@@ -15,6 +15,6 @@ public class Main extends Application {
         Circle pylpyrä = new Circle();
 
         //Tämä on Diman suorakulmio
-        Rectangle dimaRectan = new Rectangle();
+        Rectangle dimaRectum = new Rectangle();
     }
 }

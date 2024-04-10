@@ -13,5 +13,6 @@ public class Main extends Application {
         // Tein ympyrän, jota ei ole määritelty
         Circle nothisisnotarectangle = new Circle();
         Circle pylpyrä = new Circle();
+        Rectangle dimaRectan = new Rectangle();
     }
 }

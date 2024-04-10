@@ -9,6 +9,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage){
         Rectangle yesthisisarectangle = new Rectangle();
+
+        // Tein ympyrän, jota ei ole määritelty
         Circle nothisisnotarectangle = new Circle();
         Circle pylpyrä = new Circle();
     }

@@ -10,5 +10,6 @@ public class Main extends Application {
     public void start(Stage stage){
         Rectangle yesthisisarectangle = new Rectangle();
         Circle nothisisnotarectangle = new Circle();
+        Circle pylpyrä = new Circle();
     }
 }

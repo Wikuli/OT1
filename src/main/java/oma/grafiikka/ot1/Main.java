@@ -27,6 +27,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        //SqlConn conn = new SqlConn();
+        //conn.connect();
         launch(args);
     }
 }

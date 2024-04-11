@@ -31,4 +31,24 @@ public class SqlConn {
 
         }
     }
+
+    public void addCustomer(String pcode, String fname, String sname, String addr, String email, String pnr)
+            throws SQLException{
+
+        String sql = "INSERT INTO asiakas (postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, pcode);
+        preparedStatement.setString(2, fname);
+        preparedStatement.setString(3, sname);
+        preparedStatement.setString(4, addr);
+        preparedStatement.setString(5, email);
+        preparedStatement.setString(6, pnr);
+
+        int succesful = preparedStatement.executeUpdate();
+        if(succesful < 1){
+            throw new SQLException();
+        }
+    }
+
 }

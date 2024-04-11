@@ -23,7 +23,7 @@ public class SqlConn {
         }
     }
 
-    public void deconnect(){
+    public void disconnect(){
         try{
             connection.close();
         }

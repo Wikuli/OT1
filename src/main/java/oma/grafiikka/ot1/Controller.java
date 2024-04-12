@@ -1,6 +1,12 @@
 package oma.grafiikka.ot1;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * This class contains methods that give functionality to the elements in the ui.
@@ -8,11 +14,23 @@ import javafx.event.ActionEvent;
 public class Controller {
 
     /**
-     * Method for the "Uusi varaus" button functionality
+     * Method for the "Uusi varaus" button functionality. Opens a new window when clicked.
      * @param actionEvent Equals a click of the button from the user
      */
-    public void newReservation(ActionEvent actionEvent) {
+    public void newReservation(ActionEvent actionEvent) throws IOException {
         System.out.println("Uusi varaus tehty");
+
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/Test.fxml"));
+
+        Scene scene = new Scene(root, 600, 400);
+
+        stage.setScene(scene);
+
+        stage.setTitle("FXML Example");
+
+        stage.show();
+
     }
 
     /**

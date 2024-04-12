@@ -28,6 +28,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        //SqlConn conn = new SqlConn("s", "s", 3306, "sakila");
+        //conn.connect();
         launch(args);
     }
 }

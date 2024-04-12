@@ -35,7 +35,9 @@ public class SqlConn {
 
     public void disconnect(){
         try{
-            connection.close();
+            if(connection != null && !connection.isClosed()) {
+                connection.close();
+            }
         }
         catch (SQLException e){
 

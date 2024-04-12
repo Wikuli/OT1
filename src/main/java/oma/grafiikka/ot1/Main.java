@@ -30,12 +30,7 @@ public class Main extends Application {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                try {
-                    conn.disconnect();
-                }
-                catch (Exception e){
-
-                }
+                conn.disconnect();
             }
         });
 

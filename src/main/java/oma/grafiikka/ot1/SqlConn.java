@@ -18,6 +18,16 @@ public class SqlConn {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
+
+            String sql = "SELECT city FROM city";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            ResultSet resSet = prepStatement.executeQuery();
+            while(resSet.next()){
+                String city = resSet.getString("city");
+                System.out.println(city);
+            }
+            prepStatement.close();
+            resSet.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

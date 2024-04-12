@@ -5,24 +5,46 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="844.0"
-            prefWidth="1004.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <Label alignment="CENTER" layoutX="50.0" layoutY="20.0" prefHeight="213.0" prefWidth="904.0"
-          text="Tervetuloa mökinvarausjärjestelmään!" textOverrun="CLIP">
-      <font>
-         <Font size="40.0"/>
-      </font>
-   </Label>
-   <Label layoutX="351.0" layoutY="208.0" prefHeight="45.0" prefWidth="303.0" text="Mitä haluat tehdä?">
-      <font>
-         <Font size="34.0"/>
-      </font>
-   </Label>
-   <Button layoutX="280.0" layoutY="318.0" mnemonicParsing="false" text="Uusi varaus"/>
-   <Button layoutX="456.0" layoutY="416.0" mnemonicParsing="false" text="Asiakashallinta"/>
-   <Button layoutX="471.0" layoutY="318.0" mnemonicParsing="false" text="Laskutus"/>
-   <Button layoutX="663.0" layoutY="318.0" mnemonicParsing="false" text="Raportit"/>
-   <Button layoutX="266.0" layoutY="410.0" mnemonicParsing="false" text="Alueiden hallinta"/>
-   <Button layoutX="633.0" layoutY="416.0" mnemonicParsing="false" text="Palveluiden hallinta"/>
+            prefWidth="1004.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="oma.grafiikka.ot1.Controller">
+   <children>
+      <Label alignment="CENTER" layoutX="50.0" layoutY="20.0" prefHeight="213.0" prefWidth="904.0" text="Tervetuloa mökinvarausjärjestelmään!" textOverrun="CLIP">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="351.0" layoutY="208.0" prefHeight="45.0" prefWidth="303.0" text="Mitä haluat tehdä?">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <Button layoutX="280.0" layoutY="318.0" mnemonicParsing="false" text="Uusi varaus" />
+      <Button layoutX="456.0" layoutY="416.0" mnemonicParsing="false" text="Asiakashallinta" />
+      <Button layoutX="471.0" layoutY="318.0" mnemonicParsing="false" text="Laskutus" />
+      <Button layoutX="663.0" layoutY="318.0" mnemonicParsing="false" text="Raportit" />
+      <Button layoutX="266.0" layoutY="410.0" mnemonicParsing="false" text="Alueiden hallinta" />
+      <Button layoutX="633.0" layoutY="416.0" mnemonicParsing="false" text="Palveluiden hallinta" />
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="844.0"
+                  prefWidth="1004.0">
+         <children>
+            <Label alignment="CENTER" layoutX="50.0" layoutY="20.0" prefHeight="213.0" prefWidth="904.0" text="Tervetuloa mökinvarausjärjestelmään!" textOverrun="CLIP">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+            <Label layoutX="351.0" layoutY="208.0" prefHeight="45.0" prefWidth="303.0" text="Mitä haluat tehdä?">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Button fx:id="reservationButton" layoutX="280.0" layoutY="318.0" mnemonicParsing="false" onAction="#newReservation" text="Uusi varaus" />
+            <Button fx:id="customerButton" layoutX="456.0" layoutY="416.0" mnemonicParsing="false" onAction="#manageCustomers" text="Asiakashallinta" />
+            <Button fx:id="invoiceButton" layoutX="471.0" layoutY="318.0" mnemonicParsing="false" onAction="#manageInvoice" text="Laskutus" />
+            <Button fx:id="reportButton" layoutX="663.0" layoutY="318.0" mnemonicParsing="false" onAction="#seeReports" text="Raportit" />
+            <Button fx:id="areaButton" layoutX="266.0" layoutY="410.0" mnemonicParsing="false" onAction="#manageAreas" text="Alueiden hallinta" />
+            <Button fx:id="serviceButton" layoutX="633.0" layoutY="416.0" mnemonicParsing="false" onAction="#manageServices" text="Palveluiden hallinta" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

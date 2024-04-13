@@ -27,25 +27,13 @@ public class Main extends Application {
 
         stage.setTitle("FXML Example");
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                conn.disconnect();
-            }
-        });
-
         stage.show();
     }
 
 
     public static void main(String[] args) {
-        conn = new SqlConn("username", "password", 3306, "sakila");
-        try{
-            conn.connect();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
+        Alue alue = new Alue("Tusby");
+        alue.lisaaAlue(alue);
         launch(args);
     }
 }

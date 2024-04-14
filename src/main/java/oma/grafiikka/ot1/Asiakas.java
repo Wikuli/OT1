@@ -2,6 +2,8 @@ package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table (name = "asiakas")
 public class Asiakas {
@@ -9,8 +11,9 @@ public class Asiakas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "asiakas_id")
     private int asiakas_id;
-    @Column(name = "postinro")
-    private String postinro;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postinro")
+    private Posti posti;
     @Column(name = "etunimi")
     private String etunimi;
     @Column(name = "sukunimi")
@@ -21,14 +24,22 @@ public class Asiakas {
     private String email;
     @Column(name = "puhelinnro")
     private String puhelinnro;
+    @OneToMany(mappedBy = "asiakas")
+    private List<Varaus> varaukset;
 
-    public Asiakas(String postinro, String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro){
-        this.postinro = postinro;
+    public Asiakas(Posti posti, String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro){
+        this.posti = posti;
         this.etunimi = etunimi;
         this.sukunimi = sukunimi;
         this.lahiosoite = lahiosoite;
         this.email = email;
         this.puhelinnro = puhelinnro;
+    }
+    public void setPosti(Posti posti){
+        this.posti = posti;
+    }
+    public Posti getPosti(){
+        return posti;
     }
 
     public int getAsiakas_id() {
@@ -37,14 +48,6 @@ public class Asiakas {
 
     public void setAsiakas_id(int asiakas_id) {
         this.asiakas_id = asiakas_id;
-    }
-
-    public String getPostinro() {
-        return postinro;
-    }
-
-    public void setPostinro(String postinro) {
-        this.postinro = postinro;
     }
 
     public String getEtunimi() {

@@ -5,18 +5,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
-import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "alue")
-public class Alue implements Serializable {
+public class Alue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "alue_id")
     private int alue_id;
     @Column(name = "nimi")
     private String nimi;
+    @OneToMany(mappedBy = "alue")
+    private List<Mokki> mokit;
 
     public Alue(String nimi){
         this.nimi = nimi;

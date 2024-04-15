@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
+   <children>
+      <Label layoutX="45.0" layoutY="27.0" text="Syötä seuraavat tiedot löytääksesi mökin:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <DatePicker layoutX="38.0" layoutY="93.0" promptText="Alku pvm" />
+      <DatePicker layoutX="241.0" layoutY="93.0" promptText="Loppu pvm" />
+      <TextField layoutX="38.0" layoutY="149.0" text="Alue" />
+      <TextField layoutX="38.0" layoutY="214.0" text="Hinta min" />
+      <TextField layoutX="212.0" layoutY="214.0" text="Hinta max" />
+      <Label layoutX="193.0" layoutY="211.0" text="-" translateX="3.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <ListView layoutX="38.0" layoutY="299.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="38.0" layoutY="272.0" prefHeight="17.0" prefWidth="231.0" text="Valitse palvelut joita haluat:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="38.0" layoutY="550.0" mnemonicParsing="false" text="Etsi" />
+   </children>
+</AnchorPane>

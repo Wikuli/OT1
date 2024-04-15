@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="39.0" layoutY="29.0" text="Anna asiakkaan nimi:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField layoutX="211.0" layoutY="81.0" text="Sukunimi" />
+      <TextField layoutX="39.0" layoutY="81.0" text="Etunimi" />
+      <Button layoutX="39.0" layoutY="129.0" mnemonicParsing="false" text="Etsi varaukset" />
+      <ListView layoutX="39.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="39.0" layoutY="412.0" mnemonicParsing="false" text="Poista varaus" />
+   </children>
+</AnchorPane>

@@ -19,8 +19,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         // Tässä lisätään fxml-tiedoston asiat projektiin ja ohjelma sitten näyttää sen mitä screen builderissa on tehty
-        Parent root = FXMLLoader.load(getClass().getResource("/sqlTest.fxml"));
-
+        Parent root = FXMLLoader.load(getClass().getResource("/startScreen2.fxml"));
         Scene scene = new Scene(root, 600, 400);
 
         stage.setMaximized(true);
@@ -31,8 +30,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Alue alue = new Alue("Tusby");
-        alue.lisaaAlue(alue);
         launch(args);
     }
 }

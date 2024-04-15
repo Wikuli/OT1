@@ -1,6 +1,7 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,6 +22,10 @@ public class Alue {
 
     public Alue(String nimi){
         this.nimi = nimi;
+    }
+
+    public Alue() {
+
     }
 
 
@@ -53,4 +58,35 @@ public class Alue {
             sessionFactory.close();
         }
     }
+
+    public Alue etsiAlue(String alueNimi) {
+        SessionFactory sesFac = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        Alue alue = null;
+        try (Session session = sesFac.openSession()) {
+            TypedQuery<Alue> query = session.createQuery("FROM Alue WHERE nimi = :nimi", Alue.class);
+            query.setParameter("nimi", alueNimi);
+            alue = query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sesFac.close();
+        }
+        return alue;
+    }
+
+    public void poistaAlue(Alue alue){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        String aluenimi = null;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            etsiAlue(aluenimi);
+            session.delete(alue);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
+    }
+
 }

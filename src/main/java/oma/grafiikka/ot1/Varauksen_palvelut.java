@@ -2,7 +2,7 @@ package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
 
-@Entity
+@Embeddable
 @Table(name = "varauksen_palvelut" )
 public class Varauksen_palvelut {
     @ManyToOne (fetch = FetchType.LAZY)

@@ -31,8 +31,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        /*Alue alue = new Alue("Tusby");
-        alue.lisaaAlue(alue);*/
+        Alue alue = new Alue("Tusby");
+        alue.lisaaAlue(alue);
         launch(args);
     }
 }

@@ -9,8 +9,9 @@ public class Lasku {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lasku_id")
     private int lasku_id;
-    @Column(name = "varaus_id")
-    private int varaus_id;
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn (name = "varaus_id")
+    private Varaus varaus;
     @Column(name = "summa")
     private double summa;
     @Column(name = "alv")
@@ -18,9 +19,9 @@ public class Lasku {
     @Column(name = "maksettu")
     private char maksettu;
 
-    public Lasku(int lasku_id, int varaus_id, double summa, double alv, char maksettu) {
+    public Lasku(int lasku_id, Varaus varaus, double summa, double alv, char maksettu) {
         this.lasku_id = lasku_id;
-        this.varaus_id = varaus_id;
+        this.varaus = varaus;
         this.summa = summa;
         this.alv = alv;
         this.maksettu = maksettu;
@@ -34,12 +35,12 @@ public class Lasku {
         this.lasku_id = lasku_id;
     }
 
-    public int getVaraus_id() {
-        return varaus_id;
+    public Varaus getVaraus_id() {
+        return varaus;
     }
 
-    public void setVaraus_id(int varaus_id) {
-        this.varaus_id = varaus_id;
+    public void setVaraus_id(Varaus varaus) {
+        this.varaus = varaus;
     }
 
     public double getSumma() {

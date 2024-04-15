@@ -16,17 +16,12 @@ public class Varaus {
     @ManyToOne(fetch = FetchType.LAZY)
     private Mokki mokki;
     @Column(name = "varattu_pvm", columnDefinition = "DATETIME")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date varattu_pvm;
     @Column(name = "vahvistus_pvm", columnDefinition = "DATETIME")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date vahvistus_pvm;
     @Column(name = "varattu_alkupvm", columnDefinition = "DATETIME")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date varattu_alkupvm;
-
     @Column(name = "varattu_loppupvm", columnDefinition = "DATETIME")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date varattu_loppupvm;
 
     public Varaus(Asiakas asiakas, Mokki mokki, Date varattu_pvm, Date vahvistus_pvm, Date varattu_alkupvm, Date varattu_loppupvm) {

@@ -23,12 +23,10 @@ public class Controller {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/Test.fxml"));
 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root);
 
         stage.setScene(scene);
-
         stage.setTitle("FXML Example");
-
         stage.show();
 
     }

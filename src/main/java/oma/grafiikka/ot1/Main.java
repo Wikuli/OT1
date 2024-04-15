@@ -19,21 +19,20 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         // Tässä lisätään fxml-tiedoston asiat projektiin ja ohjelma sitten näyttää sen mitä screen builderissa on tehty
-        Parent root = FXMLLoader.load(getClass().getResource("/startScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/startScreen2.fxml"));
 
         Scene scene = new Scene(root, 600, 400);
 
+        stage.setMaximized(true);
         stage.setScene(scene);
-
         stage.setTitle("FXML Example");
-
         stage.show();
     }
 
 
     public static void main(String[] args) {
-        Alue alue = new Alue("Tusby");
-        alue.lisaaAlue(alue);
+        /*Alue alue = new Alue("Tusby");
+        alue.lisaaAlue(alue);*/
         launch(args);
     }
 }

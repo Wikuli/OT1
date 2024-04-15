@@ -17,9 +17,9 @@
       </Label>
       <DatePicker layoutX="38.0" layoutY="93.0" promptText="Alku pvm" />
       <DatePicker layoutX="241.0" layoutY="93.0" promptText="Loppu pvm" />
-      <TextField layoutX="38.0" layoutY="149.0" text="Alue" />
-      <TextField layoutX="38.0" layoutY="214.0" text="Hinta min" />
-      <TextField layoutX="212.0" layoutY="214.0" text="Hinta max" />
+      <TextField layoutX="38.0" layoutY="149.0" promptText="Alue" />
+      <TextField layoutX="38.0" layoutY="214.0" promptText="Hinta min" />
+      <TextField layoutX="212.0" layoutY="214.0" promptText="Hinta max" />
       <Label layoutX="193.0" layoutY="211.0" text="-" translateX="3.0">
          <font>
             <Font size="21.0" />
@@ -31,6 +31,6 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Button layoutX="38.0" layoutY="550.0" mnemonicParsing="false" text="Etsi" />
+      <Button fx:id="findCabinButton" layoutX="38.0" layoutY="550.0" mnemonicParsing="false" onAction="#findThisCabin" text="Etsi" />
    </children>
 </AnchorPane>

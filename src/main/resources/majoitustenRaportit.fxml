@@ -8,8 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0"
+            prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="oma.grafiikka.ot1.Controller">
    <children>
       <Label layoutX="25.0" layoutY="23.0" text="Syötä seuraavat tiedot nähdäksesi raportit:">
          <font>
@@ -21,6 +22,6 @@
       <DatePicker layoutX="223.0" layoutY="139.0" promptText="Loppu pvm" />
       <Label layoutX="208.0" layoutY="143.0" text="-" />
       <TextArea layoutX="23.0" layoutY="248.0" prefHeight="303.0" prefWidth="303.0" />
-      <Button layoutX="25.0" layoutY="191.0" mnemonicParsing="false" text="Syötä" />
+      <Button fx:id="cabinReportButton" layoutX="25.0" layoutY="191.0" mnemonicParsing="false" onAction="#checkReportOnAccommodation" text="Syötä" />
    </children>
 </AnchorPane>

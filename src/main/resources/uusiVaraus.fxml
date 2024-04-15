@@ -14,13 +14,13 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="33.0" layoutY="89.0" text="Etunimi" />
-      <TextField layoutX="202.0" layoutY="89.0" text="Sukunimi" />
-      <TextField layoutX="33.0" layoutY="150.0" text="Lähiosoite" />
-      <TextField layoutX="202.0" layoutY="150.0" text="Postinro" />
-      <TextField layoutX="33.0" layoutY="213.0" text="Sähköposti" />
-      <TextField layoutX="202.0" layoutY="213.0" text="Puhelinnumero" />
-      <Button layoutX="33.0" layoutY="268.0" mnemonicParsing="false" text="Tee varaus" />
+      <TextField layoutX="33.0" layoutY="89.0" promptText="Etunimi" />
+      <TextField layoutX="202.0" layoutY="89.0" promptText="Sukunimi" />
+      <TextField layoutX="33.0" layoutY="150.0" promptText="Lähiosoite" />
+      <TextField layoutX="202.0" layoutY="150.0" promptText="Postinro" />
+      <TextField layoutX="33.0" layoutY="213.0" promptText="Sähköposti" />
+      <TextField layoutX="202.0" layoutY="213.0" promptText="Puhelinnumero" />
+      <Button fx:id="reservationButton" layoutX="33.0" layoutY="268.0" mnemonicParsing="false" onAction="#makeReservation" text="Tee varaus" />
       <Label layoutX="450.0" layoutY="30.0" text="Olet varaamassa seuraavaa mökkiä:">
          <font>
             <Font size="24.0" />

@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         // Tässä lisätään fxml-tiedoston asiat projektiin ja ohjelma sitten näyttää sen mitä screen builderissa on tehty
-        Parent root = FXMLLoader.load(getClass().getResource("/startScreen2.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/sqlTest.fxml"));
 
         Scene scene = new Scene(root, 600, 400);
 

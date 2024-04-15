@@ -70,4 +70,7 @@ public class Controller {
     public void manageServices(ActionEvent actionEvent) {
         System.out.println("Palveluita hallittu");
     }
+
+    public void addNewArea(ActionEvent actionEvent) {
+    }
 }

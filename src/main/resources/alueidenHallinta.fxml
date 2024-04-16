@@ -14,7 +14,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ListView layoutX="523.0" layoutY="103.0" prefHeight="236.0" prefWidth="232.0" />
+      <ListView fx:id="areaListView" layoutX="523.0" layoutY="103.0" prefHeight="236.0" prefWidth="232.0" />
       <Button fx:id="deleteAreaButton" layoutX="523.0" layoutY="366.0" mnemonicParsing="false" onAction="#deleteArea" text="Poista" />
       <TextField layoutX="62.0" layoutY="103.0" promptText="Alue" />
       <Label layoutX="62.0" layoutY="51.0" text="Lisää alue">

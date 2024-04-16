@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -18,6 +19,7 @@ import java.sql.SQLException;
 public class Controller {
 
     public TextField addArea;
+    public ListView areaListView;
 
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
@@ -32,6 +34,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Mökkien hallinta");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -48,6 +51,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Poista varaus");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -64,6 +68,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Etsi mökkejä");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -80,6 +85,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Uusi varaus");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -96,6 +102,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Laskujen hallinta");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -112,6 +119,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Laskujen seuranta");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -128,6 +136,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Majoitusten raportit");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -144,6 +153,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Palveluiden raportit");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -160,6 +170,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Alueiden hallinta");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -176,6 +187,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Asiakashallinta");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -193,6 +205,7 @@ public class Controller {
 
         stage.setScene(scene);
         stage.setTitle("Palveluiden hallinta");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -200,7 +213,7 @@ public class Controller {
      * Metodi, jolla voi lisätä uuden alueen
      * @param actionEvent napin klikkaus
      */
-    public void addNewArea(ActionEvent actionEvent) {
+    public void addArea(ActionEvent actionEvent) {
         Alue alue = new Alue(addArea.getText());
         alue.lisaaAlue(alue);
     }
@@ -209,8 +222,7 @@ public class Controller {
     public void deleteArea(ActionEvent actionEvent) {
     }
 
-    public void addArea(ActionEvent actionEvent) {
-    }
+    
 
     public void deleteCustomer(ActionEvent actionEvent) {
     }

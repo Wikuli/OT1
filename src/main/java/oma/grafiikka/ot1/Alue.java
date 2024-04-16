@@ -89,4 +89,8 @@ public class Alue {
         }
     }
 
+    // Tänne pitäisi varmaankin saada metodi, joka hakee kaikki alueet tietokannasta? Saisi sitten tuohon ui:hin ListViewn
+    // alueista ja sitten siitä valitsemalla voisi poistaa alueen tietokannasta. Vai onko helpompaa, että järjestelmään
+    // kirjoitetaan alueen nimi, joka halutaan poistaa?
+
 }

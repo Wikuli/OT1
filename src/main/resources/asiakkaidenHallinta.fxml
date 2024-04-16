@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -17,22 +16,26 @@
          </font>
       </Label>
       <Button fx:id="deleteCustomerButton" layoutX="43.0" layoutY="387.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Poista asiakas" />
-      <Button fx:id="alterInfoButton" layoutX="418.0" layoutY="629.0" mnemonicParsing="false" onAction="#changeCustomerInformation" text="Muokkaa tietoja" />
-      <TextField layoutX="418.0" layoutY="489.0" promptText="Etunimi" />
-      <TextField layoutX="610.0" layoutY="574.0" promptText="Puhelinnumero" />
-      <TextField layoutX="418.0" layoutY="574.0" promptText="Sähköposti" />
-      <TextField layoutX="610.0" layoutY="533.0" promptText="Postinumero" />
-      <TextField layoutX="418.0" layoutY="533.0" promptText="Lähiosoite" />
-      <TextField layoutX="610.0" layoutY="489.0" promptText="Sukunimi" />
-      <TextArea layoutX="412.0" layoutY="85.0" prefHeight="262.0" prefWidth="260.0" />
+      <Button fx:id="alterInfoButton" layoutX="407.0" layoutY="300.0" mnemonicParsing="false" onAction="#changeCustomerInformation" text="Muokkaa tietoja" />
+      <TextField layoutX="407.0" layoutY="160.0" promptText="Etunimi" />
+      <TextField layoutX="599.0" layoutY="245.0" promptText="Puhelinnumero" />
+      <TextField layoutX="407.0" layoutY="245.0" promptText="Sähköposti" />
+      <TextField layoutX="599.0" layoutY="204.0" promptText="Postinumero" />
+      <TextField layoutX="407.0" layoutY="204.0" promptText="Lähiosoite" />
+      <TextField layoutX="599.0" layoutY="160.0" promptText="Sukunimi" />
       <Label layoutX="407.0" layoutY="27.0" text="Asiakkaan tiedot:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="418.0" layoutY="435.0" text="Muokkaa asiakkaan tietoja">
+      <Label layoutX="407.0" layoutY="80.0" prefHeight="49.0" prefWidth="317.0" text="Voit halutessasi muokata">
          <font>
-            <Font size="24.0" />
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="407.0" layoutY="104.0" prefHeight="49.0" prefWidth="317.0" text="asiakkaan tietoja">
+         <font>
+            <Font size="20.0" />
          </font>
       </Label>
    </children>

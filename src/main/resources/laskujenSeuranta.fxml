@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+            prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
+   <children>
+      <Label layoutX="64.0" layoutY="38.0" text="Etsi asiakas">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField layoutX="64.0" layoutY="105.0" promptText="Etunimi" />
+      <TextField layoutX="64.0" layoutY="143.0" promptText="Sukunimi" />
+      <TextField layoutX="64.0" layoutY="180.0" promptText="Puhelinnumero" />
+      <TextArea editable="false" layoutX="64.0" layoutY="321.0" prefHeight="339.0" prefWidth="296.0" />
+      <Label layoutX="64.0" layoutY="274.0" text="Asiakkaan laskut ja laskujen tiedot">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="findInvoiceButton" layoutX="64.0" layoutY="223.0" mnemonicParsing="false" onAction="#findInvoice" text="Etsi" />
+      <Button fx:id="invoicePayedButton" layoutX="64.0" layoutY="666.0" mnemonicParsing="false" onAction="#invoicePayed" text="Aseta lasku maksetuksi" />
+      <ListView layoutX="467.0" layoutY="66.0" prefHeight="270.0" prefWidth="296.0" />
+      <Label layoutX="467.0" layoutY="24.0" text="Lista avoinna olevista laskuista">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView layoutX="467.0" layoutY="402.0" prefHeight="270.0" prefWidth="296.0" />
+      <Label layoutX="467.0" layoutY="360.0" text="Lista maksetuista laskuista">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

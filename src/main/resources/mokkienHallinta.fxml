@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
+   <children>
+      <Label layoutX="36.0" layoutY="34.0" text="Syötä uuden mökin tiedot järjestelmään">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField layoutX="36.0" layoutY="97.0" promptText="Mökin nimi" />
+      <TextField layoutX="36.0" layoutY="170.0" promptText="Hernkilömäärä" />
+      <TextField layoutX="36.0" layoutY="132.0" promptText="Hinta" />
+      <TextField layoutX="207.0" layoutY="170.0" promptText="Varustelu" />
+      <TextField layoutX="207.0" layoutY="97.0" promptText="Katuosoite" />
+      <TextField layoutX="207.0" layoutY="132.0" promptText="Kuvaus" />
+      <Label layoutX="36.0" layoutY="273.0" text="Järjestelmässä olevat mökit">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="addNewCabinButton" layoutX="36.0" layoutY="212.0" mnemonicParsing="false" onAction="#addNewCabin" text="Syötä" />
+      <ListView layoutX="36.0" layoutY="325.0" prefHeight="221.0" prefWidth="254.0" />
+      <Button fx:id="deleteCabinButton" layoutX="36.0" layoutY="572.0" mnemonicParsing="false" onAction="#deleteCabin" text="Poista valittu mökki" />
+      <Label layoutX="363.0" layoutY="273.0" text="Voit halutessasi muokata valittun mökin tietoja">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField layoutX="363.0" layoutY="336.0" promptText="Mökin nimi" />
+      <TextField layoutX="363.0" layoutY="409.0" promptText="Hernkilömäärä" />
+      <TextField layoutX="363.0" layoutY="371.0" promptText="Hinta" />
+      <TextField layoutX="534.0" layoutY="409.0" promptText="Varustelu" />
+      <TextField layoutX="534.0" layoutY="336.0" promptText="Katuosoite" />
+      <TextField layoutX="534.0" layoutY="371.0" promptText="Kuvaus" />
+      <Button fx:id="alterCabinInfoButton" layoutX="363.0" layoutY="451.0" mnemonicParsing="false" onAction="#alterCabinInfo" text="Muokkaa" />
+   </children>
+</AnchorPane>

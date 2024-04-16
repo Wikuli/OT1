@@ -24,6 +24,22 @@ public class Controller {
      * @param actionEvent Napin painallus
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
+    public void manageCabins(ActionEvent actionEvent) throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/mokkienHallinta.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("Poista varaus");
+        stage.show();
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
     public void deleteReservation(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/poistaVaraus.fxml"));
@@ -73,7 +89,14 @@ public class Controller {
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
     public void manageInvoice(ActionEvent actionEvent) throws IOException{
-        System.out.println("Laskuja hallittu");
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/laskujenHallinta.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("FXML Example");
+        stage.show();
     }
 
     /**
@@ -82,6 +105,14 @@ public class Controller {
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
     public void trackInvoice(ActionEvent actionEvent) throws IOException{
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/laskujenSeuranta.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("FXML Example");
+        stage.show();
     }
 
     /**
@@ -138,7 +169,14 @@ public class Controller {
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
     public void manageCustomers(ActionEvent actionEvent) throws IOException {
-        System.out.println("Asiakkaita hallittu");
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/asiakkaidenHallinta.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("FXML Example");
+        stage.show();
     }
 
 
@@ -148,6 +186,14 @@ public class Controller {
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
     public void manageServices(ActionEvent actionEvent) throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/palveluidenHallinta.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("FXML Example");
+        stage.show();
     }
 
     /**
@@ -187,5 +233,42 @@ public class Controller {
     }
 
     public void serviceReportSearch(ActionEvent actionEvent) {
+    }
+
+    public void areaServiceFetch(ActionEvent actionEvent) {
+    }
+
+    public void deleteServiceFromArea(ActionEvent actionEvent) {
+    }
+
+    public void addNewService(ActionEvent actionEvent) {
+    }
+
+    public void deleteEntireService(ActionEvent actionEvent) {
+    }
+
+    public void alterServiceInfo(ActionEvent actionEvent) {
+    }
+
+    public void createPaperInvoice(ActionEvent actionEvent) {
+    }
+
+    public void createEmailInvoice(ActionEvent actionEvent) {
+    }
+
+    public void findInvoice(ActionEvent actionEvent) {
+    }
+
+    public void invoicePayed(ActionEvent actionEvent) {
+    }
+
+
+    public void addNewCabin(ActionEvent actionEvent) {
+    }
+
+    public void deleteCabin(ActionEvent actionEvent) {
+    }
+
+    public void alterCabinInfo(ActionEvent actionEvent) {
     }
 }

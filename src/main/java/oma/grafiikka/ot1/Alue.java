@@ -23,11 +23,6 @@ public class Alue {
         this.nimi = nimi;
     }
 
-    public Alue() {
-
-    }
-
-
     public int getAlue_id() {
         return alue_id;
     }
@@ -45,7 +40,6 @@ public class Alue {
     }
     public void lisaaAlue(Alue alue){
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-
 
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();

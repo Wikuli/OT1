@@ -28,9 +28,9 @@ public class Asiakas {
     private String email;
     @Column(name = "puhelinnro")
     private String puhelinnro;
-    /*@OneToMany(mappedBy = "asiakas")
+    @OneToMany(mappedBy = "asiakas")
     private List<Varaus> varaukset;
-*/
+
     public Asiakas(Posti posti, String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro){
         this.posti = posti;
         this.etunimi = etunimi;
@@ -40,11 +40,10 @@ public class Asiakas {
         this.puhelinnro = puhelinnro;
     }
     public void setPosti(Posti posti){
-        //this.posti = posti;
+        this.posti = posti;
     }
-    public int getPosti(){
-        //return posti;
-        return 1;
+    public Posti getPosti(){
+        return posti;
     }
 
     public int getAsiakas_id() {

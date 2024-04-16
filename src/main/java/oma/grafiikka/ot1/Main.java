@@ -1,17 +1,10 @@
 package oma.grafiikka.ot1;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 public class Main extends Application {
     @Override
@@ -26,8 +19,6 @@ public class Main extends Application {
         stage.setTitle("FXML Example");
         stage.show();
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }

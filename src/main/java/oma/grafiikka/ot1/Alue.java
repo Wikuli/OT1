@@ -22,6 +22,9 @@ public class Alue {
     public Alue(String nimi){
         this.nimi = nimi;
     }
+    public Alue(){
+
+    }
 
     public int getAlue_id() {
         return alue_id;

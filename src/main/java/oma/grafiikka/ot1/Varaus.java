@@ -16,8 +16,10 @@ public class Varaus {
     @Column(name = "varaus_id")
     private int varaus_id;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asiakas_id")
     private Asiakas asiakas;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mokki_id")
     private Mokki mokki;
     @Column(name = "varattu_pvm", columnDefinition = "DATETIME")
     private Date varattu_pvm;

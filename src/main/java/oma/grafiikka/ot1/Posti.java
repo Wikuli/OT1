@@ -13,7 +13,7 @@ import java.util.List;
 public class Posti {
     @Id
     @Column(name = "postinro")
-    private String posti;
+    private String postinro;
     @Column(name = "toimipaikka")
     private String toimipaikka;
 
@@ -24,16 +24,16 @@ public class Posti {
     private List<Mokki> mokit;
 
     public Posti(String posti, String toimipaikka) {
-        this.posti = posti;
+        this.postinro = posti;
         this.toimipaikka = toimipaikka;
     }
 
     public String getPosti() {
-        return posti;
+        return postinro;
     }
 
     public void setPosti(String posti) {
-        this.posti = posti;
+        this.postinro = posti;
     }
 
     public String getToimipaikka() {

@@ -89,7 +89,7 @@ public class Palvelu {
 
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(alue);
+            session.save(palvelu);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

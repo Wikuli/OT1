@@ -31,7 +31,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("Poista varaus");
+        stage.setTitle("Mökkien hallinta");
         stage.show();
     }
 
@@ -63,7 +63,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Etsi mökkejä");
         stage.show();
     }
 
@@ -79,7 +79,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Uusi varaus");
         stage.show();
     }
 
@@ -95,7 +95,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Laskujen hallinta");
         stage.show();
     }
 
@@ -111,7 +111,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Laskujen seuranta");
         stage.show();
     }
 
@@ -127,7 +127,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Majoitusten raportit");
         stage.show();
     }
 
@@ -143,7 +143,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Palveluiden raportit");
         stage.show();
     }
 
@@ -159,7 +159,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Alueiden hallinta");
         stage.show();
     }
 
@@ -175,7 +175,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Asiakashallinta");
         stage.show();
     }
 
@@ -192,18 +192,19 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("FXML Example");
+        stage.setTitle("Palveluiden hallinta");
         stage.show();
     }
 
     /**
      * Metodi, jolla voi lisätä uuden alueen
-     * @param actionEvent
+     * @param actionEvent napin klikkaus
      */
     public void addNewArea(ActionEvent actionEvent) {
         Alue alue = new Alue(addArea.getText());
         alue.lisaaAlue(alue);
     }
+
 
     public void deleteArea(ActionEvent actionEvent) {
     }

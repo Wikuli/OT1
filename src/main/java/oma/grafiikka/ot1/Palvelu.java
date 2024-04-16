@@ -2,6 +2,10 @@ package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
 import javafx.scene.control.Alert;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name = "palvelu")
@@ -21,6 +25,14 @@ public class Palvelu {
     private double hinta;
     @Column (name = "alv")
     private double alv;
+
+    public Palvelu(Alue alue, String nimi, String kuvaus, double hinta, double alv){
+        this.alue = alue;
+        this.nimi = nimi;
+        this.kuvaus = kuvaus;
+        this.hinta = hinta;
+        this.alv = alv;
+    }
 
     public int getPalvelu_id() {
         return palvelu_id;
@@ -68,6 +80,22 @@ public class Palvelu {
 
     public void setAlv(double alv) {
         this.alv = alv;
+    }
+
+
+    public void lisaaPalvelu(Palvelu palvelu){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(alue);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
     }
 }
 

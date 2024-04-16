@@ -1,6 +1,10 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name = "lasku")
@@ -65,5 +69,21 @@ public class Lasku {
 
     public void setMaksettu(char maksettu) {
         this.maksettu = maksettu;
+    }
+
+
+    public void lisaaLasku(Lasku lasku){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(lasku);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
     }
 }

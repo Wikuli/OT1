@@ -1,6 +1,10 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import java.sql.Date;
 
@@ -83,5 +87,21 @@ public class Varaus {
 
     public void setVarattu_loppupvm(Date varattu_loppupvm) {
         this.varattu_loppupvm = varattu_loppupvm;
+    }
+
+
+    public void lisaaVaraus(Varaus varaus){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(varaus);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
     }
 }

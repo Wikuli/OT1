@@ -1,6 +1,10 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name = "mokki")
@@ -63,6 +67,29 @@ public class Mokki {
      */
     @Column(name = "varustelu")
     private String varustelu;
+
+    /**
+     * Alustaja mökki oliolle
+     * @param alue eli mökin alue
+     * @param posti eli mökin postinumero
+     * @param mokkinimi eli mökin nimi
+     * @param katuosoite eli mökin katuosoite
+     * @param hinta eli mökin hinta
+     * @param kuvaus eli mökin kuvaus
+     * @param henkilomaara eli mökin henkilömäärä
+     * @param varustelu eli mökin varustelu
+     */
+    public Mokki(Alue alue, Posti posti, String mokkinimi, String katuosoite, double hinta, String kuvaus, int henkilomaara, String varustelu) {
+        this.alue = alue;
+        this.posti = posti;
+        this.mokkinimi = mokkinimi;
+        this.katuosoite = katuosoite;
+        this.hinta = hinta;
+        this.kuvaus = kuvaus;
+        this.henkilomaara = henkilomaara;
+        this.varustelu = varustelu;
+    }
+
     /**
      * Get-metodi mökin id_lle
      * @return mokki_id eli mökin id
@@ -190,27 +217,18 @@ public class Mokki {
         this.varustelu = varustelu;
     }
 
-    /**
-     * Alustaja mökki oliolle
-     * @param mokki_id eli mökin id
-     * @param alue eli mökin alue
-     * @param posti eli mökin postinumero
-     * @param mokkinimi eli mökin nimi
-     * @param katuosoite eli mökin katuosoite
-     * @param hinta eli mökin hinta
-     * @param kuvaus eli mökin kuvaus
-     * @param henkilomaara eli mökin henkilömäärä
-     * @param varustelu eli mökin varustelu
-     */
-    public Mokki(int mokki_id, Alue alue, Posti posti, String mokkinimi, String katuosoite, double hinta, String kuvaus, int henkilomaara, String varustelu) {
-        this.mokki_id = mokki_id;
-        this.alue = alue;
-        this.posti = posti;
-        this.mokkinimi = mokkinimi;
-        this.katuosoite = katuosoite;
-        this.hinta = hinta;
-        this.kuvaus = kuvaus;
-        this.henkilomaara = henkilomaara;
-        this.varustelu = varustelu;
+
+    public void lisaaMokki(Mokki mokki){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(mokki);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
     }
 }

@@ -1,6 +1,10 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
@@ -28,7 +32,7 @@ public class Asiakas {
     private List<Varaus> varaukset;
 */
     public Asiakas(Posti posti, String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro){
-        //this.posti = posti;
+        this.posti = posti;
         this.etunimi = etunimi;
         this.sukunimi = sukunimi;
         this.lahiosoite = lahiosoite;
@@ -89,5 +93,21 @@ public class Asiakas {
 
     public void setPuhelinnro(String puhelinnro) {
         this.puhelinnro = puhelinnro;
+    }
+
+
+    public void lisaaAsiakas(Asiakas asiakas){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(asiakas);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
     }
 }

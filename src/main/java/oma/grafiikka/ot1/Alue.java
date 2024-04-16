@@ -1,7 +1,6 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -59,7 +58,7 @@ public class Alue {
         }
     }
 
-    public Alue etsiAlue(String alueNimi) {
+    public static Alue etsiAlue(String alueNimi) {
         SessionFactory sesFac = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         Alue alue = null;
         try (Session session = sesFac.openSession()) {

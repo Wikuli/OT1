@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Main extends Application {
-    static SqlConn conn;
     @Override
     public void start(Stage stage) throws Exception {
 

@@ -1,15 +1,23 @@
 package oma.grafiikka.ot1;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class contains methods that give functionality to the elements in the ui. HUOM!!! Ensimmäiset 10 metodia ovat
@@ -18,8 +26,9 @@ import java.sql.SQLException;
  */
 public class Controller {
 
-    public ListView areaListView;
     public TextField addAreaTextField;
+    @FXML
+    public ListView areaListViewNew;
 
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
@@ -162,16 +171,40 @@ public class Controller {
      * @param actionEvent Napin painallus
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
+    @FXML
     public void manageAreas(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/alueidenHallinta.fxml"));
-
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.setTitle("Alueiden hallinta");
         stage.setResizable(false);
         stage.show();
+
+        List <Alue> alueet = kaikkiAlueet();
+        ArrayList <String> nimet = new ArrayList<>();
+        System.out.println(alueet);
+
+        for (Alue alue:alueet){
+            System.out.println(alue.getNimi());
+            nimet.add(alue.getNimi());
+        }
+        System.out.println(nimet);
+        //areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
+        // areaListViewNew.getItems().addAll("Teppo", "MAtti");
+        System.out.println(areaListViewNew.getItems());
+    }
+
+    public List <Alue> kaikkiAlueet() {
+        try (Session session = Main.sessionFactory.openSession()) {
+            Query<Alue> alueQuery = session.createQuery("from Alue", Alue.class);
+            return alueQuery.getResultList();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

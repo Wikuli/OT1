@@ -35,12 +35,12 @@ public class Main extends Application {
     }
     public static void main(String[] args) {
         sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-        Alue turku = new Alue("Turku");
+        /*Alue turku = new Alue("Turku");
         turku.lisaaAlue(turku, sessionFactory);
         Posti posti = new Posti("04300", "Uusimaa");
         posti.lisaaPosti(posti, sessionFactory);
         Palvelu palvelu = new Palvelu(Alue.etsiAlue("Turku", sessionFactory), "palvelu2", "kuvaus", 123.456, 24);
-        palvelu.lisaaPalvelu(palvelu, sessionFactory);
+        palvelu.lisaaPalvelu(palvelu, sessionFactory);*/
         launch(args);
     }
 }

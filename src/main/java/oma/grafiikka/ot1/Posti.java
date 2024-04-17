@@ -28,6 +28,8 @@ public class Posti {
         this.toimipaikka = toimipaikka;
     }
 
+    public Posti(){}
+
     public String getPosti() {
         return postinro;
     }

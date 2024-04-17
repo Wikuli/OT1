@@ -41,6 +41,8 @@ public class Controller {
     public TextField uusiKuvaus;
     public TextField AlueTextField;
     public TextField postiNumeroTextField;
+    @FXML
+    public ListView jarjestelmanMokit;
 
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
@@ -211,21 +213,6 @@ public class Controller {
         stage.setResizable(false);
         stage.show();
         naytaListView();
-
-
-        /*List <Alue> alueet = kaikkiAlueet();
-        ArrayList <String> nimet = new ArrayList<>();
-        System.out.println(alueet);
-
-        for (Alue alue:alueet){
-            System.out.println(alue.getNimi());
-            nimet.add(alue.getNimi());
-        }
-        System.out.println(nimet);
-
-        areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
-        // areaListViewNew.getItems().addAll("Teppo", "MAtti");
-        System.out.println(areaListViewNew.getItems());*/
     }
 
     public List <Alue> kaikkiAlueet() {
@@ -380,7 +367,7 @@ public class Controller {
         if (haettuAlue == null) {
             Alue.lisaaAlue(new Alue(alue), Main.sessionFactory);
         }
-
+        haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
         String postiNumero = postiNumeroTextField.getText();
         Posti etsittyPosti = Posti.etsiPosti(postiNumero, Main.sessionFactory);
         if (etsittyPosti == null) {
@@ -408,14 +395,39 @@ public class Controller {
         uusiKuvaus.clear();
         uusiKatuOsoite.clear();
         uusiMokinNimi.clear();
+
+        naytaMokkiListView();
     }
 
     public void deleteCabin(ActionEvent actionEvent) {
     }
+    public void naytaMokkiListView(){
+        List <Mokki> mokit = kaikkiMokit();
+        ArrayList <String> nimet = new ArrayList<>();
 
+        for (Mokki mokki:mokit){
+            nimet.add(mokki.getMokkinimi());
+        }
+
+        jarjestelmanMokit.setItems(FXCollections.observableArrayList(nimet));
+        jarjestelmanMokit.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
+    public List <Mokki> kaikkiMokit() {
+        try (Session session = Main.sessionFactory.openSession()) {
+            Query<Mokki> alueQuery = session.createQuery("from Mokki", Mokki.class);
+            return alueQuery.getResultList();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public void alterCabinInfo(ActionEvent actionEvent) {
     }
 
 
-
+    public void haeMokit(ActionEvent actionEvent) {
+        naytaMokkiListView();
+    }
 }

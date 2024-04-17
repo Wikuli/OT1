@@ -90,6 +90,9 @@ public class Mokki {
         this.varustelu = varustelu;
     }
 
+    public Mokki(){
+
+    }
     /**
      * Get-metodi mökin id_lle
      * @return mokki_id eli mökin id

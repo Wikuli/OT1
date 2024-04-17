@@ -42,5 +42,11 @@
       <TextField fx:id="muokattuKatuOsoite" layoutX="534.0" layoutY="336.0" promptText="Katuosoite" />
       <TextField fx:id="muokattuKuvaus" layoutX="534.0" layoutY="371.0" promptText="Kuvaus" />
       <Button fx:id="alterCabinInfoButton" layoutX="363.0" layoutY="451.0" mnemonicParsing="false" onAction="#alterCabinInfo" text="Muokkaa" />
+      <Label layoutX="118.0" layoutY="240.0" textFill="#ff0606">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="haeMokitButton" layoutX="36.0" layoutY="546.0" mnemonicParsing="false" onAction="#haeMokit" text="Hae mökit" />
    </children>
 </AnchorPane>

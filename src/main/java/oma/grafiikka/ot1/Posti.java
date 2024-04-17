@@ -44,18 +44,13 @@ public class Posti {
         this.toimipaikka = toimipaikka;
     }
 
-    public void lisaaPosti(Posti posti){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-
-
+    public void lisaaPosti(Posti posti, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(posti);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 }

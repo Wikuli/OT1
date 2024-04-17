@@ -83,18 +83,13 @@ public class Palvelu {
     }
 
 
-    public void lisaaPalvelu(Palvelu palvelu){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-
-
+    public void lisaaPalvelu(Palvelu palvelu, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(palvelu);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 }

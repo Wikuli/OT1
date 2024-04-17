@@ -92,18 +92,13 @@ public class Varaus {
     }
 
 
-    public void lisaaVaraus(Varaus varaus){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-
-
+    public void lisaaVaraus(Varaus varaus, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(varaus);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 }

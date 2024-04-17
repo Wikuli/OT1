@@ -95,18 +95,13 @@ public class Asiakas {
     }
 
 
-    public void lisaaAsiakas(Asiakas asiakas){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-
-
+    public void lisaaAsiakas(Asiakas asiakas, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(asiakas);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 }

@@ -72,18 +72,13 @@ public class Lasku {
     }
 
 
-    public void lisaaLasku(Lasku lasku){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-
-
+    public void lisaaLasku(Lasku lasku, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(lasku);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 }

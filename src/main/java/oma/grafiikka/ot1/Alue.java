@@ -41,22 +41,17 @@ public class Alue {
     public void setNimi(String nimi) {
         this.nimi = nimi;
     }
-    public void lisaaAlue(Alue alue){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-
+    public void lisaaAlue(Alue alue, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(alue);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 
-    public static Alue etsiAlue(String alueNimi) {
-        SessionFactory sesFac = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+    public static Alue etsiAlue(String alueNimi, SessionFactory sesFac) {
         Alue alue = null;
         try (Session session = sesFac.openSession()) {
             TypedQuery<Alue> query = session.createQuery("FROM Alue WHERE nimi = :nimi", Alue.class);
@@ -64,24 +59,19 @@ public class Alue {
             alue = query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sesFac.close();
         }
         return alue;
     }
 
-    public void poistaAlue(Alue alue){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+    public void poistaAlue(Alue alue, SessionFactory sessionFactory){
         String aluenimi = null;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            etsiAlue(aluenimi);
+            etsiAlue(aluenimi, sessionFactory);
             session.delete(alue);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 

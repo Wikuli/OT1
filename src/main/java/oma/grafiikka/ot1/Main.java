@@ -1,12 +1,17 @@
 package oma.grafiikka.ot1;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 public class Main extends Application {
+    static SessionFactory sessionFactory = null;
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -18,14 +23,24 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setTitle("FXML Example");
         stage.show();
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                if (sessionFactory != null && sessionFactory.isOpen()) {
+                    sessionFactory.close();
+                }
+            }
+        });
     }
     public static void main(String[] args) {
-        //Alue turku = new Alue("Turku");
-        //turku.lisaaAlue(turku);
-        //Posti posti = new Posti("04300", "Uusimaa");
-        //posti.lisaaPosti(posti);
-        Palvelu palvelu = new Palvelu(Alue.etsiAlue("Turku"), "palvelu2", "kuvaus", 123.456, 24);
-        palvelu.lisaaPalvelu(palvelu);
+        sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        Alue turku = new Alue("Turku");
+        turku.lisaaAlue(turku, sessionFactory);
+        Posti posti = new Posti("04300", "Uusimaa");
+        posti.lisaaPosti(posti, sessionFactory);
+        Palvelu palvelu = new Palvelu(Alue.etsiAlue("Turku", sessionFactory), "palvelu2", "kuvaus", 123.456, 24);
+        palvelu.lisaaPalvelu(palvelu, sessionFactory);
         launch(args);
     }
 }

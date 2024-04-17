@@ -215,7 +215,7 @@ public class Controller {
      */
     public void addArea(ActionEvent actionEvent) {
         Alue alue = new Alue(addArea.getText());
-        alue.lisaaAlue(alue);
+        alue.lisaaAlue(alue, Main.sessionFactory);
     }
 
 

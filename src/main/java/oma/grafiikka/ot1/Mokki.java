@@ -217,8 +217,7 @@ public class Mokki {
         this.varustelu = varustelu;
     }
 
-    public void lisaaMokki(Mokki mokki){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+    public void lisaaMokki(Mokki mokki, SessionFactory sessionFactory){
 
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -226,8 +225,6 @@ public class Mokki {
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
     }
 }

@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
+<AnchorPane fx:id="aluePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
    <children>
-      <Label layoutX="523.0" layoutY="42.0" text="Valitse alue, jonka haluat poistaa">
+      <Label layoutX="523.0" layoutY="42.0" prefHeight="75.0" prefWidth="214.0" text="Valitse alue/alueet, jotka haluat poistaa" wrapText="true">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="deleteAreaButton" layoutX="523.0" layoutY="366.0" mnemonicParsing="false" onAction="#deleteArea" text="Poista" />
+      <Button fx:id="deleteAreaButton" layoutX="523.0" layoutY="376.0" mnemonicParsing="false" onAction="#deleteArea" text="Poista valittu alue" />
       <TextField fx:id="addAreaTextField" layoutX="62.0" layoutY="103.0" promptText="Alue" />
       <Label layoutX="62.0" layoutY="51.0" text="Lisää alue">
          <font>
@@ -22,6 +22,7 @@
          </font>
       </Label>
       <Button fx:id="addAreaButton" layoutX="62.0" layoutY="150.0" mnemonicParsing="false" onAction="#addNewArea" text="Lisää" />
-      <ListView fx:id="areaListViewNew" layoutX="523.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="areaListViewNew" layoutX="523.0" layoutY="142.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button fx:id="haeAlueetButton" layoutX="523.0" layoutY="348.0" mnemonicParsing="false" onAction="#haeAlueet" text="Hae alueet" />
    </children>
 </AnchorPane>

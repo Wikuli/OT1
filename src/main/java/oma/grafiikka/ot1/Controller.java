@@ -8,7 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -29,6 +32,7 @@ public class Controller {
     public TextField addAreaTextField;
     @FXML
     public ListView areaListViewNew;
+    public AnchorPane aluePane;
 
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
@@ -166,6 +170,23 @@ public class Controller {
         stage.show();
     }
 
+    public void haeAlueet(ActionEvent actionEvent) {
+        naytaListView();
+    }
+
+    public void naytaListView(){
+        List <Alue> alueet = kaikkiAlueet();
+        ArrayList <String> nimet = new ArrayList<>();
+
+        for (Alue alue:alueet){
+            System.out.println(alue.getNimi());
+            nimet.add(alue.getNimi());
+        }
+
+        areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
+        areaListViewNew.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    }
+
     /**
      * Tällä metodilla voidaan avata uusi ikkuna "Alueiden hallinta" nappia painamalla
      * @param actionEvent Napin painallus
@@ -181,8 +202,10 @@ public class Controller {
         stage.setTitle("Alueiden hallinta");
         stage.setResizable(false);
         stage.show();
+        naytaListView();
 
-        List <Alue> alueet = kaikkiAlueet();
+
+        /*List <Alue> alueet = kaikkiAlueet();
         ArrayList <String> nimet = new ArrayList<>();
         System.out.println(alueet);
 
@@ -191,9 +214,10 @@ public class Controller {
             nimet.add(alue.getNimi());
         }
         System.out.println(nimet);
-        //areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
+
+        areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
         // areaListViewNew.getItems().addAll("Teppo", "MAtti");
-        System.out.println(areaListViewNew.getItems());
+        System.out.println(areaListViewNew.getItems());*/
     }
 
     public List <Alue> kaikkiAlueet() {
@@ -248,11 +272,24 @@ public class Controller {
      */
     public void addNewArea(ActionEvent actionEvent) {
         Alue alue = new Alue(addAreaTextField.getText());
-        alue.lisaaAlue(alue, Main.sessionFactory);
+        Alue etsittyAlue = Alue.etsiAlue(alue.getNimi(), Main.sessionFactory);
+
+        if (etsittyAlue == null){
+            alue.lisaaAlue(alue, Main.sessionFactory);
+        }
+        else {
+            System.out.println("Elä perkele");
+        }
+        naytaListView();
     }
 
 
     public void deleteArea(ActionEvent actionEvent) {
+        List<String> alueet = areaListViewNew.getSelectionModel().getSelectedItems();
+        for (String i: alueet){
+            Alue alue = Alue.etsiAlue(i, Main.sessionFactory);
+            Alue.poistaAlue(alue, Main.sessionFactory);
+        }
     }
 
     
@@ -317,4 +354,7 @@ public class Controller {
 
     public void alterCabinInfo(ActionEvent actionEvent) {
     }
+
+
+
 }

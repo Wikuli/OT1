@@ -63,7 +63,7 @@ public class Alue {
         return alue;
     }
 
-    public void poistaAlue(Alue alue, SessionFactory sessionFactory){
+    public static void poistaAlue(Alue alue, SessionFactory sessionFactory){
         String aluenimi = null;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();

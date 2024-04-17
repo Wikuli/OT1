@@ -33,6 +33,14 @@ public class Controller {
     @FXML
     public ListView areaListViewNew;
     public AnchorPane aluePane;
+    public TextField uusiMokinNimi;
+    public TextField uusiHenkiloMaara;
+    public TextField uusiHinta;
+    public TextField uusiVarustelu;
+    public TextField uusiKatuOsoite;
+    public TextField uusiKuvaus;
+    public TextField AlueTextField;
+    public TextField postiNumeroTextField;
 
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
@@ -346,7 +354,60 @@ public class Controller {
     }
 
 
-    public void addNewCabin(ActionEvent actionEvent) {
+    public void addNewCabin(ActionEvent actionEvent) throws IOException {
+        String mokinNimi = uusiMokinNimi.getText();
+        String katuOsoite = uusiKatuOsoite.getText();
+        Double hinta = 0.0;
+        try {
+            hinta = Double.parseDouble(uusiHinta.getText());
+        }
+        catch (Exception e){
+            uusiHinta.setText("Anna desimaalilukuna!");
+            return;
+        }
+        String kuvaus = uusiKuvaus.getText();
+        int henkiloMaara = 0;
+        try {
+            henkiloMaara = Integer.parseInt(uusiHenkiloMaara.getText());
+        }
+        catch (Exception e) {
+            uusiHenkiloMaara.setText("Anna kokonaislukuna!");
+            return;
+        }
+        String varustelu = uusiVarustelu.getText();
+        String alue = AlueTextField.getText();
+        Alue haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
+        if (haettuAlue == null) {
+            Alue.lisaaAlue(new Alue(alue), Main.sessionFactory);
+        }
+
+        String postiNumero = postiNumeroTextField.getText();
+        Posti etsittyPosti = Posti.etsiPosti(postiNumero, Main.sessionFactory);
+        if (etsittyPosti == null) {
+            etsittyPosti = new Posti(postiNumero, postiNumero);
+            Posti.lisaaPosti(etsittyPosti, Main.sessionFactory);
+        }
+        Mokki uusiMokki = new Mokki(haettuAlue, etsittyPosti, mokinNimi, katuOsoite, hinta, kuvaus, henkiloMaara, varustelu);
+        uusiMokki.lisaaMokki(uusiMokki, Main.sessionFactory);
+
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/mokkiLisatty.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("Palveluiden hallinta");
+        stage.setResizable(false);
+        stage.show();
+
+        AlueTextField.clear();
+        postiNumeroTextField.clear();
+        uusiHinta.clear();
+        uusiVarustelu.clear();
+        uusiHenkiloMaara.clear();
+        uusiKuvaus.clear();
+        uusiKatuOsoite.clear();
+        uusiMokinNimi.clear();
     }
 
     public void deleteCabin(ActionEvent actionEvent) {

@@ -44,7 +44,7 @@ public class Posti {
         this.toimipaikka = toimipaikka;
     }
 
-    public void lisaaPosti(Posti posti, SessionFactory sessionFactory){
+    public static void lisaaPosti(Posti posti, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(posti);
@@ -52,5 +52,17 @@ public class Posti {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Posti etsiPosti(String postinro, SessionFactory sesFac) {
+        Posti posti = null;
+        try (Session session = sesFac.openSession()) {
+            TypedQuery<Posti> query = session.createQuery("FROM Posti WHERE postinro = :nimi", Posti.class);
+            query.setParameter("nimi", postinro);
+            posti = query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return posti;
     }
 }

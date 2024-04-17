@@ -41,7 +41,7 @@ public class Alue {
     public void setNimi(String nimi) {
         this.nimi = nimi;
     }
-    public void lisaaAlue(Alue alue, SessionFactory sessionFactory){
+    public static void lisaaAlue(Alue alue, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(alue);

@@ -16,12 +16,12 @@
       </Label>
       <ListView fx:id="areaListView" layoutX="523.0" layoutY="103.0" prefHeight="236.0" prefWidth="232.0" />
       <Button fx:id="deleteAreaButton" layoutX="523.0" layoutY="366.0" mnemonicParsing="false" onAction="#deleteArea" text="Poista" />
-      <TextField layoutX="62.0" layoutY="103.0" promptText="Alue" />
+      <TextField fx:id="addAreaTextField" layoutX="62.0" layoutY="103.0" promptText="Alue" />
       <Label layoutX="62.0" layoutY="51.0" text="Lisää alue">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="addAreaButton" layoutX="62.0" layoutY="150.0" mnemonicParsing="false" onAction="#addArea" text="Lisää" />
+      <Button fx:id="addAreaButton" layoutX="62.0" layoutY="150.0" mnemonicParsing="false" onAction="#addNewArea" text="Lisää" />
    </children>
 </AnchorPane>

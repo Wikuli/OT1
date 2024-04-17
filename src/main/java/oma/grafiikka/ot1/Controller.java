@@ -20,6 +20,7 @@ public class Controller {
 
     public TextField addArea;
     public ListView areaListView;
+    public TextField addAreaTextField;
 
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
@@ -213,13 +214,13 @@ public class Controller {
      * Metodi, jolla voi lisätä uuden alueen
      * @param actionEvent napin klikkaus
      */
-    public void addArea(ActionEvent actionEvent) {
-        Alue alue = new Alue(addArea.getText());
+    public void addNewArea(ActionEvent actionEvent) {
+        Alue alue = new Alue(addAreaTextField.getText());
         alue.lisaaAlue(alue);
     }
 
-
     public void deleteArea(ActionEvent actionEvent) {
+
     }
 
     
@@ -284,4 +285,6 @@ public class Controller {
 
     public void alterCabinInfo(ActionEvent actionEvent) {
     }
+
+
 }

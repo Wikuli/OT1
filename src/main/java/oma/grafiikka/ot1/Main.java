@@ -20,12 +20,12 @@ public class Main extends Application {
         stage.show();
     }
     public static void main(String[] args) {
-        //Alue turku = new Alue("Turku");
-        //turku.lisaaAlue(turku);
-        //Posti posti = new Posti("04300", "Uusimaa");
-        //posti.lisaaPosti(posti);
+        /*Alue turku = new Alue("Turku");
+        turku.lisaaAlue(turku);
+        Posti posti = new Posti("04300", "Uusimaa");
+        posti.lisaaPosti(posti);
         Palvelu palvelu = new Palvelu(Alue.etsiAlue("Turku"), "palvelu2", "kuvaus", 123.456, 24);
-        palvelu.lisaaPalvelu(palvelu);
+        palvelu.lisaaPalvelu(palvelu);*/
         launch(args);
     }
 }

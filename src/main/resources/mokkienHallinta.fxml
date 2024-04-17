@@ -15,7 +15,7 @@
          </font>
       </Label>
       <TextField layoutX="36.0" layoutY="97.0" promptText="Mökin nimi" />
-      <TextField layoutX="36.0" layoutY="170.0" promptText="Hernkilömäärä" />
+      <TextField layoutX="36.0" layoutY="170.0" promptText="Henkilömäärä" />
       <TextField layoutX="36.0" layoutY="132.0" promptText="Hinta" />
       <TextField layoutX="207.0" layoutY="170.0" promptText="Varustelu" />
       <TextField layoutX="207.0" layoutY="97.0" promptText="Katuosoite" />

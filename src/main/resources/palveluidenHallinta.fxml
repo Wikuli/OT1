@@ -15,8 +15,8 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ListView layoutX="41.0" layoutY="118.0" prefHeight="227.0" prefWidth="158.0" />
-      <TextField layoutX="41.0" layoutY="79.0" prefHeight="25.0" prefWidth="120.0" promptText="Alue" />
+      <ListView fx:id="palvelutListView" layoutX="41.0" layoutY="118.0" prefHeight="227.0" prefWidth="158.0" />
+      <TextField fx:id="haeAlueTextField" layoutX="41.0" layoutY="79.0" onAction="#haeAluePalveluaVarten" prefHeight="25.0" prefWidth="120.0" promptText="Alue" />
       <Button fx:id="areaServiceButton" layoutX="161.0" layoutY="79.0" mnemonicParsing="false" onAction="#areaServiceFetch" text="Hae" />
       <Button fx:id="deleteArealServiceButton" layoutX="41.0" layoutY="350.0" mnemonicParsing="false" onAction="#deleteServiceFromArea" text="Poista palvelu alueelta" />
       <Label layoutX="539.0" layoutY="33.0" text="Lisää uusi palvelu alueelle">

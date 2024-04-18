@@ -34,6 +34,8 @@ public class Palvelu {
         this.alv = alv;
     }
 
+    public Palvelu() {}
+
     public int getPalvelu_id() {
         return palvelu_id;
     }
@@ -83,10 +85,34 @@ public class Palvelu {
     }
 
 
-    public void lisaaPalvelu(Palvelu palvelu, SessionFactory sessionFactory){
+    public static void lisaaPalvelu(Palvelu palvelu, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(palvelu);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Palvelu etsiPalvelu(String palveluNimi, SessionFactory sesFac) {
+        Palvelu palvelu = null;
+        try (Session session = sesFac.openSession()) {
+            TypedQuery<Palvelu> query = session.createQuery("FROM Palvelu WHERE nimi = :nimi", Palvelu.class);
+            query.setParameter("nimi", palveluNimi);
+            palvelu = query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return palvelu;
+    }
+
+    public static void poistaPalvelu(Palvelu palvelu, SessionFactory sessionFactory){
+        String aluenimi = null;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            etsiPalvelu(aluenimi, sessionFactory);
+            session.delete(palvelu);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

@@ -49,7 +49,7 @@
       <TextField layoutX="224.0" layoutY="169.0" promptText="Postinro" />
       <TextField layoutX="55.0" layoutY="232.0" promptText="Sähköposti" />
       <TextField layoutX="224.0" layoutY="232.0" promptText="Puhelinnumero" />
-      <Button layoutX="55.0" layoutY="276.0" mnemonicParsing="false" text="Syötä" />
+      <Button fx:id="addCustomerButton" layoutX="55.0" layoutY="276.0" mnemonicParsing="false" onAction="#addCustomer" text="Syötä" />
       <Button layoutX="479.0" layoutY="348.0" mnemonicParsing="false" text="Hae asiakkaat" />
    </children>
 </AnchorPane>

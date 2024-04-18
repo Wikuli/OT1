@@ -44,7 +44,18 @@ public class Controller {
     @FXML
     public ListView jarjestelmanMokit;
     public ListView areaListViewService;
+    public ListView palvelutListView;
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Apukoodit
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Tällä metodilla voi avata uuden pop-up ikkunan ohjelmassa
+     * @param fxmlTiedosto Tämä on merkkijono, joka määrittää, mikä fmxl-tiedosto avataan
+     * @param ikkunanNimi Merkkijono, joka määrittää ikkunan vasempaan ylälaitaan tulevan otsikon
+     * @throws IOException Heittää exceptionin, jolla varmistetaan että on oikea tiedostonimi
+     */
     public void popUpIkkunanLuoja(String fxmlTiedosto, String ikkunanNimi) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource(fxmlTiedosto));
@@ -57,6 +68,10 @@ public class Controller {
         stage.show();
     }
 
+    /**
+     * Tällä metodilla saa ListViewin näyttämään tietokantaan tallennetut alueet
+     * @param listView se ListView joka halutaan näyttää
+     */
     public void naytaAlueListView(ListView listView){
         List <Alue> alueet = kaikkiAlueet();
         ArrayList <String> nimet = new ArrayList<>();
@@ -70,6 +85,9 @@ public class Controller {
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
+    /**
+     * Tällä saa näkyviin tietokantaan tallennetut mökit ListViewiin
+     */
     public void naytaMokkiListView(){
         List <Mokki> mokit = kaikkiMokit();
         ArrayList <String> nimet = new ArrayList<>();
@@ -82,6 +100,73 @@ public class Controller {
         jarjestelmanMokit.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    /**
+     * Tällä saa näkyviin tietokantaan tallennetut mökit ListViewiin
+     */
+    public void naytaPalveluListView(){
+        List <Palvelu> palvelut= kaikkiPalvelut();
+        ArrayList <String> nimet = new ArrayList<>();
+
+        for (Palvelu palvelu:palvelut){
+            nimet.add(palvelu.getNimi());
+        }
+
+        palvelutListView.setItems(FXCollections.observableArrayList(nimet));
+        palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
+    /**
+     * Palauttaa listan, jossa on kaikki alueet
+     * @return palauttaa listan
+     */
+    public List <Alue> kaikkiAlueet() {
+        try (Session session = Main.sessionFactory.openSession()) {
+            Query<Alue> alueQuery = session.createQuery("from Alue", Alue.class);
+            return alueQuery.getResultList();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Palauttaa listan, jossa on kaikki mökit
+     * @return palauttaa listan
+     */
+    public List <Mokki> kaikkiMokit() {
+        try (Session session = Main.sessionFactory.openSession()) {
+            Query<Mokki> alueQuery = session.createQuery("from Mokki", Mokki.class);
+            return alueQuery.getResultList();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Palauttaa listan, jossa on kaikki palvelut
+     * @return palauttaa listan
+     */
+    public List <Palvelu> kaikkiPalvelut() {
+        try (Session session = Main.sessionFactory.openSession()) {
+            Query<Palvelu> palveluQuery = session.createQuery("from Palvelu ", Palvelu.class);
+            return palveluQuery.getResultList();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Aloitusnäytön koodit
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
      * @param actionEvent Napin painallus
@@ -154,10 +239,6 @@ public class Controller {
         popUpIkkunanLuoja("/palveluidenRaportit.fxml", "Palveluiden raportit");
     }
 
-    public void haeAlueet(ActionEvent actionEvent) {
-        naytaAlueListView(areaListView);
-    }
-
     /**
      * Tällä metodilla voidaan avata uusi ikkuna "Alueiden hallinta" nappia painamalla
      * @param actionEvent Napin painallus
@@ -166,18 +247,6 @@ public class Controller {
     @FXML
     public void manageAreas(ActionEvent actionEvent) throws IOException {
         popUpIkkunanLuoja("/alueidenHallinta.fxml", "Alueiden hallinta");
-        naytaAlueListView(areaListView);
-    }
-
-    public List <Alue> kaikkiAlueet() {
-        try (Session session = Main.sessionFactory.openSession()) {
-            Query<Alue> alueQuery = session.createQuery("from Alue", Alue.class);
-            return alueQuery.getResultList();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     /**
@@ -197,6 +266,21 @@ public class Controller {
     public void manageServices(ActionEvent actionEvent) throws IOException {
         popUpIkkunanLuoja("/palveluidenHallinta.fxml", "Palveluiden hallinta");
     }
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // PopUp Ikkunoiden koodit
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Tällä metodilla saa nappia painamalla kutsuttua naytaALueListView, joka näyttää alueet ListViewissä
+     * @param actionEvent Napin painallus
+     */
+    public void haeAlueet(ActionEvent actionEvent) {
+        naytaAlueListView(areaListView);
+    }
 
     /**
      * Metodi, jolla voi lisätä uuden alueen
@@ -215,6 +299,10 @@ public class Controller {
         naytaAlueListView(areaListView);
     }
 
+    /**
+     * Kutsuu Alue-luokan metodeja, jotka poistavat halutun alueen tietokannasta
+     * @param actionEvent napin painallus
+     */
     public void deleteArea(ActionEvent actionEvent) {
         List<String> alueet = areaListView.getSelectionModel().getSelectedItems();
         for (String i: alueet){
@@ -248,6 +336,7 @@ public class Controller {
     }
 
     public void areaServiceFetch(ActionEvent actionEvent) {
+        naytaPalveluListView();
     }
 
     public void deleteServiceFromArea(ActionEvent actionEvent) {
@@ -273,7 +362,6 @@ public class Controller {
 
     public void invoicePayed(ActionEvent actionEvent) {
     }
-
 
     public void addNewCabin(ActionEvent actionEvent) throws IOException {
         String mokinNimi = uusiMokinNimi.getText();
@@ -342,16 +430,6 @@ public class Controller {
 
     }
 
-    public List <Mokki> kaikkiMokit() {
-        try (Session session = Main.sessionFactory.openSession()) {
-            Query<Mokki> alueQuery = session.createQuery("from Mokki", Mokki.class);
-            return alueQuery.getResultList();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     public void alterCabinInfo(ActionEvent actionEvent) {
     }
 
@@ -362,5 +440,8 @@ public class Controller {
 
     public void haeAlueetPalveluidenHallinnassa(ActionEvent actionEvent) {
         naytaAlueListView(areaListViewService);
+    }
+
+    public void addCustomer(ActionEvent actionEvent) {
     }
 }

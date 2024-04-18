@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class Controller {
         stage.show();
     }
 
-    public void naytaListView(ListView listView){
+    public void naytaAlueListView(){
         List <Alue> alueet = kaikkiAlueet();
         ArrayList <String> nimet = new ArrayList<>();
 
@@ -64,8 +65,20 @@ public class Controller {
             nimet.add(alue.getNimi());
         }
 
-        listView.setItems(FXCollections.observableArrayList(nimet));
-        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
+        areaListViewNew.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    }
+
+    public void naytaMokkiListView(){
+        List <Mokki> mokit = kaikkiMokit();
+        ArrayList <String> nimet = new ArrayList<>();
+
+        for (Mokki mokki:mokit){
+            nimet.add(mokki.getMokkinimi());
+        }
+
+        jarjestelmanMokit.setItems(FXCollections.observableArrayList(nimet));
+        jarjestelmanMokit.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     /**
@@ -140,7 +153,7 @@ public class Controller {
     }
 
     public void haeAlueet(ActionEvent actionEvent) {
-        naytaListView(areaListViewNew);
+        naytaAlueListView();
     }
 
     /**
@@ -151,7 +164,7 @@ public class Controller {
     @FXML
     public void manageAreas(ActionEvent actionEvent) throws IOException {
         popUpIkkunanLuoja("/alueidenHallinta.fxml", "Alueiden hallinta");
-        naytaListView(areaListViewNew);
+        naytaAlueListView();
     }
 
     public List <Alue> kaikkiAlueet() {
@@ -197,7 +210,7 @@ public class Controller {
         else {
             System.out.println("Elä perkele");
         }
-        naytaListView(areaListViewNew);
+        naytaAlueListView();
     }
 
     public void deleteArea(ActionEvent actionEvent) {
@@ -315,7 +328,7 @@ public class Controller {
         uusiKatuOsoite.clear();
         uusiMokinNimi.clear();
 
-        naytaListView(jarjestelmanMokit);
+        naytaAlueListView();
     }
 
     public void deleteCabin(ActionEvent actionEvent) {
@@ -336,6 +349,6 @@ public class Controller {
 
 
     public void haeMokit(ActionEvent actionEvent) {
-        naytaListView(jarjestelmanMokit);
+        naytaMokkiListView();
     }
 }

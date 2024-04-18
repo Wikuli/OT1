@@ -43,6 +43,7 @@ public class Controller {
     public TextField postiNumeroTextField;
     @FXML
     public ListView jarjestelmanMokit;
+    public ListView areaListViewService;
 
     public void popUpIkkunanLuoja(String fxmlTiedosto, String ikkunanNimi) throws IOException {
         Stage stage = new Stage();
@@ -56,7 +57,7 @@ public class Controller {
         stage.show();
     }
 
-    public void naytaAlueListView(){
+    public void naytaAlueListView(ListView listView){
         List <Alue> alueet = kaikkiAlueet();
         ArrayList <String> nimet = new ArrayList<>();
 
@@ -65,8 +66,8 @@ public class Controller {
             nimet.add(alue.getNimi());
         }
 
-        areaListView.setItems(FXCollections.observableArrayList(nimet));
-        areaListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listView.setItems(FXCollections.observableArrayList(nimet));
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     public void naytaMokkiListView(){
@@ -154,7 +155,7 @@ public class Controller {
     }
 
     public void haeAlueet(ActionEvent actionEvent) {
-        naytaAlueListView();
+        naytaAlueListView(areaListView);
     }
 
     /**
@@ -165,7 +166,7 @@ public class Controller {
     @FXML
     public void manageAreas(ActionEvent actionEvent) throws IOException {
         popUpIkkunanLuoja("/alueidenHallinta.fxml", "Alueiden hallinta");
-        naytaAlueListView();
+        naytaAlueListView(areaListView);
     }
 
     public List <Alue> kaikkiAlueet() {
@@ -211,7 +212,7 @@ public class Controller {
         else {
             System.out.println("Elä perkele");
         }
-        naytaAlueListView();
+        naytaAlueListView(areaListView);
     }
 
     public void deleteArea(ActionEvent actionEvent) {
@@ -329,7 +330,7 @@ public class Controller {
         uusiKatuOsoite.clear();
         uusiMokinNimi.clear();
 
-        naytaAlueListView();
+        naytaAlueListView(areaListView);
     }
 
     public void deleteCabin(ActionEvent actionEvent) {
@@ -357,5 +358,9 @@ public class Controller {
 
     public void haeMokit(ActionEvent actionEvent) {
         naytaMokkiListView();
+    }
+
+    public void haeAlueetPalveluidenHallinnassa(ActionEvent actionEvent) {
+        naytaAlueListView(areaListViewService);
     }
 }

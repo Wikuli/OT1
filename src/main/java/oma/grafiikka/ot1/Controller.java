@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,147 +43,19 @@ public class Controller {
     @FXML
     public ListView jarjestelmanMokit;
 
-    /**
-     * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void manageCabins(ActionEvent actionEvent) throws IOException {
+    public void popUpIkkunanLuoja(String fxmlTiedosto, String ikkunanNimi) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/mokkienHallinta.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlTiedosto));
 
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("Mökkien hallinta");
+        stage.setTitle(ikkunanNimi);
         stage.setResizable(false);
         stage.show();
     }
 
-    /**
-     * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void deleteReservation(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/poistaVaraus.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Poista varaus");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    /**
-     * Tällä metodilla voidaan avata uusi ikkuna "Etsi mökkejä" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void findCabins(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/etsiMokkeja.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Etsi mökkejä");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    /**
-     * Tällä metodilla voidaan avata uusi ikkuna "Uusi varaus" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void newReservation(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/uusiVaraus.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Uusi varaus");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    /**
-     * Tällä metodilla voidaan avata uusi ikkuna "Laskujen hallinta" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void manageInvoice(ActionEvent actionEvent) throws IOException{
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/laskujenHallinta.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Laskujen hallinta");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    /**
-     * Tällä metodilla voidaan avata uusi ikkuna "Laskujen seuranta" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void trackInvoice(ActionEvent actionEvent) throws IOException{
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/laskujenSeuranta.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Laskujen seuranta");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    /**
-     * Tällä metodilla voidaan avata uusi ikkuna "Majoitusten raportit" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void seeAccommodationReports(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/majoitustenRaportit.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Majoitusten raportit");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    /**
-     * Tällä metodilla voidaan avata uusi ikkuna "Palveluiden raportit" nappia painamalla
-     * @param actionEvent Napin painallus
-     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
-     */
-    public void seeServiceReports(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/palveluidenRaportit.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Palveluiden raportit");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    public void haeAlueet(ActionEvent actionEvent) {
-        naytaListView();
-    }
-
-    public void naytaListView(){
+    public void naytaListView(ListView listView){
         List <Alue> alueet = kaikkiAlueet();
         ArrayList <String> nimet = new ArrayList<>();
 
@@ -193,8 +64,83 @@ public class Controller {
             nimet.add(alue.getNimi());
         }
 
-        areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
-        areaListViewNew.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listView.setItems(FXCollections.observableArrayList(nimet));
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void manageCabins(ActionEvent actionEvent) throws IOException {
+        popUpIkkunanLuoja("/mokkienHallinta.fxml", "Mökkien hallinta");
+    }
+    /**
+     * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void deleteReservation(ActionEvent actionEvent) throws IOException {
+        popUpIkkunanLuoja("/poistaVaraus.fxml", "Poista varaus");
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkuna "Etsi mökkejä" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void findCabins(ActionEvent actionEvent) throws IOException {
+        popUpIkkunanLuoja("/etsiMokkeja.fxml", "Etsi mökkejä");
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkuna "Uusi varaus" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void newReservation(ActionEvent actionEvent) throws IOException {
+        popUpIkkunanLuoja("/uusiVaraus.fxml", "Uusi varaus");
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkuna "Laskujen hallinta" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void manageInvoice(ActionEvent actionEvent) throws IOException{
+        popUpIkkunanLuoja("/laskujenHallinta.fxml", "Laskujen hallinta");
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkuna "Laskujen seuranta" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void trackInvoice(ActionEvent actionEvent) throws IOException{
+        popUpIkkunanLuoja("/laskujenSeuranta.fxml", "Laskujen seuranta");
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkuna "Majoitusten raportit" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void seeAccommodationReports(ActionEvent actionEvent) throws IOException {
+        popUpIkkunanLuoja("/majoitustenRaportit.fxml", "Majoitusten raportit");
+    }
+
+    /**
+     * Tällä metodilla voidaan avata uusi ikkuna "Palveluiden raportit" nappia painamalla
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void seeServiceReports(ActionEvent actionEvent) throws IOException {
+        popUpIkkunanLuoja("/palveluidenRaportit.fxml", "Palveluiden raportit");
+    }
+
+    public void haeAlueet(ActionEvent actionEvent) {
+        naytaListView(areaListViewNew);
     }
 
     /**
@@ -204,15 +150,8 @@ public class Controller {
      */
     @FXML
     public void manageAreas(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/alueidenHallinta.fxml"));
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Alueiden hallinta");
-        stage.setResizable(false);
-        stage.show();
-        naytaListView();
+        popUpIkkunanLuoja("/alueidenHallinta.fxml", "Alueiden hallinta");
+        naytaListView(areaListViewNew);
     }
 
     public List <Alue> kaikkiAlueet() {
@@ -232,17 +171,8 @@ public class Controller {
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
     public void manageCustomers(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/asiakkaidenHallinta.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Asiakashallinta");
-        stage.setResizable(false);
-        stage.show();
+        popUpIkkunanLuoja("/asiakkaidenHallinta.fxml", "Asiakkaiden hallinta");
     }
-
 
     /**
      * Tällä metodilla voidaan avata uusi ikkuna "Asiakashallinta" nappia painamalla
@@ -250,15 +180,7 @@ public class Controller {
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
     public void manageServices(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/palveluidenHallinta.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Palveluiden hallinta");
-        stage.setResizable(false);
-        stage.show();
+        popUpIkkunanLuoja("/palveluidenHallinta.fxml", "Palveluiden hallinta");
     }
 
     /**
@@ -275,9 +197,8 @@ public class Controller {
         else {
             System.out.println("Elä perkele");
         }
-        naytaListView();
+        naytaListView(areaListViewNew);
     }
-
 
     public void deleteArea(ActionEvent actionEvent) {
         List<String> alueet = areaListViewNew.getSelectionModel().getSelectedItems();
@@ -286,8 +207,6 @@ public class Controller {
             Alue.poistaAlue(alue, Main.sessionFactory);
         }
     }
-
-    
 
     public void deleteCustomer(ActionEvent actionEvent) {
     }
@@ -396,21 +315,10 @@ public class Controller {
         uusiKatuOsoite.clear();
         uusiMokinNimi.clear();
 
-        naytaMokkiListView();
+        naytaListView(jarjestelmanMokit);
     }
 
     public void deleteCabin(ActionEvent actionEvent) {
-    }
-    public void naytaMokkiListView(){
-        List <Mokki> mokit = kaikkiMokit();
-        ArrayList <String> nimet = new ArrayList<>();
-
-        for (Mokki mokki:mokit){
-            nimet.add(mokki.getMokkinimi());
-        }
-
-        jarjestelmanMokit.setItems(FXCollections.observableArrayList(nimet));
-        jarjestelmanMokit.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     public List <Mokki> kaikkiMokit() {
@@ -428,6 +336,6 @@ public class Controller {
 
 
     public void haeMokit(ActionEvent actionEvent) {
-        naytaMokkiListView();
+        naytaListView(jarjestelmanMokit);
     }
 }

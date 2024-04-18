@@ -220,6 +220,11 @@ public class Mokki {
         this.varustelu = varustelu;
     }
 
+    /**
+     * Mökin lisäyksen metodi
+     * @param mokki mokki olio
+     * @param sessionFactory
+     */
     public void lisaaMokki(Mokki mokki, SessionFactory sessionFactory){
 
         try (Session session = sessionFactory.openSession()) {
@@ -227,6 +232,35 @@ public class Mokki {
             session.save(mokki);
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static Mokki etsiMokki(String mokinNimi, SessionFactory sesFac) {
+        Mokki mokki = null;
+        try (Session session = sesFac.openSession()) {
+            TypedQuery<Mokki> query = session.createQuery("FROM Mokki WHERE mokkinimi = :nimi", Mokki.class);
+            query.setParameter("nimi", mokinNimi);
+            mokki = query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mokki;
+    }
+
+    /**
+     * Mökin poistomiseen tarkoitettu metodi
+     * @param mokki
+     * @param sessionFactory
+     */
+    public static void poistaMokki(Mokki mokki, SessionFactory sessionFactory){
+        String mokinNimi = null;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            etsiMokki(mokinNimi, sessionFactory);
+            session.delete(mokki);
+            transaction.commit();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

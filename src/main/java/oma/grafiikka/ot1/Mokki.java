@@ -91,8 +91,8 @@ public class Mokki {
     }
 
     public Mokki(){
-
     }
+
     /**
      * Get-metodi mökin id_lle
      * @return mokki_id eli mökin id
@@ -100,6 +100,7 @@ public class Mokki {
     public int getMokki_id() {
         return mokki_id;
     }
+
     /**
      * Get-metodi mökin alueelle
      * @return alue eli mökin alueen
@@ -107,6 +108,7 @@ public class Mokki {
     public Alue getAlue() {
         return alue;
     }
+
     /**
      * Set-metodi mökin alueelle
      * @param alue eli parametrinä toimii mökin alue
@@ -114,6 +116,7 @@ public class Mokki {
     public void setAlue(Alue alue) {
         this.alue = alue;
     }
+
     /**
      * Get-metodi mökin postinumerolle
      * @return posti eli mökin postinumero
@@ -121,6 +124,7 @@ public class Mokki {
     public Posti getPosti() {
         return posti;
     }
+
     /**
      * Set-metodi mökin postinumerolle
      * @param posti eli mökin postinumero
@@ -128,6 +132,7 @@ public class Mokki {
     public void setPosti(Posti posti) {
         this.posti = posti;
     }
+
     /**
      *Get-metodi mökin nimelle
      * @return mokkinimi eli palauttaa mökin nimen
@@ -135,6 +140,7 @@ public class Mokki {
     public String getMokkinimi() {
         return mokkinimi;
     }
+
     /**
      * Set-metodi mökin nimelle
      * @param mokkinimi eli mökin nimi
@@ -142,6 +148,7 @@ public class Mokki {
     public void setMokkinimi(String mokkinimi) {
         this.mokkinimi = mokkinimi;
     }
+
     /**
      * Get-metodi katuosoitteelle
      * @return katuosoite eli palauttaa mökin katusoitteen
@@ -149,6 +156,7 @@ public class Mokki {
     public String getKatuosoite() {
         return katuosoite;
     }
+
     /**
      * Set-metodi mökin katuosoiteelle
      * @param katuosoite eli mökin katuosoite.
@@ -156,6 +164,7 @@ public class Mokki {
     public void setKatuosoite(String katuosoite) {
         this.katuosoite = katuosoite;
     }
+
     /**
      * Get-metodi hinnalle
      * @return hinta eli palauttaa hinnan

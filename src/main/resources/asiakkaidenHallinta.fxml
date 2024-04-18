@@ -9,34 +9,47 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
    <children>
-      <ListView layoutX="43.0" layoutY="85.0" prefHeight="262.0" prefWidth="239.0" />
-      <Label layoutX="51.0" layoutY="27.0" text="Valitse asiakas">
+      <ListView layoutX="479.0" layoutY="72.0" prefHeight="262.0" prefWidth="239.0" />
+      <Label layoutX="487.0" layoutY="14.0" text="Valitse asiakas">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="deleteCustomerButton" layoutX="43.0" layoutY="387.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Poista asiakas" />
-      <Button fx:id="alterInfoButton" layoutX="407.0" layoutY="300.0" mnemonicParsing="false" onAction="#changeCustomerInformation" text="Muokkaa tietoja" />
-      <TextField layoutX="407.0" layoutY="160.0" promptText="Etunimi" />
-      <TextField layoutX="599.0" layoutY="245.0" promptText="Puhelinnumero" />
-      <TextField layoutX="407.0" layoutY="245.0" promptText="Sähköposti" />
-      <TextField layoutX="599.0" layoutY="204.0" promptText="Postinumero" />
-      <TextField layoutX="407.0" layoutY="204.0" promptText="Lähiosoite" />
-      <TextField layoutX="599.0" layoutY="160.0" promptText="Sukunimi" />
-      <Label layoutX="407.0" layoutY="27.0" text="Asiakkaan tiedot:">
+      <Button fx:id="deleteCustomerButton" layoutX="479.0" layoutY="375.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Poista asiakas" />
+      <Button fx:id="alterInfoButton" layoutX="479.0" layoutY="673.0" mnemonicParsing="false" onAction="#changeCustomerInformation" text="Muokkaa tietoja" />
+      <TextField layoutX="479.0" layoutY="533.0" promptText="Etunimi" />
+      <TextField layoutX="671.0" layoutY="618.0" promptText="Puhelinnumero" />
+      <TextField layoutX="479.0" layoutY="618.0" promptText="Sähköposti" />
+      <TextField layoutX="671.0" layoutY="577.0" promptText="Postinumero" />
+      <TextField layoutX="479.0" layoutY="577.0" promptText="Lähiosoite" />
+      <TextField layoutX="671.0" layoutY="533.0" promptText="Sukunimi" />
+      <Label layoutX="479.0" layoutY="400.0" text="Asiakkaan tiedot:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="407.0" layoutY="80.0" prefHeight="49.0" prefWidth="317.0" text="Voit halutessasi muokata">
+      <Label layoutX="479.0" layoutY="453.0" prefHeight="49.0" prefWidth="317.0" text="Voit halutessasi muokata">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="407.0" layoutY="104.0" prefHeight="49.0" prefWidth="317.0" text="asiakkaan tietoja">
+      <Label layoutX="479.0" layoutY="477.0" prefHeight="49.0" prefWidth="317.0" text="asiakkaan tietoja">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
+      <Label layoutX="55.0" layoutY="49.0" text="Syötä uuden asiakkaan tiedot:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField layoutX="55.0" layoutY="108.0" promptText="Etunimi" />
+      <TextField layoutX="224.0" layoutY="108.0" promptText="Sukunimi" />
+      <TextField layoutX="55.0" layoutY="169.0" promptText="Lähiosoite" />
+      <TextField layoutX="224.0" layoutY="169.0" promptText="Postinro" />
+      <TextField layoutX="55.0" layoutY="232.0" promptText="Sähköposti" />
+      <TextField layoutX="224.0" layoutY="232.0" promptText="Puhelinnumero" />
+      <Button layoutX="55.0" layoutY="276.0" mnemonicParsing="false" text="Syötä" />
+      <Button layoutX="479.0" layoutY="348.0" mnemonicParsing="false" text="Hae asiakkaat" />
    </children>
 </AnchorPane>

@@ -22,7 +22,7 @@
          </font>
       </Label>
       <Button fx:id="addAreaButton" layoutX="62.0" layoutY="150.0" mnemonicParsing="false" onAction="#addNewArea" text="Lisää" />
-      <ListView fx:id="areaListViewNew" layoutX="523.0" layoutY="142.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="areaListView" layoutX="523.0" layoutY="142.0" prefHeight="200.0" prefWidth="200.0" />
       <Button fx:id="haeAlueetButton" layoutX="523.0" layoutY="348.0" mnemonicParsing="false" onAction="#haeAlueet" text="Hae alueet" />
    </children>
 </AnchorPane>

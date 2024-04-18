@@ -31,7 +31,7 @@ public class Controller {
 
     public TextField addAreaTextField;
     @FXML
-    public ListView areaListViewNew;
+    public ListView areaListView;
     public AnchorPane aluePane;
     public TextField uusiMokinNimi;
     public TextField uusiHenkiloMaara;
@@ -65,8 +65,8 @@ public class Controller {
             nimet.add(alue.getNimi());
         }
 
-        areaListViewNew.setItems(FXCollections.observableArrayList(nimet));
-        areaListViewNew.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        areaListView.setItems(FXCollections.observableArrayList(nimet));
+        areaListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     public void naytaMokkiListView(){
@@ -215,7 +215,7 @@ public class Controller {
     }
 
     public void deleteArea(ActionEvent actionEvent) {
-        List<String> alueet = areaListViewNew.getSelectionModel().getSelectedItems();
+        List<String> alueet = areaListView.getSelectionModel().getSelectedItems();
         for (String i: alueet){
             Alue alue = Alue.etsiAlue(i, Main.sessionFactory);
             Alue.poistaAlue(alue, Main.sessionFactory);

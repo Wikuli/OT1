@@ -244,6 +244,13 @@ public class Mokki {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Etsi mökki metodi. Tätä hyödynnetään mökin poistossa, jotta osataan poistaa juuri oikea mökki
+     * @param mokinNimi
+     * @param sesFac
+     * @return
+     */
     public static Mokki etsiMokki(String mokinNimi, SessionFactory sesFac) {
         Mokki mokki = null;
         try (Session session = sesFac.openSession()) {

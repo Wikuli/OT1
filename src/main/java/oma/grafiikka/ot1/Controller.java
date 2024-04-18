@@ -332,6 +332,12 @@ public class Controller {
     }
 
     public void deleteCabin(ActionEvent actionEvent) {
+        List<String> mokit = jarjestelmanMokit.getSelectionModel().getSelectedItems();
+        for (String i: mokit){
+            Mokki mokki = Mokki.etsiMokki(i, Main.sessionFactory);
+            Mokki.poistaMokki(mokki, Main.sessionFactory);
+        }
+
     }
 
     public List <Mokki> kaikkiMokit() {

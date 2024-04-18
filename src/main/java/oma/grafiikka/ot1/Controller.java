@@ -89,6 +89,7 @@ public class Controller {
     public void manageCabins(ActionEvent actionEvent) throws IOException {
         popUpIkkunanLuoja("/mokkienHallinta.fxml", "Mökkien hallinta");
     }
+
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
      * @param actionEvent Napin painallus

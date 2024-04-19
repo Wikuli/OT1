@@ -119,7 +119,7 @@ public class Palvelu {
         }
     }
 
-    public static void palvelunTiedot
+    /*public static void palvelunTiedot*/
 
 }
 

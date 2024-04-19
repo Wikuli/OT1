@@ -182,13 +182,13 @@ public class Controller {
         }
     }
 
-    public void naytaAlueenPalvelut() {
+    /*public void naytaAlueenPalvelut() {
         List<String> palvelut = palvelutListView.getSelectionModel().getSelectedItems();
         for (String i: palvelut){
             Palvelu palvelu = Palvelu.etsiPalvelu(i, Main.sessionFactory);
             Palvelu.(palvelu, Main.sessionFactory);
         }
-    }
+    }*/
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------

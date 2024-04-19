@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +22,7 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class contains methods that give functionality to the elements in the ui. HUOM!!! Ensimmäiset 10 metodia ovat
@@ -45,6 +47,8 @@ public class Controller {
     public ListView jarjestelmanMokit;
     public ListView areaListViewService;
     public ListView palvelutListView;
+    public TextField haeAlueTextField;
+    public TextArea palvelunTiedotTextArea;
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Apukoodit
@@ -101,15 +105,33 @@ public class Controller {
     }
 
     /**
-     * Tällä saa näkyviin tietokantaan tallennetut mökit ListViewiin
+     * Tällä saa näkyviin tietokantaan tallennetut palvelut ListViewiin
      */
     public void naytaPalveluListView(){
-        List <Palvelu> palvelut= kaikkiPalvelut();
+        List <Palvelu> palvelut = kaikkiPalvelut();
         ArrayList <String> nimet = new ArrayList<>();
 
         for (Palvelu palvelu:palvelut){
             nimet.add(palvelu.getNimi());
         }
+
+        palvelutListView.setItems(FXCollections.observableArrayList(nimet));
+        palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
+    public void naytaAlueenPalvelutListView(){
+        List <Palvelu> palvelut = kaikkiPalvelut();
+        ArrayList <String> nimet = new ArrayList<>();
+
+        Alue haettavaAlue = Alue.etsiAlue(haeAlueTextField.getText(), Main.sessionFactory);
+
+        for (Palvelu palvelu:palvelut){
+            if (haettavaAlue.getAlue_id() == palvelu.getAlue().getAlue_id()) {
+                nimet.add(palvelu.getNimi());
+            }
+        }
+
+
 
         palvelutListView.setItems(FXCollections.observableArrayList(nimet));
         palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -157,6 +179,14 @@ public class Controller {
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void naytaAlueenPalvelut() {
+        List<String> palvelut = palvelutListView.getSelectionModel().getSelectedItems();
+        for (String i: palvelut){
+            Palvelu palvelu = Palvelu.etsiPalvelu(i, Main.sessionFactory);
+            Palvelu.(palvelu, Main.sessionFactory);
         }
     }
 
@@ -336,7 +366,7 @@ public class Controller {
     }
 
     public void areaServiceFetch(ActionEvent actionEvent) {
-        naytaPalveluListView();
+        naytaAlueenPalvelutListView();
     }
 
     public void deleteServiceFromArea(ActionEvent actionEvent) {
@@ -427,7 +457,6 @@ public class Controller {
             Mokki mokki = Mokki.etsiMokki(i, Main.sessionFactory);
             Mokki.poistaMokki(mokki, Main.sessionFactory);
         }
-
     }
 
     public void alterCabinInfo(ActionEvent actionEvent) {

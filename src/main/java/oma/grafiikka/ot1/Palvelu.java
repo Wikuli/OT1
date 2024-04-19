@@ -16,7 +16,7 @@ public class Palvelu {
     private int palvelu_id;
     @ManyToOne(fetch = FetchType.LAZY) //Vai pitääkö olla OneToMany?
     @JoinColumn(name = "alue_id")
-    private Alue alue;    // vai pitääkö olla private int alue_id ?
+    private Alue alue;// vai pitääkö olla private int alue_id ?
     @Column(name = "nimi")
     private String nimi;
     @Column(name = "kuvaus")
@@ -118,5 +118,8 @@ public class Palvelu {
             e.printStackTrace();
         }
     }
+
+    public static void palvelunTiedot
+
 }
 

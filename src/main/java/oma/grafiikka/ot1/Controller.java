@@ -131,8 +131,6 @@ public class Controller {
             }
         }
 
-
-
         palvelutListView.setItems(FXCollections.observableArrayList(nimet));
         palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
@@ -182,14 +180,24 @@ public class Controller {
         }
     }
 
-    /*public void naytaAlueenPalvelut() {
+    public void naytaAlueenPalvelut() {
         List<String> palvelut = palvelutListView.getSelectionModel().getSelectedItems();
         for (String i: palvelut){
-            Palvelu palvelu = Palvelu.etsiPalvelu(i, Main.sessionFactory);
-            Palvelu.(palvelu, Main.sessionFactory);
+            Palvelu haettuPalvelu = Palvelu.etsiPalvelu(i, Main.sessionFactory);
+            palvelunTiedotTextArea.setText("Palvelun tiedot:\nNimi: " + haettuPalvelu.getNimi() + "\n" +
+                    "Kuvaus: " + haettuPalvelu.getKuvaus() + "\nHinta: " + haettuPalvelu.getHinta() + "\n" +
+                    "Alv: " + haettuPalvelu.getAlv());
         }
-    }*/
 
+
+        /*String kuvaus = haettuPalvelu.getKuvaus();
+        String hinta = String.valueOf(haettuPalvelu.getHinta());
+        String alv = String.valueOf(haettuPalvelu.getAlv());*/
+        // tästä eteenpäin voit käyttää myös useita riviä
+        /*palvelunTiedotTextArea.setText("Palvelun tiedot:\n Nimi: " + haettuPalvelu.getNimi() + "\n" +
+                "Kuvaus: " + haettuPalvelu.getKuvaus() + "\nHinta: " + haettuPalvelu.getHinta() + "\n" +
+                "Alv: " + haettuPalvelu.getAlv());*/
+    }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -472,5 +480,9 @@ public class Controller {
     }
 
     public void addCustomer(ActionEvent actionEvent) {
+    }
+
+    public void naytaPalvelunTiedot(ActionEvent actionEvent) {
+        naytaAlueenPalvelut();
     }
 }

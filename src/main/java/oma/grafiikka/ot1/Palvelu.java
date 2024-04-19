@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 @Entity
 @Table(name = "palvelu")
 public class Palvelu {
@@ -119,7 +121,14 @@ public class Palvelu {
         }
     }
 
-    /*public static void palvelunTiedot*/
+    /*public static void palvelunTiedot(Palvelu palvelu, SessionFactory sessionFactory){
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            List<Palvelu[]> palvelut = session.createQuery("select nimi, kuvaus, hinta, alv from palvelu").getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 
 }
 

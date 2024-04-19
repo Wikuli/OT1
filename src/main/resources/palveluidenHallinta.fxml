@@ -53,5 +53,6 @@
       <TextField layoutX="43.0" layoutY="503.0" promptText="Uuden palvelun kuvaus" />
       <Button fx:id="alterServiceButton" layoutX="43.0" layoutY="629.0" mnemonicParsing="false" onAction="#alterServiceInfo" text="Muokkaa tietoja" />
       <Button fx:id="haeAlueetPalveluidenHallinnassaButton" layoutX="530.0" layoutY="311.0" mnemonicParsing="false" onAction="#haeAlueetPalveluidenHallinnassa" text="Hae alueet" />
+      <Button fx:id="naytaPalvelunTiedotButton" layoutX="212.0" layoutY="350.0" mnemonicParsing="false" onAction="#naytaPalvelunTiedot" text="Näytä palvelun tiedot" />
    </children>
 </AnchorPane>

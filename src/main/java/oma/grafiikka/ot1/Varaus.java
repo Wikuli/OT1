@@ -42,6 +42,10 @@ public class Varaus {
         this.varattu_loppupvm = varattu_loppupvm;
     }
 
+    public Varaus(){
+
+    }
+
     public int getVaraus_id() {
         return varaus_id;
     }

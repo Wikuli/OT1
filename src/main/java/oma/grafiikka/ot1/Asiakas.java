@@ -39,6 +39,9 @@ public class Asiakas {
         this.email = email;
         this.puhelinnro = puhelinnro;
     }
+    public Asiakas(){
+
+    }
     public void setPosti(Posti posti){
         this.posti = posti;
     }

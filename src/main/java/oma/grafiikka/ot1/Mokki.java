@@ -263,6 +263,7 @@ public class Mokki {
         return mokki;
     }
 
+
     /**
      * Mökin poistomiseen tarkoitettu metodi
      * @param mokki

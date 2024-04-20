@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,6 +16,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -359,10 +357,71 @@ public class Controller {
     public void deleteThisReservation(ActionEvent actionEvent) {
     }
 
+    @FXML
+    public DatePicker AlkuPvm;
+    @FXML
+    public DatePicker LoppuPvm;
+    @FXML
+    public TextField alueTF;
+    @FXML
+    public TextField hintaMinTF;
+    @FXML
+    public TextField hintaMaxTF;
+
+    @FXML
+    public ListView palveluLV;
     public void findThisCabin(ActionEvent actionEvent) {
+        Date alku = Date.valueOf(AlkuPvm.getValue());
+        Date loppu = Date.valueOf(LoppuPvm.getValue());
+        String alue = alueTF.getText();
+        List<Palvelu> palvelut = palveluLV.getSelectionModel().getSelectedItems();
+
+        double hintaMin = 0;
+        try {
+            if(!hintaMinTF.getText().isBlank()) {
+                hintaMin = Double.parseDouble(hintaMinTF.getText());
+            }
+        }
+        catch (Exception e){
+            return;
+        }
+        double hintaMax = 0;
+        try {
+            if(!hintaMaxTF.getText().isBlank()){
+                hintaMax = Double.parseDouble(hintaMaxTF.getText());
+            }
+        }
+        catch (Exception e){
+            return;
+        }
+        Alue kohdeAlue = Alue.etsiAlue(alue, Main.sessionFactory);
+        if(kohdeAlue == null){
+            return;
+        }
+        int i = 0;
+        for (Palvelu palvelu : palvelut){
+            if(palvelu.getAlue() != kohdeAlue){
+                i--;
+            }
+        }
+        if(i < 0){
+            return;
+        }
+        ArrayList<Mokki> retMokit = new ArrayList<>();
+        for(Mokki mokki : kohdeAlue.getMokit()){
+           if(mokki.getHinta() < hintaMax && mokki.getHinta() > hintaMin){
+                if(!Varaus.onVarattu(alku, loppu, mokki.getMokki_id(), Main.sessionFactory)){
+                    retMokit.add(mokki);
+                }
+           }
+        }
+
+        //Minne menee mökit, jotka täyttävät ehdot?
+
     }
 
     public void makeReservation(ActionEvent actionEvent) {
+
     }
 
     public void serviceReportSearch(ActionEvent actionEvent) {

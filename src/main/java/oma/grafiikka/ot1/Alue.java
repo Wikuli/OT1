@@ -26,6 +26,9 @@ public class Alue {
 
     }
 
+    public List<Mokki> getMokit(){
+        return this.mokit;
+    }
     public int getAlue_id() {
         return alue_id;
     }

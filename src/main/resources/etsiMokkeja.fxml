@@ -15,17 +15,17 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <DatePicker layoutX="38.0" layoutY="93.0" promptText="Alku pvm" />
-      <DatePicker layoutX="241.0" layoutY="93.0" promptText="Loppu pvm" />
-      <TextField layoutX="38.0" layoutY="149.0" promptText="Alue" />
-      <TextField layoutX="38.0" layoutY="214.0" promptText="Hinta min" />
-      <TextField layoutX="212.0" layoutY="214.0" promptText="Hinta max" />
+      <DatePicker fx:id="AlkuPvm" layoutX="38.0" layoutY="93.0" promptText="Alku pvm" />
+      <DatePicker fx:id="LoppuPvm" layoutX="241.0" layoutY="93.0" promptText="Loppu pvm" />
+      <TextField fx:id="alueTF" layoutX="38.0" layoutY="149.0" promptText="Alue" />
+      <TextField fx:id="hintaMinTF" layoutX="38.0" layoutY="214.0" promptText="Hinta min" />
+      <TextField fx:id="hintaMaxTF" layoutX="212.0" layoutY="214.0" promptText="Hinta max" />
       <Label layoutX="193.0" layoutY="211.0" text="-" translateX="3.0">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <ListView layoutX="38.0" layoutY="299.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="palveluLV" layoutX="38.0" layoutY="299.0" prefHeight="200.0" prefWidth="200.0" />
       <Label layoutX="38.0" layoutY="272.0" prefHeight="17.0" prefWidth="231.0" text="Valitse palvelut joita haluat:">
          <font>
             <Font size="16.0" />

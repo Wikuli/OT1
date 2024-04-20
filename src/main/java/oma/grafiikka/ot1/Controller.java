@@ -372,10 +372,26 @@ public class Controller {
         naytaAlueenPalvelutListView();
     }
 
-    public void deleteServiceFromArea(ActionEvent actionEvent) {
-    }
+    public void naytaViestiToiminnonOnnistumisesta(String fxmlTiedosto, String otsikko) throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlTiedosto));
 
-    public void deleteEntireService(ActionEvent actionEvent) {
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle(otsikko);
+        stage.setResizable(false);
+        stage.show();
+    }
+    public void deleteServiceFromArea(ActionEvent actionEvent) throws IOException {
+        List<String> palvelut = palvelutListView.getSelectionModel().getSelectedItems();
+        for (String i: palvelut){
+            Palvelu palvelu = Palvelu.etsiPalvelu(i, Main.sessionFactory);
+            Palvelu.poistaPalvelu(palvelu, Main.sessionFactory);
+            naytaViestiToiminnonOnnistumisesta("/palveluPoistettu.fxml", "Palvelu poistettu");
+            areaServiceFetch(actionEvent);
+            palvelunTiedotTextArea.clear();
+        }
     }
 
     public void alterServiceInfo(ActionEvent actionEvent) {

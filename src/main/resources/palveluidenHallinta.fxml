@@ -41,7 +41,6 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="deleteEntireServiceButton" layoutX="41.0" layoutY="383.0" mnemonicParsing="false" onAction="#deleteEntireService" text="Poista koko järjestelmästä" />
       <Label layoutX="41.0" layoutY="417.0" text="Muokkaa palvelun tietoja">
          <font>
             <Font size="24.0" />

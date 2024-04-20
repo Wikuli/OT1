@@ -49,6 +49,10 @@ public class Controller {
     public ListView palvelutListView;
     public TextField haeAlueTextField;
     public TextArea palvelunTiedotTextArea;
+    public TextField uudenPalvelunHintaTextField;
+    public TextField uudenPalvelunAlvTextField;
+    public TextField uudenPalvelunKuvausTextField;
+    public TextField uudenPalvelunNimiTextField;
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Apukoodit
@@ -188,15 +192,6 @@ public class Controller {
                     "Kuvaus: " + haettuPalvelu.getKuvaus() + "\nHinta: " + haettuPalvelu.getHinta() + "\n" +
                     "Alv: " + haettuPalvelu.getAlv());
         }
-
-
-        /*String kuvaus = haettuPalvelu.getKuvaus();
-        String hinta = String.valueOf(haettuPalvelu.getHinta());
-        String alv = String.valueOf(haettuPalvelu.getAlv());*/
-        // tästä eteenpäin voit käyttää myös useita riviä
-        /*palvelunTiedotTextArea.setText("Palvelun tiedot:\n Nimi: " + haettuPalvelu.getNimi() + "\n" +
-                "Kuvaus: " + haettuPalvelu.getKuvaus() + "\nHinta: " + haettuPalvelu.getHinta() + "\n" +
-                "Alv: " + haettuPalvelu.getAlv());*/
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -380,9 +375,6 @@ public class Controller {
     public void deleteServiceFromArea(ActionEvent actionEvent) {
     }
 
-    public void addNewService(ActionEvent actionEvent) {
-    }
-
     public void deleteEntireService(ActionEvent actionEvent) {
     }
 
@@ -401,10 +393,71 @@ public class Controller {
     public void invoicePayed(ActionEvent actionEvent) {
     }
 
+    /**
+     * Tällä metodilla voi asettaa alueelle uuden palvelun.
+     * @param actionEvent napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
+    public void addNewService(ActionEvent actionEvent) throws IOException {
+        String palvelunNimi = uudenPalvelunNimiTextField.getText();
+        String palvelunKuvaus = uudenPalvelunKuvausTextField.getText();
+        Double palvelunHinta;
+        Double palvelunAlv;
+
+        try {
+            palvelunHinta = Double.parseDouble(uudenPalvelunHintaTextField.getText());
+        }
+        catch (Exception e){
+            uudenPalvelunHintaTextField.setText("Anna desimaalilukuna!");
+            return;
+        }
+
+        try {
+            palvelunAlv = Double.parseDouble(uudenPalvelunAlvTextField.getText());
+        }
+        catch (Exception e) {
+            uudenPalvelunAlvTextField.setText("Anna desimaalilukuna!");
+            return;
+        }
+
+        areaListViewService.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        List<String> alue = areaListViewService.getSelectionModel().getSelectedItems();
+        Alue haettuAlue = Alue.etsiAlue(alue.getFirst(), Main.sessionFactory);
+
+        Palvelu uusiPalvelu = new Palvelu(haettuAlue, palvelunNimi, palvelunKuvaus, palvelunHinta, palvelunAlv);
+        Palvelu.lisaaPalvelu(uusiPalvelu, Main.sessionFactory);
+
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/palveluLisatty.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("Palvelu lisätty!");
+        stage.setResizable(false);
+        stage.show();
+
+        uudenPalvelunNimiTextField.clear();
+        uudenPalvelunKuvausTextField.clear();
+        uudenPalvelunHintaTextField.clear();
+        uudenPalvelunAlvTextField.clear();
+    }
+
+    /**
+     * Tällä metodilla voi lisätä uuden mökin järjestelmään
+     * @param actionEvent Napin painallus
+     * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
+     */
     public void addNewCabin(ActionEvent actionEvent) throws IOException {
         String mokinNimi = uusiMokinNimi.getText();
         String katuOsoite = uusiKatuOsoite.getText();
+        String varustelu = uusiVarustelu.getText();
+        String alue = AlueTextField.getText();
+        String kuvaus = uusiKuvaus.getText();
         Double hinta = 0.0;
+        int henkiloMaara = 0;
+        String postiNumero = postiNumeroTextField.getText();
+
         try {
             hinta = Double.parseDouble(uusiHinta.getText());
         }
@@ -412,8 +465,7 @@ public class Controller {
             uusiHinta.setText("Anna desimaalilukuna!");
             return;
         }
-        String kuvaus = uusiKuvaus.getText();
-        int henkiloMaara = 0;
+
         try {
             henkiloMaara = Integer.parseInt(uusiHenkiloMaara.getText());
         }
@@ -421,19 +473,19 @@ public class Controller {
             uusiHenkiloMaara.setText("Anna kokonaislukuna!");
             return;
         }
-        String varustelu = uusiVarustelu.getText();
-        String alue = AlueTextField.getText();
+
         Alue haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
         if (haettuAlue == null) {
             Alue.lisaaAlue(new Alue(alue), Main.sessionFactory);
         }
         haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
-        String postiNumero = postiNumeroTextField.getText();
+
         Posti etsittyPosti = Posti.etsiPosti(postiNumero, Main.sessionFactory);
         if (etsittyPosti == null) {
             etsittyPosti = new Posti(postiNumero, postiNumero);
             Posti.lisaaPosti(etsittyPosti, Main.sessionFactory);
         }
+
         Mokki uusiMokki = new Mokki(haettuAlue, etsittyPosti, mokinNimi, katuOsoite, hinta, kuvaus, henkiloMaara, varustelu);
         uusiMokki.lisaaMokki(uusiMokki, Main.sessionFactory);
 
@@ -443,7 +495,7 @@ public class Controller {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("Palveluiden hallinta");
+        stage.setTitle("Mökki lisätty!");
         stage.setResizable(false);
         stage.show();
 

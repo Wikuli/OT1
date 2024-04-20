@@ -16,9 +16,9 @@ public class Palvelu {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "palvelu_id")
     private int palvelu_id;
-    @ManyToOne(fetch = FetchType.LAZY) //Vai pitääkö olla OneToMany?
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "alue_id")
-    private Alue alue;// vai pitääkö olla private int alue_id ?
+    private Alue alue;
     @Column(name = "nimi")
     private String nimi;
     @Column(name = "kuvaus")

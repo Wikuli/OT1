@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
    <children>
-      <ListView layoutX="479.0" layoutY="72.0" prefHeight="262.0" prefWidth="239.0" />
+      <ListView fx:id="asiakasLV" layoutX="479.0" layoutY="72.0" prefHeight="262.0" prefWidth="239.0" />
       <Label layoutX="487.0" layoutY="14.0" text="Valitse asiakas">
          <font>
             <Font size="24.0" />
@@ -17,12 +17,12 @@
       </Label>
       <Button fx:id="deleteCustomerButton" layoutX="479.0" layoutY="375.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Poista asiakas" />
       <Button fx:id="alterInfoButton" layoutX="479.0" layoutY="673.0" mnemonicParsing="false" onAction="#changeCustomerInformation" text="Muokkaa tietoja" />
-      <TextField layoutX="479.0" layoutY="533.0" promptText="Etunimi" />
-      <TextField layoutX="671.0" layoutY="618.0" promptText="Puhelinnumero" />
-      <TextField layoutX="479.0" layoutY="618.0" promptText="Sähköposti" />
-      <TextField layoutX="671.0" layoutY="577.0" promptText="Postinumero" />
-      <TextField layoutX="479.0" layoutY="577.0" promptText="Lähiosoite" />
-      <TextField layoutX="671.0" layoutY="533.0" promptText="Sukunimi" />
+      <TextField fx:id="editEnimiTF" layoutX="479.0" layoutY="533.0" promptText="Etunimi" />
+      <TextField fx:id="editSnimiTF" layoutX="671.0" layoutY="533.0" promptText="Sukunimi" />
+      <TextField fx:id="editPuhNroTF" layoutX="671.0" layoutY="618.0" promptText="Puhelinnumero" />
+      <TextField fx:id="editSpostiTF" layoutX="479.0" layoutY="618.0" promptText="Sähköposti" />
+      <TextField fx:id="editPostiNroTF" layoutX="671.0" layoutY="577.0" promptText="Postinumero" />
+      <TextField fx:id="editLahiosTF" layoutX="479.0" layoutY="577.0" promptText="Lähiosoite" />
       <Label layoutX="479.0" layoutY="400.0" text="Asiakkaan tiedot:">
          <font>
             <Font size="24.0" />
@@ -43,13 +43,13 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="55.0" layoutY="108.0" promptText="Etunimi" />
-      <TextField layoutX="224.0" layoutY="108.0" promptText="Sukunimi" />
-      <TextField layoutX="55.0" layoutY="169.0" promptText="Lähiosoite" />
-      <TextField layoutX="224.0" layoutY="169.0" promptText="Postinro" />
-      <TextField layoutX="55.0" layoutY="232.0" promptText="Sähköposti" />
-      <TextField layoutX="224.0" layoutY="232.0" promptText="Puhelinnumero" />
+      <TextField fx:id="enimiTF" layoutX="55.0" layoutY="108.0" promptText="Etunimi" />
+      <TextField fx:id="snimiTF" layoutX="224.0" layoutY="108.0" promptText="Sukunimi" />
+      <TextField fx:id="lahiosoiteTF" layoutX="55.0" layoutY="169.0" promptText="Lähiosoite" />
+      <TextField fx:id="postinroTF" layoutX="224.0" layoutY="169.0" promptText="Postinro" />
+      <TextField fx:id="spostiTF" layoutX="55.0" layoutY="232.0" promptText="Sähköposti" />
+      <TextField fx:id="puhnroTF" layoutX="224.0" layoutY="232.0" promptText="Puhelinnumero" />
       <Button fx:id="addCustomerButton" layoutX="55.0" layoutY="276.0" mnemonicParsing="false" onAction="#addCustomer" text="Syötä" />
-      <Button layoutX="479.0" layoutY="348.0" mnemonicParsing="false" text="Hae asiakkaat" />
+      <Button fx:id="findCustomerButton" layoutX="479.0" layoutY="348.0" mnemonicParsing="false" onAction="#findCustomers" text="Hae asiakkaat" />
    </children>
 </AnchorPane>

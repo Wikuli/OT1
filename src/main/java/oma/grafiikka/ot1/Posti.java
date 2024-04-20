@@ -63,7 +63,6 @@ public class Posti {
             query.setParameter("nimi", postinro);
             posti = query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return posti;
     }

@@ -1,33 +1,37 @@
 package oma.grafiikka.ot1;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This class contains methods that give functionality to the elements in the ui. HUOM!!! Ensimmäiset 10 metodia ovat
  * järjestyksessä Buttonit aloitusnäytöltä. Tämän seikan huomioiminen saattaa paranttaa luettavuutta. Muut metodit ovat
  * Aukeavien ikkunoiden sisällä olevia metodeja. Metodeja niimmaan perkeleesti.
  */
-public class Controller {
+public class Controller implements Initializable {
 
     public TextField addAreaTextField;
     @FXML
@@ -51,7 +55,91 @@ public class Controller {
     public TextField uudenPalvelunAlvTextField;
     public TextField uudenPalvelunKuvausTextField;
     public TextField uudenPalvelunNimiTextField;
+    @FXML
+    public DatePicker AlkuPvm;
+    @FXML
+    public DatePicker LoppuPvm;
+    @FXML
+    public TextField alueTF;
+    @FXML
+    public TextField hintaMinTF;
+    @FXML
+    public TextField hintaMaxTF;
+    @FXML
+    public ListView palveluLV;
+    @FXML
+    public TextField enimiTF;
+    @FXML
+    public TextField snimiTF;
+    @FXML
+    public TextField lahiosoiteTF;
+    @FXML
+    public TextField postinroTF;
+    @FXML
+    public TextField spostiTF;
+    @FXML
+    public TextField puhnroTF;
+    @FXML
+    public ListView<Asiakas> asiakasLV;
+    @FXML
+    public TextField editEnimiTF;
+    @FXML
+    public TextField editSnimiTF;
+    @FXML
+    public TextField editPuhNroTF;
+    @FXML
+    public TextField editSpostiTF;
+    @FXML
+    public TextField editPostiNroTF;
+    @FXML
+    public TextField editLahiosTF;
 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle){
+        if(asiakasLV != null){
+            initializeUIComponent();
+        }
+    }
+
+    private void initializeUIComponent(){
+        asiakasLV.getSelectionModel().selectedItemProperty().addListener((observable, oldAsiakas, newAsiakas) -> {
+                if (newAsiakas == null){
+                    editLahiosTF.clear();
+                    editPostiNroTF.clear();
+                    editEnimiTF.clear();
+                    editSnimiTF.clear();
+                    editSpostiTF.clear();
+                    editPuhNroTF.clear();
+                }
+                else {
+                    editPuhNroTF.setText(newAsiakas.getPuhelinnro());
+                    editEnimiTF.setText(newAsiakas.getEtunimi());
+                    editLahiosTF.setText(newAsiakas.getLahiosoite());
+                    System.out.println(newAsiakas.getPostiNro());
+                    editPostiNroTF.setText(newAsiakas.getPostiNro());
+                    editSpostiTF.setText(newAsiakas.getEmail());
+                    editSnimiTF.setText(newAsiakas.getSukunimi());
+                }
+        });
+        asiakasLV.setCellFactory(new Callback<ListView<Asiakas>, ListCell<Asiakas>>() {
+            @Override
+            public ListCell<Asiakas> call(ListView<Asiakas> param) {
+                return new ListCell<Asiakas>(){
+                    @Override
+                    protected void updateItem(Asiakas asiakas, boolean empty){
+                        super.updateItem(asiakas, empty);
+                        if(asiakas != null){
+                            setText(asiakas.getEtunimi() + " " + asiakas.getSukunimi());
+                        }
+                        else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+    }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Apukoodit
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -343,9 +431,34 @@ public class Controller {
     }
 
     public void deleteCustomer(ActionEvent actionEvent) {
+        if(asiakasLV == null || asiakasLV.getItems().isEmpty()){
+            return;
+        }
+        if (asiakasLV.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
+        Asiakas asiakas = (Asiakas) asiakasLV.getSelectionModel().getSelectedItem();
+        asiakasLV.getItems().remove(asiakas);
+        Asiakas.poistaAsiakas(asiakas);
     }
 
     public void changeCustomerInformation(ActionEvent actionEvent) {
+        String enimi = editEnimiTF.getText();
+        String snimi = editSnimiTF.getText();
+        String lahiosoite = editLahiosTF.getText();
+        String postinro = editPostiNroTF.getText();
+        String sposti = editSpostiTF.getText();
+        String puhnro = editPuhNroTF.getText();
+        if(postinro.length() != 5){
+            return;
+        }
+        Posti posti = Posti.etsiPosti(postinro, Main.sessionFactory);
+        if(posti == null){
+            posti = new Posti(postinro, "posti");
+            Posti.lisaaPosti(posti, Main.sessionFactory);
+        }
+        Asiakas asiakas = asiakasLV.getSelectionModel().getSelectedItem();
+        Asiakas.paivitaAsiakas(asiakas, enimi, snimi, lahiosoite, posti, sposti, puhnro);
     }
 
     public void checkReportOnAccommodation(ActionEvent actionEvent) {
@@ -357,19 +470,7 @@ public class Controller {
     public void deleteThisReservation(ActionEvent actionEvent) {
     }
 
-    @FXML
-    public DatePicker AlkuPvm;
-    @FXML
-    public DatePicker LoppuPvm;
-    @FXML
-    public TextField alueTF;
-    @FXML
-    public TextField hintaMinTF;
-    @FXML
-    public TextField hintaMaxTF;
 
-    @FXML
-    public ListView palveluLV;
     public void findThisCabin(ActionEvent actionEvent) {
         Date alku = Date.valueOf(AlkuPvm.getValue());
         Date loppu = Date.valueOf(LoppuPvm.getValue());
@@ -394,26 +495,37 @@ public class Controller {
         catch (Exception e){
             return;
         }
+
         Alue kohdeAlue = Alue.etsiAlue(alue, Main.sessionFactory);
         if(kohdeAlue == null){
             return;
         }
-        int i = 0;
+
         for (Palvelu palvelu : palvelut){
             if(palvelu.getAlue() != kohdeAlue){
-                i--;
+                return;
             }
         }
-        if(i < 0){
-            return;
-        }
-        ArrayList<Mokki> retMokit = new ArrayList<>();
-        for(Mokki mokki : kohdeAlue.getMokit()){
-           if(mokki.getHinta() < hintaMax && mokki.getHinta() > hintaMin){
-                if(!Varaus.onVarattu(alku, loppu, mokki.getMokki_id(), Main.sessionFactory)){
-                    retMokit.add(mokki);
+
+        Session session = Main.sessionFactory.openSession();
+        try {
+            Transaction transaction = null;
+            transaction = session.beginTransaction();
+            ArrayList<Mokki> retMokit = new ArrayList<>();
+            for (Mokki mokki : kohdeAlue.getMokit()) {
+                if (mokki.getHinta() < hintaMax && mokki.getHinta() > hintaMin) {
+                    if (!Varaus.onVarattu(alku, loppu, mokki.getMokki_id(), Main.sessionFactory)) {
+                        retMokit.add(mokki);
+                    }
                 }
-           }
+            }
+            transaction.commit();
+        }
+        catch (HibernateException e){
+
+        }
+        finally {
+            session.close();
         }
 
         //Minne menee mökit, jotka täyttävät ehdot?
@@ -606,10 +718,45 @@ public class Controller {
         naytaAlueListView(areaListViewService);
     }
 
-    public void addCustomer(ActionEvent actionEvent) {
+
+    public void findCustomers(ActionEvent actionEvent) {
+       List<Asiakas> asiakkaat = Asiakas.kaikkiAsiakkaat();
+       if (asiakkaat == null){
+           return;
+       }
+       asiakasLV.setItems(FXCollections.observableList(asiakkaat));
     }
+
+    public void addCustomer(ActionEvent actionEvent) {
+        String enimi = enimiTF.getText();
+        String snimi = snimiTF.getText();
+        String lahiosoite = lahiosoiteTF.getText();
+        String postinro = postinroTF.getText();
+        if (postinro.length() != 5){
+            return;
+        }
+        String sposti = spostiTF.getText();
+        String puhnro = puhnroTF.getText();
+        List<String> lista = Arrays.asList(enimi, snimi, lahiosoite, postinro, sposti, puhnro);
+
+        for(String string : lista){
+            if (string.isBlank()){
+                return;
+            }
+        }
+
+        Posti posti = Posti.etsiPosti(postinro, Main.sessionFactory);
+        if(posti == null){
+            posti = new Posti(postinro, "tp");
+            Posti.lisaaPosti(posti, Main.sessionFactory);
+        }
+        Asiakas asiakas = new Asiakas(posti, enimi, snimi, lahiosoite, sposti, puhnro);
+        asiakas.lisaaAsiakas(asiakas, Main.sessionFactory);
+    }
+
 
     public void naytaPalvelunTiedot(ActionEvent actionEvent) {
         naytaAlueenPalvelut();
     }
+
 }

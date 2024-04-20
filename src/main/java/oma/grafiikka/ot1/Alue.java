@@ -19,6 +19,9 @@ public class Alue {
     @OneToMany(mappedBy = "alue")
     private List<Mokki> mokit;
 
+    @OneToMany(mappedBy = "alue")
+    private List<Palvelu> palvelut;
+
     public Alue(String nimi){
         this.nimi = nimi;
     }

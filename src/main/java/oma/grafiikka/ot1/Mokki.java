@@ -245,6 +245,8 @@ public class Mokki {
         }
     }
 
+
+
     /**
      * Etsi mökki metodi. Tätä hyödynnetään mökin poistossa, jotta osataan poistaa juuri oikea mökki
      * @param mokinNimi

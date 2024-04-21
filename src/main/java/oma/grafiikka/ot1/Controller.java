@@ -7,20 +7,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,12 +44,24 @@ public class Controller {
     public TextField AlueTextField;
     public TextField postiNumeroTextField;
     @FXML
-    public ListView jarjestelmanMokit;
+    public ListView<String> jarjestelmanMokit;   //pitääkö olla String? Vai Mokki? vai ei ollenkkaan ? Dima.
     public ListView areaListViewService;
     public ListView palvelutListView;
     public TextField haeAlueTextField;
     public TextArea palvelunTiedotTextArea;
-
+    @FXML
+    private TextField muokattuMokinNimi;
+    @FXML
+    private TextField muokattuHenkiloMaara;
+    @FXML
+    private TextField muokattuHinta;
+    @FXML
+    private TextField muokattuVarustelu;
+    @FXML
+    private TextField muokattuKatuOsoite;
+    @FXML
+    private TextField muokattuKuvaus;
+    @FXML
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Apukoodit
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -216,6 +228,7 @@ public class Controller {
 
     /**
      * Tällä metodilla voidaan avata uusi ikkunta "Poista varaus" nappia painamalla
+     *
      * @param actionEvent Napin painallus
      * @throws IOException Heitetään exception, jos haluttua fxml-tiedostoa ei ole.
      */
@@ -304,6 +317,9 @@ public class Controller {
     public void manageServices(ActionEvent actionEvent) throws IOException {
         popUpIkkunanLuoja("/palveluidenHallinta.fxml", "Palveluiden hallinta");
     }
+
+    @FXML
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -467,9 +483,49 @@ public class Controller {
         }
     }
 
-    public void alterCabinInfo(ActionEvent actionEvent) {
+    @FXML
+    public void mokinTiedotTextFieldiin(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            String valittuMokki = jarjestelmanMokit.getSelectionModel().getSelectedItem();
+            if (valittuMokki != null) {
+                try (Session session = Main.sessionFactory.openSession()) {
+                    Query<Mokki> query = session.createQuery("FROM Mokki WHERE mokkinimi = :mokkinimi", Mokki.class);
+                    query.setParameter("mokkinimi", valittuMokki);
+                    Mokki mokki = query.uniqueResult();
+                    if (mokki != null) {
+                        muokattuMokinNimi.setText(mokki.getMokkinimi());
+                        muokattuHenkiloMaara.setText(String.valueOf(mokki.getHenkilomaara()));
+                        muokattuHinta.setText(String.valueOf(mokki.getHinta()));
+                        muokattuVarustelu.setText(mokki.getVarustelu());
+                        muokattuKatuOsoite.setText(mokki.getKatuosoite());
+                        muokattuKuvaus.setText(mokki.getKuvaus());
+                    }
+                }
+            }
+        }
     }
+    public void alterCabinInfo(ActionEvent actionEvent) {
+        String valittuMokki = jarjestelmanMokit.getSelectionModel().getSelectedItem();
+        if (valittuMokki != null) {
+            try (Session session = Main.sessionFactory.openSession()){
+                Query<Mokki> query = session.createQuery("FROM Mokki WHERE mokkinimi = :mokkinimi", Mokki.class);
+                query.setParameter("mokkinimi", valittuMokki);
+                Mokki mokki = query.uniqueResult();
+                if (mokki != null) {
+                    mokki.setMokkinimi(muokattuMokinNimi.getText());
+                    mokki.setHenkilomaara(Integer.parseInt(muokattuHenkiloMaara.getText()));
+                    mokki.setHinta(Double.parseDouble(muokattuHinta.getText()));
+                    mokki.setVarustelu(muokattuVarustelu.getText());
+                    mokki.setKatuosoite(muokattuKatuOsoite.getText());
+                    mokki.setKuvaus(muokattuKuvaus.getText());
 
+                    Transaction transaction = session.beginTransaction();
+                    session.update(mokki);
+                    transaction.commit();
+                }
+            }
+        }
+    }
 
     public void haeMokit(ActionEvent actionEvent) {
         naytaMokkiListView();

@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -472,8 +473,20 @@ public class Controller implements Initializable {
 
 
     public void findThisCabin(ActionEvent actionEvent) {
-        Date alku = Date.valueOf(AlkuPvm.getValue());
-        Date loppu = Date.valueOf(LoppuPvm.getValue());
+        Date alku;
+        Date loppu;
+        try {
+            alku = Date.valueOf(AlkuPvm.getValue());
+        }
+        catch (Exception e){
+            return;
+        }
+        try {
+            loppu = Date.valueOf(LoppuPvm.getValue());
+        }
+        catch (Exception e){
+            return;
+        }
         String alue = alueTF.getText();
         List<Palvelu> palvelut = palveluLV.getSelectionModel().getSelectedItems();
 
@@ -507,12 +520,13 @@ public class Controller implements Initializable {
             }
         }
 
-        Session session = Main.sessionFactory.openSession();
-        try {
-            Transaction transaction = null;
-            transaction = session.beginTransaction();
-            ArrayList<Mokki> retMokit = new ArrayList<>();
+
+        ArrayList<Mokki> retMokit = new ArrayList<>();
+        try(Session session = Main.sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            System.out.println(kohdeAlue.getMokit());
             for (Mokki mokki : kohdeAlue.getMokit()) {
+                System.out.println(mokki.getMokkinimi());
                 if (mokki.getHinta() < hintaMax && mokki.getHinta() > hintaMin) {
                     if (!Varaus.onVarattu(alku, loppu, mokki.getMokki_id(), Main.sessionFactory)) {
                         retMokit.add(mokki);
@@ -524,10 +538,8 @@ public class Controller implements Initializable {
         catch (HibernateException e){
 
         }
-        finally {
-            session.close();
-        }
 
+        System.out.println(retMokit);
         //Minne menee mökit, jotka täyttävät ehdot?
 
     }

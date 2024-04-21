@@ -119,7 +119,7 @@ public class Varaus {
 
             query.where(
                     cb.and(
-                            cb.equal(root.get("mokki_id"), id),
+                            cb.equal(root.get("mokki").get("mokki_id"), id),
                             cb.or(
                                     cb.between(root.get("varattu_alkupvm"), alkuPvm, loppuPvm),
                                     cb.between(root.get("varattu_loppupvm"), alkuPvm, loppuPvm)
@@ -128,12 +128,7 @@ public class Varaus {
             );
             Long maara = session.createQuery(query).getSingleResult();
 
-            if(maara == 0){
-                return false;
-            }
-            else {
-                return true;
-            }
+            return maara != 0;
         }
         catch (Exception e){
             return true;

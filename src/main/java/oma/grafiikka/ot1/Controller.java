@@ -50,6 +50,23 @@ public class Controller {
     public TextField haeAlueTextField;
     public TextArea palvelunTiedotTextArea;
 
+    @FXML
+    private TextField muokattuMokinNimi;
+    @FXML
+
+    private TextField muokattuHenkiloMaara;
+    @FXML
+
+    private TextField muokattuHinta;
+    @FXML
+
+    private TextField muokattuVarustelu;
+    @FXML
+
+    private TextField muokattuKatuOsoite;
+    @FXML
+    private TextField muokattuKuvaus;
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Apukoodit
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -467,8 +484,54 @@ public class Controller {
         }
     }
 
-    public void alterCabinInfo(ActionEvent actionEvent) {
+    public void alterCabinInfo(ActionEvent actionEvent) {   //same as muokkaaMokki
+        String valittuMokki = (String) jarjestelmanMokit.getSelectionModel().getSelectedItem();
+        if (valittuMokki != null) {
+            try(Session session = Main.sessionFactory.openSession()) {
+                Query<Mokki> query = session.createQuery("FROM Mokki WHERE mokkinimi = :mokkinimi");
+                query.setParameter("mokkinimi", valittuMokki);
+                Mokki mokki = query.uniqueResult();
+                if (mokki != null) {
+                    mokki.setMokkinimi(muokattuMokinNimi.getText());
+                    mokki.setHenkilomaara(Integer.parseInt(muokattuHenkiloMaara.getText()));
+                    mokki.setHinta(Double.parseDouble(muokattuHinta.getText()));
+                    mokki.setVarustelu(muokattuVarustelu.getText());
+                    mokki.setKatuosoite(muokattuKatuOsoite.getText());
+                    mokki.setKuvaus(muokattuKuvaus.getText());
+
+                    Transaction transaction = session.beginTransaction();
+                    session.update(mokki);
+                    transaction.commit();
+                }
+            }
+        }
+
     }
+
+
+
+    public void mokinTiedotTextFieldiin(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            String valittuMokki = (String) jarjestelmanMokit.getSelectionModel().getSelectedItem();
+            if (valittuMokki != null) {
+                try (Session session = Main.sessionFactory.openSession()) {
+                Query<Mokki> query = session.createQuery("FROM Mokki WHERE mokkinimi = :mokkinimi",Mokki.class);
+                query.setParameter("mokkinimi", valittuMokki);
+                Mokki mokki = query.uniqueResult();
+                if (mokki != null) {
+                    muokattuMokinNimi.setText(mokki.getMokkinimi());
+                    muokattuHenkiloMaara.setText(String.valueOf(mokki.getHenkilomaara()));
+                    muokattuHinta.setText(String.valueOf(mokki.getHinta()));
+                    muokattuVarustelu.setText(mokki.getVarustelu());
+                    muokattuKatuOsoite.setText(mokki.getKatuosoite());
+                    muokattuKuvaus.setText(mokki.getKuvaus());
+
+                }
+            }
+        }
+    }
+    }
+
 
 
     public void haeMokit(ActionEvent actionEvent) {

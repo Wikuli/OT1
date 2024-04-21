@@ -56,6 +56,7 @@ public class Lasku {
         this.alv = alv;
         this.maksettu = maksettu;
     }
+    public Lasku(){}
 
     /**
      * Get-metodi laskun id:lle

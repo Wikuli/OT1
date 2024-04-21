@@ -21,14 +21,14 @@ public class Mokki {
      * Kenttä mökin alue ID:lle
      * Yhdistetään SQL:n mokki taulun alue_id riviin
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "alue_id")
     private Alue alue;
     /**
      * Kenttä mökin postinumerolle
      * Yhdistetään SQL:n mokki taulun postinro riviin
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "postinro")
     private Posti posti;
     /**
@@ -264,6 +264,7 @@ public class Mokki {
         }
         return mokki;
     }
+
 
     /**
      * Mökin poistomiseen tarkoitettu metodi

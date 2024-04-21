@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.cfg.Configuration;
 import java.util.List;
 
@@ -16,8 +17,11 @@ public class Alue {
     private int alue_id;
     @Column(name = "nimi")
     private String nimi;
-    @OneToMany(mappedBy = "alue")
+    @OneToMany(mappedBy = "alue", fetch = FetchType.EAGER)
     private List<Mokki> mokit;
+
+    @OneToMany(mappedBy = "alue")
+    private List<Palvelu> palvelut;
 
     public Alue(String nimi){
         this.nimi = nimi;
@@ -26,6 +30,9 @@ public class Alue {
 
     }
 
+    public List<Mokki> getMokit(){
+        return this.mokit;
+    }
     public int getAlue_id() {
         return alue_id;
     }

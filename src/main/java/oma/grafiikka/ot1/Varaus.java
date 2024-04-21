@@ -1,6 +1,9 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,6 +40,10 @@ public class Varaus {
         this.vahvistus_pvm = vahvistus_pvm;
         this.varattu_alkupvm = varattu_alkupvm;
         this.varattu_loppupvm = varattu_loppupvm;
+    }
+
+    public Varaus(){
+
     }
 
     public int getVaraus_id() {
@@ -99,6 +106,32 @@ public class Varaus {
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static boolean onVarattu(Date alkuPvm, Date loppuPvm, int id, SessionFactory sessionFactory){
+        try{
+            Session session = sessionFactory.openSession();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Long> query = cb.createQuery(Long.class);
+            Root<Varaus> root = query.from(Varaus.class);
+            query.select(cb.count(root));
+
+            query.where(
+                    cb.and(
+                            cb.equal(root.get("mokki").get("mokki_id"), id),
+                            cb.or(
+                                    cb.between(root.get("varattu_alkupvm"), alkuPvm, loppuPvm),
+                                    cb.between(root.get("varattu_loppupvm"), alkuPvm, loppuPvm)
+                            )
+                    )
+            );
+            Long maara = session.createQuery(query).getSingleResult();
+
+            return maara != 0;
+        }
+        catch (Exception e){
+            return true;
         }
     }
 }

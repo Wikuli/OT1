@@ -1,6 +1,9 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,7 +18,7 @@ public class Asiakas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "asiakas_id")
     private int asiakas_id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "postinro")
     private Posti posti;
     @Column(name = "etunimi")
@@ -39,11 +42,25 @@ public class Asiakas {
         this.email = email;
         this.puhelinnro = puhelinnro;
     }
+    public Asiakas(){
+
+    }
     public void setPosti(Posti posti){
         this.posti = posti;
     }
     public Posti getPosti(){
         return posti;
+    }
+    public String getPostiNro(){
+        try(Session session = Main.sessionFactory.openSession()){
+            Transaction transaction = session.beginTransaction();
+            String nro = posti.getPosti();
+            transaction.commit();
+            return nro;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
     public int getAsiakas_id() {
@@ -95,13 +112,52 @@ public class Asiakas {
     }
 
 
-    public void lisaaAsiakas(Asiakas asiakas, SessionFactory sessionFactory){
+    public static void lisaaAsiakas(Asiakas asiakas, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(asiakas);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void poistaAsiakas(Asiakas asiakas){
+        try(Session session = Main.sessionFactory.openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.remove(asiakas);
+            transaction.commit();
+        }
+    }
+
+    public static List<Asiakas> kaikkiAsiakkaat(){
+        try (Session session = Main.sessionFactory.openSession();){
+            Transaction transaction = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Asiakas> cq = cb.createQuery(Asiakas.class);
+            Root<Asiakas> root = cq.from(Asiakas.class);
+            cq.select(root);
+            List<Asiakas> asiakkaat = session.createQuery(cq).getResultList();
+            return asiakkaat;
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+    public static void paivitaAsiakas(Asiakas asiakas, String enimi, String snimi, String lahiosoite, Posti posti, String sposti, String puhnro){
+        try(Session session = Main.sessionFactory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            asiakas.setEtunimi(enimi);
+            asiakas.setSukunimi(snimi);
+            asiakas.setLahiosoite(lahiosoite);
+            asiakas.setPosti(posti);
+            asiakas.setEmail(sposti);
+            asiakas.setPuhelinnro(puhnro);
+            session.merge(asiakas);
+            tx.commit();
+        }
+        catch (Exception e){
+
         }
     }
 }

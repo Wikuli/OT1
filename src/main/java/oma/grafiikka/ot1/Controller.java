@@ -149,6 +149,9 @@ public class Controller implements Initializable {
         if(valitseMokkiListaltaListView != null){
             initializeLV();
         }
+        if(palveluLV != null){
+            initializePalveluLV();
+        }
     }
 
     private void initializeUIComponent(){
@@ -221,6 +224,27 @@ public class Controller implements Initializable {
                         "Osoite: " + newMokki.getKatuosoite());
             }
         });
+    }
+
+    public void initializePalveluLV(){
+        palveluLV.setCellFactory(new Callback<ListView<Palvelu>, ListCell<Palvelu>>() {
+            @Override
+            public ListCell<Palvelu> call(ListView<Palvelu> param) {
+                return new ListCell<Palvelu>(){
+                    @Override
+                    protected void updateItem(Palvelu palvelu, boolean empty){
+                        super.updateItem(palvelu, empty);
+                        if(palvelu != null){
+                            setText(palvelu.getNimi());
+                        }
+                        else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+        palveluLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -937,5 +961,20 @@ public class Controller implements Initializable {
                 "Varustelu: " + valittuMokki.getVarustelu() + "\n" +
                 "Henkilömäärä: " + valittuMokki.getHenkilomaara() + "\n" +
                 "Osoite: " + valittuMokki.getKatuosoite());*/
+    }
+
+    public void haePalvelutEtsiMokki(ActionEvent actionEvent) {
+        try (Session session = Main.sessionFactory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            Query<Palvelu> query = session.createQuery("FROM Palvelu", Palvelu.class);
+            List<Palvelu> palvelut = query.getResultList();
+            tx.commit();
+            if (palvelut != null) {
+                palveluLV.setItems(FXCollections.observableList(palvelut));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

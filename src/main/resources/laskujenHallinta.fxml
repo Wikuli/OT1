@@ -27,18 +27,18 @@
       </Label>
       <ListView layoutX="31.0" layoutY="110.0" prefHeight="200.0" prefWidth="180.0" />
       <TextArea editable="false" layoutX="238.0" layoutY="110.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="34.0" layoutY="343.0" text="Täytä laskun tiedot">
+      <Label layoutX="34.0" layoutY="360.0" text="Täytä laskun tiedot">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="31.0" layoutY="390.0" promptText="Asiakkaan etunimi" />
-      <TextField layoutX="189.0" layoutY="390.0" promptText="Asiakkaan sukunimi" />
-      <TextField layoutX="31.0" layoutY="432.0" promptText="Asiakkaan lähiosoite" />
-      <TextField layoutX="189.0" layoutY="432.0" promptText="Asiakkaan sähköposti" />
-      <TextField layoutX="31.0" layoutY="471.0" promptText="Asiakkaan puh" />
-      <TextField layoutX="189.0" layoutY="471.0" promptText="Laskun summa" />
-      <TextField layoutX="31.0" layoutY="509.0" promptText="Laskun alv" />
+      <TextField layoutX="31.0" layoutY="407.0" promptText="Asiakkaan etunimi" />
+      <TextField layoutX="189.0" layoutY="407.0" promptText="Asiakkaan sukunimi" />
+      <TextField layoutX="31.0" layoutY="449.0" promptText="Asiakkaan lähiosoite" />
+      <TextField layoutX="189.0" layoutY="449.0" promptText="Asiakkaan sähköposti" />
+      <TextField layoutX="31.0" layoutY="488.0" promptText="Asiakkaan puh" />
+      <TextField layoutX="189.0" layoutY="488.0" promptText="Laskun summa" />
+      <TextField layoutX="31.0" layoutY="526.0" promptText="Laskun alv" />
       <Label layoutX="357.0" layoutY="368.0" text="Valitse palvelut">
          <font>
             <Font size="14.0" />
@@ -49,5 +49,6 @@
       <TextField layoutX="357.0" layoutY="590.0" promptText="Palvelun alv" />
       <Button fx:id="createEmailInvoiceButton" layoutX="578.0" layoutY="390.0" mnemonicParsing="false" onAction="#createEmailInvoice" text="Luo sähköpostilasku" />
       <Button fx:id="createPaperInvoiceButton" layoutX="578.0" layoutY="432.0" mnemonicParsing="false" onAction="#createPaperInvoice" text="Luo paperilasku" />
+      <Button layoutX="31.0" layoutY="318.0" mnemonicParsing="false" text="Hee varaukset" />
    </children>
 </AnchorPane>

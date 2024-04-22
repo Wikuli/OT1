@@ -28,7 +28,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ListView fx:id="jarjestelmanMokit" layoutX="36.0" layoutY="325.0" onMouseClicked="#mokinTiedotTextFieldiin" prefHeight="221.0" prefWidth="254.0" />
+      <ListView fx:id="jarjestelmanMokit" layoutX="43.0" layoutY="324.0" onMouseClicked="#mokinTiedotTextFieldiin" prefHeight="221.0" prefWidth="254.0" />
       <Button fx:id="haeMokitButton" layoutX="36.0" layoutY="546.0" mnemonicParsing="false" onAction="#haeMokit" text="Hae mökit" />
       <Button fx:id="deleteCabinButton" layoutX="36.0" layoutY="572.0" mnemonicParsing="false" onAction="#deleteCabin" text="Poista valittu mökki" />
       <Label layoutX="363.0" layoutY="273.0" text="Voit halutessasi muokata valittun mökin tietoja">

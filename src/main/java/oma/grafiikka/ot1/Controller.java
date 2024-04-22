@@ -783,16 +783,7 @@ public class Controller implements Initializable {
         }
         Mokki uusiMokki = new Mokki(haettuAlue, etsittyPosti, mokinNimi, katuOsoite, hinta, kuvaus, henkiloMaara, varustelu);
         uusiMokki.lisaaMokki(uusiMokki, Main.sessionFactory);
-
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/mokkiLisatty.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Palveluiden hallinta");
-        stage.setResizable(false);
-        stage.show();
+        naytaViestiToiminnonOnnistumisesta("Mökki lisätty!");
 
         AlueTextField.clear();
         postiNumeroTextField.clear();

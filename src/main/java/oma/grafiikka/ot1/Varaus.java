@@ -33,8 +33,8 @@ public class Varaus {
     private Date varattu_alkupvm;
     @Column(name = "varattu_loppupvm", columnDefinition = "DATETIME")
     private Date varattu_loppupvm;
-    @OneToMany (mappedBy = "varaus")
-    private List<Varauksen_palvelut> varauksenPalveluList;
+   /* @OneToMany (mappedBy = "varaus")
+    private List<Varauksen_palvelut> varauksenPalveluList;*/
 
     public Varaus(Asiakas asiakas, Mokki mokki, Date varattu_pvm, Date vahvistus_pvm, Date varattu_alkupvm, Date varattu_loppupvm) {
         this.asiakas = asiakas;

@@ -8,21 +8,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0"
-            prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
    <children>
       <Label layoutX="25.0" layoutY="23.0" text="Syötä seuraavat tiedot nähdäksesi raportit:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+      <TextField layoutX="25.0" layoutY="103.0" promptText="Palvelu" />
       <TextField layoutX="25.0" layoutY="157.0" promptText="Alue" />
       <DatePicker layoutX="25.0" layoutY="213.0" promptText="Alku pvm" />
-      <DatePicker layoutX="223.0" layoutY="213.0" promptText="Loppu pvm" />
       <Label layoutX="208.0" layoutY="217.0" text="-" />
-      <TextArea layoutX="25.0" layoutY="341.0" prefHeight="303.0" prefWidth="303.0" />
+      <DatePicker layoutX="223.0" layoutY="213.0" promptText="Loppu pvm" />
       <Button fx:id="serviceReportButton" layoutX="25.0" layoutY="285.0" mnemonicParsing="false" onAction="#serviceReportSearch" text="Syötä" />
-      <TextField layoutX="25.0" layoutY="103.0" promptText="Palvelu" />
+      <TextArea editable="false" layoutX="25.0" layoutY="341.0" prefHeight="303.0" prefWidth="303.0" />
    </children>
 </AnchorPane>

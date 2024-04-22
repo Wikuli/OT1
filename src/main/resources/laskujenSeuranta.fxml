@@ -18,25 +18,25 @@
       <TextField layoutX="64.0" layoutY="105.0" promptText="Etunimi" />
       <TextField layoutX="64.0" layoutY="143.0" promptText="Sukunimi" />
       <TextField layoutX="64.0" layoutY="180.0" promptText="Puhelinnumero" />
-      <TextArea editable="false" layoutX="64.0" layoutY="321.0" prefHeight="339.0" prefWidth="296.0" />
+      <Button fx:id="findInvoiceButton" layoutX="64.0" layoutY="223.0" mnemonicParsing="false" onAction="#findInvoice" text="Etsi" />
       <Label layoutX="64.0" layoutY="274.0" text="Asiakkaan laskut ja laskujen tiedot">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="findInvoiceButton" layoutX="64.0" layoutY="223.0" mnemonicParsing="false" onAction="#findInvoice" text="Etsi" />
+      <TextArea editable="false" layoutX="64.0" layoutY="321.0" prefHeight="339.0" prefWidth="296.0" />
       <Button fx:id="invoicePayedButton" layoutX="64.0" layoutY="666.0" mnemonicParsing="false" onAction="#invoicePayed" text="Aseta lasku maksetuksi" />
-      <ListView layoutX="467.0" layoutY="66.0" prefHeight="270.0" prefWidth="296.0" />
       <Label layoutX="467.0" layoutY="24.0" text="Lista avoinna olevista laskuista">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ListView layoutX="467.0" layoutY="402.0" prefHeight="270.0" prefWidth="296.0" />
+      <ListView layoutX="467.0" layoutY="66.0" prefHeight="270.0" prefWidth="296.0" />
       <Label layoutX="467.0" layoutY="360.0" text="Lista maksetuista laskuista">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+      <ListView layoutX="467.0" layoutY="402.0" prefHeight="270.0" prefWidth="296.0" />
    </children>
 </AnchorPane>

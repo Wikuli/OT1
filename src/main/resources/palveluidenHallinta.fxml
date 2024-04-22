@@ -15,43 +15,43 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ListView fx:id="palvelutListView" layoutX="41.0" layoutY="118.0" prefHeight="227.0" prefWidth="158.0" />
       <TextField fx:id="haeAlueTextField" layoutX="41.0" layoutY="79.0" prefHeight="25.0" prefWidth="120.0" promptText="Alue" />
       <Button fx:id="areaServiceButton" layoutX="161.0" layoutY="79.0" mnemonicParsing="false" onAction="#areaServiceFetch" text="Hae" />
-      <Button fx:id="deleteArealServiceButton" layoutX="41.0" layoutY="350.0" mnemonicParsing="false" onAction="#deleteServiceFromArea" text="Poista palvelu alueelta" />
-      <Label layoutX="539.0" layoutY="33.0" text="Lisää uusi palvelu alueelle">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <TextField fx:id="uudenPalvelunNimiTextField" layoutX="539.0" layoutY="404.0" promptText="Uuden palvelun nimi" />
-      <ListView fx:id="areaListViewService" layoutX="530.0" layoutY="85.0" prefHeight="219.0" prefWidth="246.0" />
-      <TextArea fx:id="palvelunTiedotTextArea" editable="false" layoutX="212.0" layoutY="118.0" prefHeight="227.0" prefWidth="196.0" />
       <Label layoutX="212.0" layoutY="91.0" text="Palvelun tiedot">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="uudenPalvelunHintaTextField" layoutX="539.0" layoutY="489.0" promptText="Uuden palvelun hinta" />
-      <TextField fx:id="uudenPalvelunAlvTextField" layoutX="539.0" layoutY="527.0" promptText="Uuden palvelun alv" />
-      <TextField fx:id="uudenPalvelunKuvausTextField" layoutX="539.0" layoutY="447.0" promptText="Uuden palvelun kuvaus" />
-      <Button fx:id="addNewServiceButton" layoutX="539.0" layoutY="573.0" mnemonicParsing="false" onAction="#addNewService" text="Lisää palvelu" />
-      <Label layoutX="543.0" layoutY="360.0" text="Syötä uuden palvelun tiedot">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
+      <ListView fx:id="palvelutListView" layoutX="41.0" layoutY="118.0" prefHeight="227.0" prefWidth="158.0" />
+      <TextArea fx:id="palvelunTiedotTextArea" editable="false" layoutX="212.0" layoutY="118.0" prefHeight="227.0" prefWidth="196.0" />
+      <Button fx:id="deleteArealServiceButton" layoutX="41.0" layoutY="350.0" mnemonicParsing="false" onAction="#deleteServiceFromArea" text="Poista palvelu alueelta" />
+      <Button fx:id="naytaPalvelunTiedotButton" layoutX="212.0" layoutY="350.0" mnemonicParsing="false" onAction="#naytaPalvelunTiedot" text="Näytä palvelun tiedot" />
       <Label layoutX="41.0" layoutY="417.0" text="Muokkaa palvelun tietoja">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <TextField layoutX="43.0" layoutY="460.0" promptText="Uuden palvelun nimi" />
+      <TextField layoutX="43.0" layoutY="503.0" promptText="Uuden palvelun kuvaus" />
       <TextField layoutX="43.0" layoutY="545.0" promptText="Uuden palvelun hinta" />
       <TextField layoutX="43.0" layoutY="583.0" promptText="Uuden palvelun alv" />
-      <TextField layoutX="43.0" layoutY="503.0" promptText="Uuden palvelun kuvaus" />
       <Button fx:id="alterServiceButton" layoutX="43.0" layoutY="629.0" mnemonicParsing="false" onAction="#alterServiceInfo" text="Muokkaa tietoja" />
+      <Label layoutX="539.0" layoutY="33.0" text="Lisää uusi palvelu alueelle">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="areaListViewService" layoutX="530.0" layoutY="85.0" prefHeight="219.0" prefWidth="246.0" />
       <Button fx:id="haeAlueetPalveluidenHallinnassaButton" layoutX="530.0" layoutY="311.0" mnemonicParsing="false" onAction="#haeAlueetPalveluidenHallinnassa" text="Hae alueet" />
-      <Button fx:id="naytaPalvelunTiedotButton" layoutX="212.0" layoutY="350.0" mnemonicParsing="false" onAction="#naytaPalvelunTiedot" text="Näytä palvelun tiedot" />
+      <Label layoutX="543.0" layoutY="360.0" text="Syötä uuden palvelun tiedot">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="uudenPalvelunNimiTextField" layoutX="539.0" layoutY="404.0" promptText="Uuden palvelun nimi" />
+      <TextField fx:id="uudenPalvelunKuvausTextField" layoutX="539.0" layoutY="447.0" promptText="Uuden palvelun kuvaus" />
+      <TextField fx:id="uudenPalvelunHintaTextField" layoutX="539.0" layoutY="489.0" promptText="Uuden palvelun hinta" />
+      <TextField fx:id="uudenPalvelunAlvTextField" layoutX="539.0" layoutY="527.0" promptText="Uuden palvelun alv" />
+      <Button fx:id="addNewServiceButton" layoutX="539.0" layoutY="573.0" mnemonicParsing="false" onAction="#addNewService" text="Lisää palvelu" />
    </children>
 </AnchorPane>

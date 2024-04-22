@@ -15,11 +15,11 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="25.0" layoutY="86.0" text="Alue" />
+      <TextField layoutX="25.0" layoutY="86.0" promptText="Alue" />
       <DatePicker layoutX="25.0" layoutY="139.0" promptText="Alku pvm" />
-      <DatePicker layoutX="223.0" layoutY="139.0" promptText="Loppu pvm" />
       <Label layoutX="208.0" layoutY="143.0" text="-" />
-      <TextArea layoutX="23.0" layoutY="248.0" prefHeight="303.0" prefWidth="303.0" />
+      <DatePicker layoutX="223.0" layoutY="139.0" promptText="Loppu pvm" />
       <Button fx:id="cabinReportButton" layoutX="25.0" layoutY="191.0" mnemonicParsing="false" onAction="#checkReportOnAccommodation" text="Syötä" />
+      <TextArea editable="false" layoutX="23.0" layoutY="248.0" prefHeight="303.0" prefWidth="303.0" />
    </children>
 </AnchorPane>

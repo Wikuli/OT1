@@ -15,20 +15,21 @@
          </font>
       </Label>
       <TextField fx:id="uusiMokinNimi" layoutX="36.0" layoutY="97.0" promptText="Mökin nimi" />
-      <TextField fx:id="uusiHenkiloMaara" layoutX="36.0" layoutY="170.0" promptText="Henkilömäärä" />
-      <TextField fx:id="uusiHinta" layoutX="36.0" layoutY="132.0" promptText="Hinta" />
-      <TextField fx:id="uusiVarustelu" layoutX="207.0" layoutY="170.0" promptText="Varustelu" />
       <TextField fx:id="uusiKatuOsoite" layoutX="207.0" layoutY="97.0" promptText="Katuosoite" />
+      <TextField fx:id="uusiHinta" layoutX="36.0" layoutY="132.0" promptText="Hinta" />
       <TextField fx:id="uusiKuvaus" layoutX="207.0" layoutY="132.0" promptText="Kuvaus" />
+      <TextField fx:id="uusiHenkiloMaara" layoutX="36.0" layoutY="170.0" promptText="Henkilömäärä" />
+      <TextField fx:id="uusiVarustelu" layoutX="207.0" layoutY="170.0" promptText="Varustelu" />
       <TextField fx:id="AlueTextField" layoutX="36.0" layoutY="204.0" promptText="Alue" />
       <TextField fx:id="postiNumeroTextField" layoutX="207.0" layoutY="204.0" promptText="Postinumero" />
+      <Button fx:id="addNewCabinButton" layoutX="36.0" layoutY="236.0" mnemonicParsing="false" onAction="#addNewCabin" text="Syötä" />
       <Label layoutX="36.0" layoutY="273.0" text="Järjestelmässä olevat mökit">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="addNewCabinButton" layoutX="36.0" layoutY="236.0" mnemonicParsing="false" onAction="#addNewCabin" text="Syötä" />
-      <ListView fx:id="jarjestelmanMokit" layoutX="36.0" layoutY="325.0" prefHeight="221.0" onMouseClicked="#mokinTiedotTextFieldiin" prefWidth="254.0" />
+      <ListView fx:id="jarjestelmanMokit" layoutX="36.0" layoutY="325.0" onMouseClicked="#mokinTiedotTextFieldiin" prefHeight="221.0" prefWidth="254.0" />
+      <Button fx:id="haeMokitButton" layoutX="36.0" layoutY="546.0" mnemonicParsing="false" onAction="#haeMokit" text="Hae mökit" />
       <Button fx:id="deleteCabinButton" layoutX="36.0" layoutY="572.0" mnemonicParsing="false" onAction="#deleteCabin" text="Poista valittu mökki" />
       <Label layoutX="363.0" layoutY="273.0" text="Voit halutessasi muokata valittun mökin tietoja">
          <font>
@@ -36,17 +37,16 @@
          </font>
       </Label>
       <TextField fx:id="muokattuMokinNimi" layoutX="363.0" layoutY="336.0" promptText="Mökin nimi" />
-      <TextField fx:id="muokattuHenkiloMaara" layoutX="363.0" layoutY="409.0" promptText="Hernkilömäärä" />
-      <TextField fx:id="muokattuHinta" layoutX="363.0" layoutY="371.0" promptText="Hinta" />
-      <TextField fx:id="muokattuVarustelu" layoutX="534.0" layoutY="409.0" promptText="Varustelu" />
       <TextField fx:id="muokattuKatuOsoite" layoutX="534.0" layoutY="336.0" promptText="Katuosoite" />
+      <TextField fx:id="muokattuHinta" layoutX="363.0" layoutY="371.0" promptText="Hinta" />
       <TextField fx:id="muokattuKuvaus" layoutX="534.0" layoutY="371.0" promptText="Kuvaus" />
+      <TextField fx:id="muokattuHenkiloMaara" layoutX="363.0" layoutY="409.0" promptText="Hernkilömäärä" />
+      <TextField fx:id="muokattuVarustelu" layoutX="534.0" layoutY="409.0" promptText="Varustelu" />
       <Button fx:id="alterCabinInfoButton" layoutX="363.0" layoutY="451.0" mnemonicParsing="false" onAction="#alterCabinInfo" text="Muokkaa" />
       <Label layoutX="118.0" layoutY="240.0" textFill="#ff0606">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="haeMokitButton" layoutX="36.0" layoutY="546.0" mnemonicParsing="false" onAction="#haeMokit" text="Hae mökit" />
    </children>
 </AnchorPane>

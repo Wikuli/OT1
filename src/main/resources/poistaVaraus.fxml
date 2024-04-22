@@ -14,8 +14,8 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="211.0" layoutY="81.0" promptText="Sukunimi" />
       <TextField layoutX="39.0" layoutY="81.0" promptText="Etunimi" />
+      <TextField layoutX="211.0" layoutY="81.0" promptText="Sukunimi" />
       <Button fx:id="findReservationButton" layoutX="39.0" layoutY="129.0" mnemonicParsing="false" onAction="#findReservations" text="Etsi varaukset" />
       <ListView layoutX="39.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0" />
       <Button fx:id="deleteReservationButton" layoutX="39.0" layoutY="412.0" mnemonicParsing="false" onAction="#deleteThisReservation" text="Poista varaus" />

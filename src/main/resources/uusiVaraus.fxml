@@ -9,13 +9,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oma.grafiikka.ot1.Controller">
    <children>
-      <Button fx:id="reservationButton" layoutX="38.0" layoutY="385.0" mnemonicParsing="false" onAction="#makeReservation" text="Tee varaus" />
-      <Label layoutX="450.0" layoutY="30.0" text="Olet varaamassa seuraavaa mökkiä:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <TextArea editable="false" layoutX="450.0" layoutY="89.0" prefHeight="427.0" prefWidth="374.0" />
       <Label layoutX="36.0" layoutY="30.0" text="Hae asiakasta järjestelmästä">
          <font>
             <Font size="24.0" />
@@ -23,13 +16,20 @@
       </Label>
       <TextField layoutX="36.0" layoutY="77.0" promptText="Etunimi" />
       <TextField layoutX="205.0" layoutY="77.0" promptText="Sukunimi" />
-      <Button layoutX="205.0" layoutY="118.0" mnemonicParsing="false" text="Hae" />
       <TextField layoutX="36.0" layoutY="118.0" promptText="Puhelinnumero" />
-      <TextArea layoutX="36.0" layoutY="236.0" prefHeight="133.0" prefWidth="176.0" />
       <Label layoutX="36.0" layoutY="157.0" prefHeight="71.0" prefWidth="322.0" text="Olet varaamassa mökkiä tälle asiakkaalle:" wrapText="true">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+      <TextArea layoutX="36.0" layoutY="236.0" prefHeight="133.0" prefWidth="176.0" />
+      <Button fx:id="reservationButton" layoutX="38.0" layoutY="385.0" mnemonicParsing="false" onAction="#makeReservation" text="Tee varaus" />
+      <Label layoutX="450.0" layoutY="30.0" text="Olet varaamassa seuraavaa mökkiä:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextArea editable="false" layoutX="450.0" layoutY="89.0" prefHeight="427.0" prefWidth="374.0" />
+      <Button layoutX="205.0" layoutY="118.0" mnemonicParsing="false" text="Hae" />
    </children>
 </AnchorPane>

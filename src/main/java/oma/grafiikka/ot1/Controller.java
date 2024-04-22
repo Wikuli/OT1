@@ -1,5 +1,8 @@
 package oma.grafiikka.ot1;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,7 +27,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -116,7 +121,14 @@ public class Controller implements Initializable {
     public TextField editPostiNroTF;
     @FXML
     public TextField editLahiosTF;
-
+    @FXML
+    public DatePicker alkuPaivaMaara;
+    @FXML
+    public DatePicker loppuPaivaMaara;
+    @FXML
+    public TextField palveluTextFieldRaporti;
+    @FXML
+    public TextField alueTextFieldRaporti;
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
@@ -506,6 +518,29 @@ public class Controller implements Initializable {
     public void deleteThisReservation(ActionEvent actionEvent) {
     }
 
+    public void serviceReportSearch(ActionEvent actionEvent) {
+        LocalDate alkupvm = alkuPaivaMaara.getValue();
+        LocalDate loppupvm = loppuPaivaMaara.getValue();
+        String palveluNimiRaporti = palveluTextFieldRaporti.getText();
+        String alueNimiRaporti = alueTextFieldRaporti.getText();
+        if (alkupvm != null && loppupvm != null && palveluNimiRaporti != null & alueNimiRaporti != null) {
+            try (Session session = Main.sessionFactory.openSession()) {
+                session.beginTransaction();
+
+                //int yhteinenHinta =
+                //String data = yhteinen
+
+
+
+                palvelunTiedotTextArea.setText(data);
+            }
+        } else {
+            palvelunTiedotTextArea.setText("Kirjoita Palvelu, Alue, ja valitse päivämäärät ");
+        }
+    }
+
+
+
     public void findThisCabin(ActionEvent actionEvent) {
         Date alku;
         Date loppu;
@@ -582,8 +617,6 @@ public class Controller implements Initializable {
     public void makeReservation(ActionEvent actionEvent) {
     }
 
-    public void serviceReportSearch(ActionEvent actionEvent) {
-    }
 
     public void areaServiceFetch(ActionEvent actionEvent) {
         naytaAlueenPalvelutListView();

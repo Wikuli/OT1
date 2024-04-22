@@ -101,6 +101,6 @@
       </VBox>
    </center>
    <bottom>
-      <TextArea prefHeight="476.0" prefWidth="1268.0" BorderPane.alignment="CENTER" />
+      <TextArea fx:id="valittuMokkiTextArea" prefHeight="476.0" prefWidth="1268.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

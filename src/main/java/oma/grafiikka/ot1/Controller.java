@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -37,9 +38,10 @@ import java.util.*;
  * Aukeavien ikkunoiden sisällä olevia metodeja. Metodeja niimmaan perkeleesti.
  */
 public class Controller implements Initializable {
-    Mokki valittuMokki;
     @FXML
     public Button varausHaeAs;
+    public AnchorPane toimintoOnnistuiAnchorPane = new AnchorPane();
+    Mokki valittuMokki;
     public TextField addAreaTextField;
     @FXML
     public ListView areaListView;
@@ -317,9 +319,9 @@ public class Controller implements Initializable {
         }
     }
 
-    public void naytaViestiToiminnonOnnistumisesta(String fxmlTiedosto, String otsikko) throws IOException {
+    public void naytaViestiToiminnonOnnistumisesta(String otsikko) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlTiedosto));
+        Parent root = FXMLLoader.load(getClass().getResource("/toimintoOnnistui.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -628,7 +630,7 @@ public class Controller implements Initializable {
         for (String i: palvelut){
             Palvelu palvelu = Palvelu.etsiPalvelu(i, Main.sessionFactory);
             Palvelu.poistaPalvelu(palvelu, Main.sessionFactory);
-            naytaViestiToiminnonOnnistumisesta("/palveluPoistettu.fxml", "Palvelu poistettu");
+            naytaViestiToiminnonOnnistumisesta("Palvelu poistettu!");
             areaServiceFetch(actionEvent);
             palvelunTiedotTextArea.clear();
         }
@@ -664,15 +666,7 @@ public class Controller implements Initializable {
         Palvelu uusiPalvelu = new Palvelu(haettuAlue, palvelunNimi, palvelunKuvaus, palvelunHinta, palvelunAlv);
         Palvelu.lisaaPalvelu(uusiPalvelu, Main.sessionFactory);
 
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/palveluLisatty.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Palvelu lisätty!");
-        stage.setResizable(false);
-        stage.show();
+        naytaViestiToiminnonOnnistumisesta("Palvelu lisätty!");
 
         uudenPalvelunNimiTextField.clear();
         uudenPalvelunKuvausTextField.clear();
@@ -680,7 +674,7 @@ public class Controller implements Initializable {
         uudenPalvelunAlvTextField.clear();
     }
 
-    public void alterServiceInfo(ActionEvent actionEvent) {
+    public void alterServiceInfo(ActionEvent actionEvent) throws IOException {
         String valittuPalvelu = (String) palvelutListView.getSelectionModel().getSelectedItem();
         if (valittuPalvelu != null) {
             try(Session session = Main.sessionFactory.openSession()) {
@@ -697,9 +691,11 @@ public class Controller implements Initializable {
                     Transaction transaction = session.beginTransaction();
                     session.update(palvelu);
                     transaction.commit();
+
                 }
             }
         }
+        naytaViestiToiminnonOnnistumisesta("Palvelun tietoja muokattu!");
     }
 
     public void createPaperInvoice(ActionEvent actionEvent) {

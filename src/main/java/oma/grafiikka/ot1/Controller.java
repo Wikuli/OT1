@@ -41,6 +41,10 @@ public class Controller implements Initializable {
     @FXML
     public Button varausHaeAs;
     public AnchorPane toimintoOnnistuiAnchorPane = new AnchorPane();
+    public ListView<Mokki> valitseMokkiListaltaListView;
+    public TextArea mokinTiedotTextAres;
+    @FXML
+    public TextArea valittuMokkiTextArea;
     Mokki valittuMokki;
     public TextField addAreaTextField;
     @FXML
@@ -139,6 +143,9 @@ public class Controller implements Initializable {
         if(asiakasLV != null){
             initializeUIComponent();
         }
+        if(valitseMokkiListaltaListView != null){
+            initializeLV();
+        }
     }
 
     private void initializeUIComponent(){
@@ -175,6 +182,40 @@ public class Controller implements Initializable {
                         }
                     }
                 };
+            }
+        });
+    }
+
+    public void initializeLV(){
+        valitseMokkiListaltaListView.setCellFactory(new Callback<ListView<Mokki>, ListCell<Mokki>>() {
+            @Override
+            public ListCell<Mokki> call(ListView<Mokki> param) {
+                return new ListCell<Mokki>(){
+                    @Override
+                    protected void updateItem(Mokki mokki, boolean empty){
+                        super.updateItem(mokki, empty);
+                        if(mokki != null){
+                            setText(mokki.getMokkinimi());
+                        }
+                        else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+
+        valitseMokkiListaltaListView.getSelectionModel().selectedItemProperty().addListener((observable, oldMokki, newMokki) -> {
+            if (newMokki == null) {
+                mokinTiedotTextAres.clear();
+            }
+            else {
+                mokinTiedotTextAres.setText("Mökin nimi: " + newMokki.getMokkinimi() + "\n" +
+                        "Kuvaus: " + newMokki.getKuvaus() + "\n" +
+                        "Hinta: " + newMokki.getHinta() + "\n" +
+                        "Varustelu: " + newMokki.getVarustelu() + "\n" +
+                        "Henkilömäärä: " + newMokki.getHenkilomaara() + "\n" +
+                        "Osoite: " + newMokki.getKatuosoite());
             }
         });
     }
@@ -587,10 +628,7 @@ public class Controller implements Initializable {
         catch (HibernateException e){
 
         }
-
-        System.out.println(retMokit);
-        //Minne menee mökit, jotka täyttävät ehdot?
-
+        valitseMokkiListaltaListView.setItems(FXCollections.observableArrayList(retMokit));
     }
 
     Asiakas valittuAs;
@@ -887,4 +925,15 @@ public class Controller implements Initializable {
         palvelunTiedotTextFieldeihin();
     }
 
+    public void valitseMokki(ActionEvent actionEvent) throws IOException {
+        valittuMokki = valitseMokkiListaltaListView.getSelectionModel().getSelectedItem();
+        popUpIkkunanLuoja("/uusiVaraus.fxml", "Uusi varaus");
+
+        /*valittuMokkiTextArea.setText("Mökin nimi: " + valittuMokki.getMokkinimi() + "\n" +
+                "Kuvaus: " + valittuMokki.getKuvaus() + "\n" +
+                "Hinta: " + valittuMokki.getHinta() + "\n" +
+                "Varustelu: " + valittuMokki.getVarustelu() + "\n" +
+                "Henkilömäärä: " + valittuMokki.getHenkilomaara() + "\n" +
+                "Osoite: " + valittuMokki.getKatuosoite());*/
+    }
 }

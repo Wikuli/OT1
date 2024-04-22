@@ -26,6 +26,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -559,6 +560,8 @@ public class Controller implements Initializable {
     }
 
     public void findReservations(ActionEvent actionEvent) {
+        Asiakas asiakas = Asiakas.haeAsiakas("Urho", "Kekkonen", "112");
+        System.out.println(Varaus.etsiVaraus(asiakas));
     }
 
     public void deleteThisReservation(ActionEvent actionEvent) {

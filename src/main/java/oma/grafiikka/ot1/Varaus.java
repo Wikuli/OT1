@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -137,6 +138,34 @@ public class Varaus {
         }
         catch (Exception e){
             return true;
+        }
+    }
+    public static List<Varaus> etsiVaraus(Asiakas asiakas) {
+        Date date = Date.valueOf(LocalDate.now());
+        int id = asiakas.getAsiakas_id();
+        try (Session session = Main.sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Varaus> query = cb.createQuery(Varaus.class);
+            Root<Varaus> root = query.from(Varaus.class);
+            query.select(root);
+            query.where(
+                    cb.greaterThan(
+                            root.get("varattu_alkupvm"), date
+                    )
+            );
+            List<Varaus> varaukset = session.createQuery(query).getResultList();
+            return varaukset;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static void poistaVaraus(Varaus varaus){
+        try(Session session = Main.sessionFactory.openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.remove(varaus);
+            transaction.commit();
         }
     }
 }

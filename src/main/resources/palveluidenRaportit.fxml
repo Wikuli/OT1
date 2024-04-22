@@ -15,8 +15,8 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id ="palveluTextFieldRaporti" layoutX="25.0" layoutY="103.0" promptText="Palvelu" />
-      <TextField fx:id ="alueTextFiedRaportti" layoutX="25.0" layoutY="157.0" promptText="Alue" />
+      <TextField fx:id="palveluTextFieldRaporti" layoutX="25.0" layoutY="103.0" promptText="Palvelu" />
+      <TextField fx:id="alueTextFiedRaportti" layoutX="25.0" layoutY="157.0" promptText="Alue" />
       <DatePicker fx:id="alkuPaivaMaara" layoutX="25.0" layoutY="213.0" promptText="Alku pvm" />
       <Label layoutX="208.0" layoutY="217.0" text="-" />
       <DatePicker fx:id="loppuPaivaMaara" layoutX="223.0" layoutY="213.0" promptText="Loppu pvm" />

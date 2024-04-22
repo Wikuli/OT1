@@ -139,7 +139,6 @@ public class Controller implements Initializable {
                 editPuhNroTF.setText(newAsiakas.getPuhelinnro());
                 editEnimiTF.setText(newAsiakas.getEtunimi());
                 editLahiosTF.setText(newAsiakas.getLahiosoite());
-                System.out.println(newAsiakas.getPostiNro());
                 editPostiNroTF.setText(newAsiakas.getPostiNro());
                 editSpostiTF.setText(newAsiakas.getEmail());
                 editSnimiTF.setText(newAsiakas.getSukunimi());

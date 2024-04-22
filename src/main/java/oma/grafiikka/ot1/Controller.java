@@ -507,7 +507,77 @@ public class Controller implements Initializable {
     }
 
     public void findThisCabin(ActionEvent actionEvent) {
+        Date alku;
+        Date loppu;
+        try {
+            alku = Date.valueOf(AlkuPvm.getValue());
+        }
+        catch (Exception e){
+            return;
+        }
+        try {
+            loppu = Date.valueOf(LoppuPvm.getValue());
+        }
+        catch (Exception e){
+            return;
+        }
+        String alue = alueTF.getText();
+        List<Palvelu> palvelut = palveluLV.getSelectionModel().getSelectedItems();
+
+        double hintaMin = 0;
+        try {
+            if(!hintaMinTF.getText().isBlank()) {
+                hintaMin = Double.parseDouble(hintaMinTF.getText());
+            }
+        }
+        catch (Exception e){
+            return;
+        }
+        double hintaMax = 0;
+        try {
+            if(!hintaMaxTF.getText().isBlank()){
+                hintaMax = Double.parseDouble(hintaMaxTF.getText());
+            }
+        }
+        catch (Exception e){
+            return;
+        }
+
+        Alue kohdeAlue = Alue.etsiAlue(alue, Main.sessionFactory);
+        if(kohdeAlue == null){
+            return;
+        }
+
+        for (Palvelu palvelu : palvelut){
+            if(palvelu.getAlue() != kohdeAlue){
+                return;
+            }
+        }
+
+
+        ArrayList<Mokki> retMokit = new ArrayList<>();
+        try(Session session = Main.sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            System.out.println(kohdeAlue.getMokit());
+            for (Mokki mokki : kohdeAlue.getMokit()) {
+                System.out.println(mokki.getMokkinimi());
+                if (mokki.getHinta() < hintaMax && mokki.getHinta() > hintaMin) {
+                    if (!Varaus.onVarattu(alku, loppu, mokki.getMokki_id(), Main.sessionFactory)) {
+                        retMokit.add(mokki);
+                    }
+                }
+            }
+            transaction.commit();
+        }
+        catch (HibernateException e){
+
+        }
+
+        System.out.println(retMokit);
+        //Minne menee mökit, jotka täyttävät ehdot?
+
     }
+
 
     public void makeReservation(ActionEvent actionEvent) {
     }

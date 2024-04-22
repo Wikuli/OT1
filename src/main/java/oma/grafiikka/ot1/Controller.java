@@ -1,8 +1,5 @@
 package oma.grafiikka.ot1;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,9 +25,11 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -38,7 +38,10 @@ import java.util.*;
  * Aukeavien ikkunoiden sisällä olevia metodeja. Metodeja niimmaan perkeleesti.
  */
 public class Controller implements Initializable {
-
+    @FXML
+    public Button varausHaeAs;
+    public AnchorPane toimintoOnnistuiAnchorPane = new AnchorPane();
+    Mokki valittuMokki;
     public TextField addAreaTextField;
     @FXML
     public ListView areaListView;
@@ -66,6 +69,14 @@ public class Controller implements Initializable {
     public TextField muokattuPalvelunKuvausTextField;
     public TextField muokattuPalvelunHintaTextField;
     public TextField muokattuPalvelunAlvTextField;
+    @FXML
+    public TextField haeVarausAsEnimi;
+    @FXML
+    public TextField haeVarausAsSnimi;
+    @FXML
+    public TextField haeVarausAsPuhnro;
+    @FXML
+    public TextArea asiakastiedotVaraus;
 
     @FXML
     private TextField muokattuMokinNimi;
@@ -121,14 +132,7 @@ public class Controller implements Initializable {
     public TextField editPostiNroTF;
     @FXML
     public TextField editLahiosTF;
-    @FXML
-    public DatePicker alkuPaivaMaara;
-    @FXML
-    public DatePicker loppuPaivaMaara;
-    @FXML
-    public TextField palveluTextFieldRaporti;
-    @FXML
-    public TextField alueTextFieldRaporti;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
@@ -151,7 +155,6 @@ public class Controller implements Initializable {
                 editPuhNroTF.setText(newAsiakas.getPuhelinnro());
                 editEnimiTF.setText(newAsiakas.getEtunimi());
                 editLahiosTF.setText(newAsiakas.getLahiosoite());
-                System.out.println(newAsiakas.getPostiNro());
                 editPostiNroTF.setText(newAsiakas.getPostiNro());
                 editSpostiTF.setText(newAsiakas.getEmail());
                 editSnimiTF.setText(newAsiakas.getSukunimi());
@@ -316,9 +319,9 @@ public class Controller implements Initializable {
         }
     }
 
-    public void naytaViestiToiminnonOnnistumisesta(String fxmlTiedosto, String otsikko) throws IOException {
+    public void naytaViestiToiminnonOnnistumisesta(String otsikko) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlTiedosto));
+        Parent root = FXMLLoader.load(getClass().getResource("/toimintoOnnistui.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -518,32 +521,9 @@ public class Controller implements Initializable {
     public void deleteThisReservation(ActionEvent actionEvent) {
     }
 
-    public void serviceReportSearch(ActionEvent actionEvent) {
-        LocalDate alkupvm = alkuPaivaMaara.getValue();
-        LocalDate loppupvm = loppuPaivaMaara.getValue();
-        String palveluNimiRaporti = palveluTextFieldRaporti.getText();
-        String alueNimiRaporti = alueTextFieldRaporti.getText();
-        if (alkupvm != null && loppupvm != null && palveluNimiRaporti != null & alueNimiRaporti != null) {
-            try (Session session = Main.sessionFactory.openSession()) {
-                session.beginTransaction();
-
-                //int yhteinenHinta =
-                //String data = yhteinen
-
-
-
-                palvelunTiedotTextArea.setText(data);
-            }
-        } else {
-            palvelunTiedotTextArea.setText("Kirjoita Palvelu, Alue, ja valitse päivämäärät ");
-        }
-    }
-
-
-
+    Date alku;
+    Date loppu;
     public void findThisCabin(ActionEvent actionEvent) {
-        Date alku;
-        Date loppu;
         try {
             alku = Date.valueOf(AlkuPvm.getValue());
         }
@@ -613,10 +593,33 @@ public class Controller implements Initializable {
 
     }
 
+    Asiakas valittuAs;
+    public void haeAs(ActionEvent actionEvent) {
+        String varausEnimi = haeVarausAsEnimi.getText();
+        String varausSnimi = haeVarausAsSnimi.getText();
+        String varausPuhnro = haeVarausAsPuhnro.getText();
+        if(varausSnimi.isBlank() || varausEnimi.isEmpty() || varausPuhnro.isEmpty()){
+            return;
+        }
+        valittuAs = Asiakas.haeAsiakas(varausEnimi, varausSnimi, varausPuhnro);
+        if(valittuAs == null){
+            return;
+        }
 
-    public void makeReservation(ActionEvent actionEvent) {
     }
 
+    public void makeReservation(ActionEvent actionEvent) {
+        if (valittuAs == null || valittuMokki == null || alku == null || loppu == null){
+            return;
+        }
+        LocalDate lDate = LocalDate.now();
+        Date date = Date.valueOf(lDate);
+        Varaus varaus = new Varaus(valittuAs, valittuMokki, date, null, alku, loppu);
+        Varaus.lisaaVaraus(varaus);
+    }
+
+    public void serviceReportSearch(ActionEvent actionEvent) {
+    }
 
     public void areaServiceFetch(ActionEvent actionEvent) {
         naytaAlueenPalvelutListView();
@@ -627,7 +630,7 @@ public class Controller implements Initializable {
         for (String i: palvelut){
             Palvelu palvelu = Palvelu.etsiPalvelu(i, Main.sessionFactory);
             Palvelu.poistaPalvelu(palvelu, Main.sessionFactory);
-            naytaViestiToiminnonOnnistumisesta("/palveluPoistettu.fxml", "Palvelu poistettu");
+            naytaViestiToiminnonOnnistumisesta("Palvelu poistettu!");
             areaServiceFetch(actionEvent);
             palvelunTiedotTextArea.clear();
         }
@@ -663,15 +666,7 @@ public class Controller implements Initializable {
         Palvelu uusiPalvelu = new Palvelu(haettuAlue, palvelunNimi, palvelunKuvaus, palvelunHinta, palvelunAlv);
         Palvelu.lisaaPalvelu(uusiPalvelu, Main.sessionFactory);
 
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/palveluLisatty.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Palvelu lisätty!");
-        stage.setResizable(false);
-        stage.show();
+        naytaViestiToiminnonOnnistumisesta("Palvelu lisätty!");
 
         uudenPalvelunNimiTextField.clear();
         uudenPalvelunKuvausTextField.clear();
@@ -679,7 +674,7 @@ public class Controller implements Initializable {
         uudenPalvelunAlvTextField.clear();
     }
 
-    public void alterServiceInfo(ActionEvent actionEvent) {
+    public void alterServiceInfo(ActionEvent actionEvent) throws IOException {
         String valittuPalvelu = (String) palvelutListView.getSelectionModel().getSelectedItem();
         if (valittuPalvelu != null) {
             try(Session session = Main.sessionFactory.openSession()) {
@@ -696,9 +691,11 @@ public class Controller implements Initializable {
                     Transaction transaction = session.beginTransaction();
                     session.update(palvelu);
                     transaction.commit();
+
                 }
             }
         }
+        naytaViestiToiminnonOnnistumisesta("Palvelun tietoja muokattu!");
     }
 
     public void createPaperInvoice(ActionEvent actionEvent) {
@@ -889,4 +886,5 @@ public class Controller implements Initializable {
         naytaAlueenPalvelut();
         palvelunTiedotTextFieldeihin();
     }
+
 }

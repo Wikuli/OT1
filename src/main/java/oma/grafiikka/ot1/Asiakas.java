@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -158,6 +159,28 @@ public class Asiakas {
         }
         catch (Exception e){
 
+        }
+    }
+
+    public static Asiakas haeAsiakas(String enimi, String snimi, String puhnro){
+        try(Session session = Main.sessionFactory.openSession()){
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Asiakas> cq = cb.createQuery(Asiakas.class);
+            Root<Asiakas> root = cq.from(Asiakas.class);
+
+            cq.select(root).where(
+                    cb.equal(root.get("etunimi"), enimi),
+                    cb.equal(root.get("sukunimi"), snimi),
+                    cb.equal(root.get("puhelinnro"), puhnro)
+            );
+            Query<Asiakas> query = session.createQuery(cq);
+            Asiakas asiakas = query.uniqueResult();
+            tx.commit();
+            return asiakas;
+        }
+        catch (Exception e){
+            return null;
         }
     }
 }

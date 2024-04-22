@@ -65,7 +65,6 @@ public class Alue {
             query.setParameter("nimi", alueNimi);
             alue = query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return alue;
     }

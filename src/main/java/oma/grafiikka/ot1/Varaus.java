@@ -99,10 +99,10 @@ public class Varaus {
     }
 
 
-    public void lisaaVaraus(Varaus varaus, SessionFactory sessionFactory){
-        try (Session session = sessionFactory.openSession()) {
+    public static void lisaaVaraus(Varaus varaus){
+        try (Session session = Main.sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(varaus);
+            session.persist(varaus);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

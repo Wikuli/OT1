@@ -25,6 +25,10 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -33,7 +37,9 @@ import java.util.*;
  * Aukeavien ikkunoiden sisällä olevia metodeja. Metodeja niimmaan perkeleesti.
  */
 public class Controller implements Initializable {
-
+    Mokki valittuMokki;
+    @FXML
+    public Button varausHaeAs;
     public TextField addAreaTextField;
     @FXML
     public ListView areaListView;
@@ -61,6 +67,14 @@ public class Controller implements Initializable {
     public TextField muokattuPalvelunKuvausTextField;
     public TextField muokattuPalvelunHintaTextField;
     public TextField muokattuPalvelunAlvTextField;
+    @FXML
+    public TextField haeVarausAsEnimi;
+    @FXML
+    public TextField haeVarausAsSnimi;
+    @FXML
+    public TextField haeVarausAsPuhnro;
+    @FXML
+    public TextArea asiakastiedotVaraus;
 
     @FXML
     private TextField muokattuMokinNimi;
@@ -505,9 +519,9 @@ public class Controller implements Initializable {
     public void deleteThisReservation(ActionEvent actionEvent) {
     }
 
+    Date alku;
+    Date loppu;
     public void findThisCabin(ActionEvent actionEvent) {
-        Date alku;
-        Date loppu;
         try {
             alku = Date.valueOf(AlkuPvm.getValue());
         }
@@ -577,8 +591,29 @@ public class Controller implements Initializable {
 
     }
 
+    Asiakas valittuAs;
+    public void haeAs(ActionEvent actionEvent) {
+        String varausEnimi = haeVarausAsEnimi.getText();
+        String varausSnimi = haeVarausAsSnimi.getText();
+        String varausPuhnro = haeVarausAsPuhnro.getText();
+        if(varausSnimi.isBlank() || varausEnimi.isEmpty() || varausPuhnro.isEmpty()){
+            return;
+        }
+        valittuAs = Asiakas.haeAsiakas(varausEnimi, varausSnimi, varausPuhnro);
+        if(valittuAs == null){
+            return;
+        }
+
+    }
 
     public void makeReservation(ActionEvent actionEvent) {
+        if (valittuAs == null || valittuMokki == null || alku == null || loppu == null){
+            return;
+        }
+        LocalDate lDate = LocalDate.now();
+        Date date = Date.valueOf(lDate);
+        Varaus varaus = new Varaus(valittuAs, valittuMokki, date, null, alku, loppu);
+        Varaus.lisaaVaraus(varaus);
     }
 
     public void serviceReportSearch(ActionEvent actionEvent) {
@@ -855,4 +890,5 @@ public class Controller implements Initializable {
         naytaAlueenPalvelut();
         palvelunTiedotTextFieldeihin();
     }
+
 }

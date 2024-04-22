@@ -22,19 +22,18 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ListView fx:id="palvelutListView" layoutX="41.0" layoutY="118.0" prefHeight="227.0" prefWidth="158.0" />
+      <ListView fx:id="palvelutListView" layoutX="41.0" layoutY="118.0" onMouseClicked="#naytaPalvelunTiedotTextAreassa" prefHeight="227.0" prefWidth="158.0" />
       <TextArea fx:id="palvelunTiedotTextArea" editable="false" layoutX="212.0" layoutY="118.0" prefHeight="227.0" prefWidth="196.0" />
       <Button fx:id="deleteArealServiceButton" layoutX="41.0" layoutY="350.0" mnemonicParsing="false" onAction="#deleteServiceFromArea" text="Poista palvelu alueelta" />
-      <Button fx:id="naytaPalvelunTiedotButton" layoutX="212.0" layoutY="350.0" mnemonicParsing="false" onAction="#naytaPalvelunTiedot" text="Näytä palvelun tiedot" />
       <Label layoutX="41.0" layoutY="417.0" text="Muokkaa palvelun tietoja">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="43.0" layoutY="460.0" promptText="Uuden palvelun nimi" />
-      <TextField layoutX="43.0" layoutY="503.0" promptText="Uuden palvelun kuvaus" />
-      <TextField layoutX="43.0" layoutY="545.0" promptText="Uuden palvelun hinta" />
-      <TextField layoutX="43.0" layoutY="583.0" promptText="Uuden palvelun alv" />
+      <TextField fx:id="muokattuPalvelunNimiTextField" layoutX="43.0" layoutY="460.0" promptText="Muokkaa palvelun nimeä" />
+      <TextField fx:id="muokattuPalvelunKuvausTextField" layoutX="43.0" layoutY="503.0" promptText="Muokkaa palvelun kuvausta" />
+      <TextField fx:id="muokattuPalvelunHintaTextField" layoutX="43.0" layoutY="545.0" promptText="Muokkaa palvelun hintaa" />
+      <TextField fx:id="muokattuPalvelunAlvTextField" layoutX="43.0" layoutY="583.0" promptText="Muokkaa palvelun alv:tä" />
       <Button fx:id="alterServiceButton" layoutX="43.0" layoutY="629.0" mnemonicParsing="false" onAction="#alterServiceInfo" text="Muokkaa tietoja" />
       <Label layoutX="539.0" layoutY="33.0" text="Lisää uusi palvelu alueelle">
          <font>

@@ -15,12 +15,12 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="25.0" layoutY="103.0" promptText="Palvelu" />
-      <TextField layoutX="25.0" layoutY="157.0" promptText="Alue" />
-      <DatePicker layoutX="25.0" layoutY="213.0" promptText="Alku pvm" />
+      <TextField fx:id ="palveluTextFieldRaporti" layoutX="25.0" layoutY="103.0" promptText="Palvelu" />
+      <TextField fx:id ="alueTextFiedRaportti" layoutX="25.0" layoutY="157.0" promptText="Alue" />
+      <DatePicker fx:id="alkuPaivaMaara" layoutX="25.0" layoutY="213.0" promptText="Alku pvm" />
       <Label layoutX="208.0" layoutY="217.0" text="-" />
-      <DatePicker layoutX="223.0" layoutY="213.0" promptText="Loppu pvm" />
+      <DatePicker fx:id="loppuPaivaMaara" layoutX="223.0" layoutY="213.0" promptText="Loppu pvm" />
       <Button fx:id="serviceReportButton" layoutX="25.0" layoutY="285.0" mnemonicParsing="false" onAction="#serviceReportSearch" text="Syötä" />
-      <TextArea editable="false" layoutX="25.0" layoutY="341.0" prefHeight="303.0" prefWidth="303.0" />
+      <TextArea fx:id="palvelunTiedotTextArea" editable="false" layoutX="25.0" layoutY="341.0" prefHeight="303.0" prefWidth="303.0" />
    </children>
 </AnchorPane>

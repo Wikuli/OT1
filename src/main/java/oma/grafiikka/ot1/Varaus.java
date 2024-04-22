@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "varaus")
@@ -32,6 +33,8 @@ public class Varaus {
     private Date varattu_alkupvm;
     @Column(name = "varattu_loppupvm", columnDefinition = "DATETIME")
     private Date varattu_loppupvm;
+    @OneToMany (mappedBy = "varaus")
+    private List<Varauksen_palvelut> varauksenPalveluList;
 
     public Varaus(Asiakas asiakas, Mokki mokki, Date varattu_pvm, Date vahvistus_pvm, Date varattu_alkupvm, Date varattu_loppupvm) {
         this.asiakas = asiakas;

@@ -38,6 +38,8 @@ import java.util.*;
  * Aukeavien ikkunoiden sisällä olevia metodeja. Metodeja niimmaan perkeleesti.
  */
 public class Controller implements Initializable {
+    public static Date alku;
+    public static Date loppu;
     @FXML
     public Button varausHaeAs;
     public AnchorPane toimintoOnnistuiAnchorPane = new AnchorPane();
@@ -45,7 +47,7 @@ public class Controller implements Initializable {
     public TextArea mokinTiedotTextAres;
     @FXML
     public TextArea valittuMokkiTextArea;
-    Mokki valittuMokki;
+    public static Mokki valittuMokki;
     public TextField addAreaTextField;
     @FXML
     public ListView areaListView;
@@ -562,17 +564,17 @@ public class Controller implements Initializable {
     public void deleteThisReservation(ActionEvent actionEvent) {
     }
 
-    Date alku;
-    Date loppu;
     public void findThisCabin(ActionEvent actionEvent) {
         try {
-            alku = Date.valueOf(AlkuPvm.getValue());
+            this.alku = Date.valueOf(AlkuPvm.getValue());
+            System.out.println(alku);
         }
         catch (Exception e){
             return;
         }
         try {
-            loppu = Date.valueOf(LoppuPvm.getValue());
+            this.loppu = Date.valueOf(LoppuPvm.getValue());
+            System.out.println(loppu);
         }
         catch (Exception e){
             return;
@@ -647,12 +649,18 @@ public class Controller implements Initializable {
     }
 
     public void makeReservation(ActionEvent actionEvent) {
+        System.out.println("makeReservation");
+        System.out.println("valittuas " + valittuAs);
+        System.out.println("valittumokk " + valittuMokki);
+        System.out.println("alku " + alku);
+        System.out.println("loppu " + loppu);
         if (valittuAs == null || valittuMokki == null || alku == null || loppu == null){
             return;
         }
         LocalDate lDate = LocalDate.now();
         Date date = Date.valueOf(lDate);
         Varaus varaus = new Varaus(valittuAs, valittuMokki, date, null, alku, loppu);
+        System.out.println(varaus);
         Varaus.lisaaVaraus(varaus);
     }
 
@@ -917,7 +925,7 @@ public class Controller implements Initializable {
     }
 
     public void valitseMokki(ActionEvent actionEvent) throws IOException {
-        valittuMokki = valitseMokkiListaltaListView.getSelectionModel().getSelectedItem();
+        this.valittuMokki = valitseMokkiListaltaListView.getSelectionModel().getSelectedItem();
         popUpIkkunanLuoja("/uusiVaraus.fxml", "Uusi varaus");
 
         /*valittuMokkiTextArea.setText("Mökin nimi: " + valittuMokki.getMokkinimi() + "\n" +

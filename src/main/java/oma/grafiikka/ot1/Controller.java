@@ -1,14 +1,10 @@
 package oma.grafiikka.ot1;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,21 +12,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.SQLOutput;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -48,6 +37,7 @@ public class Controller implements Initializable {
     public TextArea mokinTiedotTextAres;
     @FXML
     public TextArea valittuMokkiTextArea;
+    public TextArea varauksenTiedotTextArea;
     public static Mokki valittuMokki;
     public TextField addAreaTextField;
     @FXML
@@ -65,6 +55,7 @@ public class Controller implements Initializable {
     public ListView jarjestelmanMokit;
     public ListView areaListViewService;
     public ListView palvelutListView;
+    public ListView<Varaus> varauksetListView;
     public TextField haeAlueTextField;
     public TextArea palvelunTiedotTextArea;
     public TextField uudenPalvelunNimiTextField;
@@ -151,6 +142,9 @@ public class Controller implements Initializable {
         }
         if(palveluLV != null){
             initializePalveluLV();
+        }
+        if(varauksetListView != null) {
+            initializeVarausLV();
         }
     }
 
@@ -247,6 +241,59 @@ public class Controller implements Initializable {
         palveluLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
+    public void initializeVarausLV(){
+        varauksetListView.setCellFactory(new Callback<ListView<Varaus>, ListCell<Varaus>>() {
+            @Override
+            public ListCell<Varaus> call(ListView<Varaus> param) {
+                return new ListCell<Varaus>(){
+                    @Override
+                    protected void updateItem(Varaus varaus, boolean empty){
+                        super.updateItem(varaus, empty);
+                        if(varaus != null){
+                            setText(varaus.getVarattu_alkupvm() + " - " + varaus.getVarattu_loppupvm());
+                        }
+                        else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+
+        varauksetListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        varauksetListView.getSelectionModel().selectedItemProperty().addListener((observable, oldVaraus, newVaraus) -> {
+            Double millis1 = (double) newVaraus.getVarattu_alkupvm().getTime();
+            Double millis2 = (double) newVaraus.getVarattu_loppupvm().getTime();
+            Double erotus = millis2 - millis1;
+            Double paivina = (erotus / (1000 * 60 * 60 * 24));
+            Calendar kalenteri = Calendar.getInstance();
+            kalenteri.setTime(newVaraus.getVarattu_loppupvm());
+            kalenteri.add(Calendar.DATE, 30);
+            Date erapaiva = new Date(kalenteri.getTimeInMillis());
+            if (newVaraus == null) {
+                varauksenTiedotTextArea.clear();
+            }
+            else {
+                varauksenTiedotTextArea.setText("Asiakkaan nimi: " + newVaraus.getAsiakas().getEtunimi() + " " +
+                        "" + newVaraus.getAsiakas().getSukunimi() + "\n" +
+                        "Asiakkaan puhelinnumero: " + newVaraus.getAsiakas().getPuhelinnro() + "\n" +
+                        "Asiakkaan sposti: " + newVaraus.getAsiakas().getEmail() + "\n" +
+                        "Asiakkaan osoite: " + newVaraus.getAsiakas().getLahiosoite() + "\n" +
+                        "Asiakkaan postinumero: " + newVaraus.getAsiakas().getPostiNro() + "\n\n" +
+                        "Varauksen alku: " + newVaraus.getVarattu_alkupvm() + "\n" +
+                        "Varauksen loppu: " + newVaraus.getVarattu_loppupvm() + "\n" +
+                        "Vahvistus: " + newVaraus.getVahvistus_pvm() + "\n" +
+                        "Varauksen pvm: " + newVaraus.getVarattu_pvm() + "\n\n" +
+                        "Mökin nimi: " + newVaraus.getMokki().getMokkinimi() + "\n" +
+                        "Majoituspäivien määrä: " + Math.round(paivina) + "\n" +
+                        "Mökin hinta per vrk: " + newVaraus.getMokki().getHinta() + "\n\n" +
+                        "Mökin hinta kokonaisuudessaan: " + paivina * newVaraus.getMokki().getHinta() + "\n" +
+                        "Eräpäivä: " + erapaiva);
+            }
+        });
+    }
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Apukoodit
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -284,6 +331,10 @@ public class Controller implements Initializable {
 
         listView.setItems(FXCollections.observableArrayList(nimet));
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    }
+
+    public void haeVarauksetLaskutus(ActionEvent actionEvent) {
+        varauksetListView.setItems(FXCollections.observableArrayList(kaikkiVaraukset()));
     }
 
     /**
@@ -340,6 +391,17 @@ public class Controller implements Initializable {
         try (Session session = Main.sessionFactory.openSession()) {
             Query<Alue> alueQuery = session.createQuery("from Alue", Alue.class);
             return alueQuery.getResultList();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List <Varaus> kaikkiVaraukset() {
+        try (Session session = Main.sessionFactory.openSession()) {
+            Query<Varaus> varausQuery = session.createQuery("from Varaus", Varaus.class);
+            return varausQuery.getResultList();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -585,7 +647,7 @@ public class Controller implements Initializable {
 
     public void findReservations(ActionEvent actionEvent) {
         Asiakas asiakas = Asiakas.haeAsiakas("Urho", "Kekkonen", "112");
-        System.out.println(Varaus.etsiVaraus(asiakas));
+        System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
     }
 
     public void deleteThisReservation(ActionEvent actionEvent) {
@@ -770,11 +832,16 @@ public class Controller implements Initializable {
         }
         naytaViestiToiminnonOnnistumisesta("Palvelun tietoja muokattu!");
     }
-
-    public void createPaperInvoice(ActionEvent actionEvent) {
-    }
-
-    public void createEmailInvoice(ActionEvent actionEvent) {
+    // ================================================================================================================================================
+    public void createEmailInvoice(ActionEvent actionEvent) throws IOException {
+        luoPdf.luoPdfDoc("Lasku, " +
+                varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getSukunimi() + " " +
+                varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getEtunimi() + " (" +
+                varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + ").pdf",
+                varauksenTiedotTextArea.getText() + "\n" +
+                "Tilinumero: FI12 3456 7891 0111 21\nSaaja: Village Newbies Oy\nViite: " +
+                        varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + "0000000" );
+        naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
     }
 
     public void findInvoice(ActionEvent actionEvent) {

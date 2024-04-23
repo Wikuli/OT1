@@ -6,6 +6,8 @@ module oma.grafiikka.ot1 {
     requires jakarta.persistence;
     requires java.naming;
     requires javafx.graphics;
+    requires kernel;
+    requires layout;
 
 
     opens oma.grafiikka.ot1 to javafx.fxml, org.hibernate.orm.core;

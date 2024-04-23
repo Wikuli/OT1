@@ -20,10 +20,10 @@ public class Varaus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "varaus_id")
     private int varaus_id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "asiakas_id")
     private Asiakas asiakas;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mokki_id")
     private Mokki mokki;
     @Column(name = "varattu_pvm", columnDefinition = "DATETIME")
@@ -140,7 +140,7 @@ public class Varaus {
             return true;
         }
     }
-    public static List<Varaus> etsiVaraus(Asiakas asiakas) {
+    public static List<Varaus> etsiVaraus(Asiakas asiakas, SessionFactory sessionFactory) {
         Date date = Date.valueOf(LocalDate.now());
         int id = asiakas.getAsiakas_id();
         try (Session session = Main.sessionFactory.openSession()) {
@@ -161,6 +161,7 @@ public class Varaus {
             return null;
         }
     }
+
     public static void poistaVaraus(Varaus varaus){
         try(Session session = Main.sessionFactory.openSession()){
             Transaction transaction = session.beginTransaction();

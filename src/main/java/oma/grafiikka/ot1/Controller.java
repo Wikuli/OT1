@@ -23,9 +23,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * This class contains methods that give functionality to the elements in the ui. HUOM!!! Ensimmäiset 10 metodia ovat
- * järjestyksessä Buttonit aloitusnäytöltä. Tämän seikan huomioiminen saattaa paranttaa luettavuutta. Muut metodit ovat
- * Aukeavien ikkunoiden sisällä olevia metodeja. Metodeja niimmaan perkeleesti.
+ * This class contains methods that give functionality to the elements in the ui.
  */
 public class Controller implements Initializable {
     public static Date alku;
@@ -75,6 +73,9 @@ public class Controller implements Initializable {
     public TextField haeVarausAsPuhnro;
     @FXML
     public TextArea asiakastiedotVaraus;
+    public TextField laskujenSeurantaEtuNimiTF;
+    public TextField laskujenSeurantaSukuNimiTF;
+    public TextField laskujenSeurantaPuhTF;
 
     @FXML
     private TextField muokattuMokinNimi;
@@ -845,6 +846,16 @@ public class Controller implements Initializable {
     }
 
     public void findInvoice(ActionEvent actionEvent) {
+        String varausEnimi = laskujenSeurantaEtuNimiTF.getText();
+        String varausSnimi = laskujenSeurantaSukuNimiTF.getText();
+        String varausPuhnro = laskujenSeurantaPuhTF.getText();
+        if(varausSnimi.isBlank() || varausEnimi.isEmpty() || varausPuhnro.isEmpty()){
+            return;
+        }
+        valittuAs = Asiakas.haeAsiakas(varausEnimi, varausSnimi, varausPuhnro);
+        if(valittuAs == null){
+            return;
+        }
     }
 
     public void invoicePayed(ActionEvent actionEvent) {

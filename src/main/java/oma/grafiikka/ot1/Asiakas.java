@@ -196,6 +196,14 @@ public class Asiakas {
         this.puhelinnro = puhelinnro;
     }
 
+    public List<Varaus> getVaraukset() {
+        return varaukset;
+    }
+
+    public void setVaraukset(List<Varaus> varaukset) {
+        this.varaukset = varaukset;
+    }
+
     /**
      * metodi asiakkaan lisäämiselle
      * @param asiakas eli asiakas olio

@@ -98,12 +98,29 @@ public class Varaus {
         return varattu_loppupvm;
     }
 
+    /**
+     * set-metodi varauksen loppupäivämäärälle
+     * @param varattu_loppupvm eli varauksen loppu päivämäärä
+     */
     public void setVarattu_loppupvm(Date varattu_loppupvm) {
         this.varattu_loppupvm = varattu_loppupvm;
     }
 
-
-
+    /**
+     * Metodi varauksen lisäykseen
+     * @param varaus parametrina toimii varaus olio
+     */
+    public static void lisaaVaraus(Varaus varaus){
+        try (Session session = Main.sessionFactory.openSession()) {
+            System.out.println("lisaa varauksen sisällä");
+            System.out.println(varaus);
+            Transaction transaction = session.beginTransaction();
+            session.persist(varaus);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static boolean onVarattu(Date alkuPvm, Date loppuPvm, int id, SessionFactory sessionFactory){
         try{

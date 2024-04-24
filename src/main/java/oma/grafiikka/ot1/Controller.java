@@ -1,6 +1,7 @@
 package oma.grafiikka.ot1;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -141,6 +142,51 @@ public class Controller implements Initializable {
     @FXML
     public TextField editLahiosTF;
 
+    public void findInvoice(ActionEvent actionEvent) {
+        List<Varaus> varaukset = etsiAsiakkaanLaskut();
+        ObservableList<Varaus> obsVaraukset = FXCollections.observableList(varaukset);
+        asiakkaanLaskutLV.setItems(obsVaraukset);
+        etsiAsiakkaanLaskut();
+    }
+    public Asiakas valittuAsiakas;
+    public List<Varaus> etsiAsiakkaanLaskut() {
+        System.out.println("toimii");
+        String laskuEnimi = laskujenSeurantaEtuNimiTF.getText();
+        String laskuSnimi = laskujenSeurantaSukuNimiTF.getText();
+        String laskuPuhnro = laskujenSeurantaPuhTF.getText();
+
+        valittuAsiakas = Asiakas.haeAsiakas(laskuEnimi, laskuSnimi, laskuPuhnro);
+        assert valittuAsiakas != null;
+
+        if(laskuEnimi.isBlank() || laskuSnimi.isEmpty() || laskuPuhnro.isEmpty()){
+            System.out.println("if");
+            return null;
+        }
+        else {
+            System.out.println("else");
+            return valittuAsiakas.getVaraukset();
+        }
+    }
+
+    public void initializeAsLaskutLV(){
+        asiakkaanLaskutLV.setCellFactory(new Callback<ListView<Varaus>, ListCell<Varaus>>() {
+            @Override
+            public ListCell<Varaus> call(ListView<Varaus> param) {
+                return new ListCell<Varaus>(){
+                    @Override
+                    protected void updateItem(Varaus varaus, boolean empty){
+                        super.updateItem(varaus, empty);
+                        if(varaus != null){
+                            setText(varaus.getVarattu_alkupvm() + " - " + varaus.getVarattu_loppupvm());
+                        }
+                        else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
@@ -155,6 +201,9 @@ public class Controller implements Initializable {
         }
         if(varauksetListView != null) {
             initializeVarausLV();
+        }
+        if(asiakkaanLaskutLV != null) {
+            initializeAsLaskutLV();
         }
     }
 
@@ -852,19 +901,6 @@ public class Controller implements Initializable {
                 "Tilinumero: FI12 3456 7891 0111 21\nSaaja: Village Newbies Oy\nViite: " +
                         varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + "0000000" );
         naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
-    }
-
-    public void findInvoice(ActionEvent actionEvent) {
-        String varausEnimi = laskujenSeurantaEtuNimiTF.getText();
-        String varausSnimi = laskujenSeurantaSukuNimiTF.getText();
-        String varausPuhnro = laskujenSeurantaPuhTF.getText();
-        if(varausSnimi.isBlank() || varausEnimi.isEmpty() || varausPuhnro.isEmpty()){
-            return;
-        }
-        valittuAs = Asiakas.haeAsiakas(varausEnimi, varausSnimi, varausPuhnro);
-        if(valittuAs == null){
-            return;
-        }
     }
 
     public void invoicePayed(ActionEvent actionEvent) {

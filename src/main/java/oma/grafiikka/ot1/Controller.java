@@ -1,7 +1,6 @@
 package oma.grafiikka.ot1;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,6 +80,11 @@ public class Controller implements Initializable {
     public ListView laskutMaksettuLV;
     public ListView laskutAvoinnaLV;
     public TextArea laskunTiedotTA;
+    public TextField haeVarauspoistoEnimi;
+    public TextField haeVVarauspoistoSnimi;
+    public TextField haeVarauspoistoPuhnro;
+    public ListView varausPoistoLV;
+    public TextArea varausPoistoTiedotTA;
 
     @FXML
     private TextField muokattuMokinNimi;
@@ -138,37 +142,6 @@ public class Controller implements Initializable {
     public TextField editLahiosTF;
 
 
-    public void findInvoice(ActionEvent actionEvent) {
-        List<Varaus> varaukset = etsiAsiakkaanLaskut();
-        if(varaukset == null){
-            System.out.println("varaukset null 69696969");
-            return;
-        }
-
-        ObservableList<Varaus> obsVaraukset = FXCollections.observableList(varaukset);
-        asiakkaanLaskutLV.setItems(obsVaraukset);
-        System.out.println(obsVaraukset + " " + asiakkaanLaskutLV);
-    }
-    public Asiakas valittuAsiakas;
-    public List<Varaus> etsiAsiakkaanLaskut() {
-        System.out.println("toimii");
-        String laskuEnimi = laskujenSeurantaEtuNimiTF.getText();
-        String laskuSnimi = laskujenSeurantaSukuNimiTF.getText();
-        String laskuPuhnro = laskujenSeurantaPuhTF.getText();
-
-        valittuAsiakas = Asiakas.haeAsiakas(laskuEnimi, laskuSnimi, laskuPuhnro);
-        assert valittuAsiakas != null;
-
-        if(laskuEnimi.isBlank() || laskuSnimi.isEmpty() || laskuPuhnro.isEmpty()){
-            System.out.println("if");
-            return null;
-        }
-        else {
-            System.out.println("else");
-            return valittuAsiakas.getVaraukset();
-        }
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
         if(asiakasLV != null){
@@ -182,10 +155,6 @@ public class Controller implements Initializable {
         }
         if(varauksetListView != null) {
             initializeVarausLV();
-        }
-        if(asiakkaanLaskutLV != null){
-            System.out.println("AsiakaslaskutLV not null");
-            initializeAsLaskutLV();
         }
     }
 
@@ -334,26 +303,7 @@ public class Controller implements Initializable {
             }
         });
     }
-    public void initializeAsLaskutLV(){
 
-        asiakkaanLaskutLV.setCellFactory(new Callback<ListView<Varaus>, ListCell<Varaus>>() {
-            @Override
-            public ListCell<Varaus> call(ListView<Varaus> param) {
-                return new ListCell<Varaus>(){
-                    @Override
-                    protected void updateItem(Varaus varaus, boolean empty){
-                        super.updateItem(varaus, empty);
-                        if(varaus != null){
-                            setText(varaus.getVarattu_alkupvm() + " - " + varaus.getVarattu_loppupvm());
-                        }
-                        else {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
-    }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Apukoodit
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -794,6 +744,7 @@ public class Controller implements Initializable {
         if(valittuAs == null){
             return;
         }
+
     }
 
     public void makeReservation(ActionEvent actionEvent) {
@@ -903,7 +854,18 @@ public class Controller implements Initializable {
         naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
     }
 
-
+    public void findInvoice(ActionEvent actionEvent) {
+        String varausEnimi = laskujenSeurantaEtuNimiTF.getText();
+        String varausSnimi = laskujenSeurantaSukuNimiTF.getText();
+        String varausPuhnro = laskujenSeurantaPuhTF.getText();
+        if(varausSnimi.isBlank() || varausEnimi.isEmpty() || varausPuhnro.isEmpty()){
+            return;
+        }
+        valittuAs = Asiakas.haeAsiakas(varausEnimi, varausSnimi, varausPuhnro);
+        if(valittuAs == null){
+            return;
+        }
+    }
 
     public void invoicePayed(ActionEvent actionEvent) {
     }

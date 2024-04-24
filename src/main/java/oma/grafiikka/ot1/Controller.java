@@ -76,6 +76,11 @@ public class Controller implements Initializable {
     public TextField laskujenSeurantaEtuNimiTF;
     public TextField laskujenSeurantaSukuNimiTF;
     public TextField laskujenSeurantaPuhTF;
+    public TextField haeVarauspoistoEnimi;
+    public TextField haeVVarauspoistoSnimi;
+    public TextField haeVarauspoistoPuhnro;
+    public ListView varausPoistoLV;
+    public TextArea varausPoistoTiedotTA;
 
     @FXML
     private TextField muokattuMokinNimi;
@@ -647,11 +652,25 @@ public class Controller implements Initializable {
     }
 
     public void findReservations(ActionEvent actionEvent) {
-        Asiakas asiakas = Asiakas.haeAsiakas("Urho", "Kekkonen", "112");
+        String snimi = haeVarauspoistoEnimi.getText();
+        String enimi = haeVVarauspoistoSnimi.getText();
+        String puhnro = haeVarauspoistoPuhnro.getText();
+        Asiakas asiakas = Asiakas.haeAsiakas(enimi, snimi, puhnro);
         System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
+//        try {
+//            Asiakas asiakas = Asiakas.haeAsiakas(enimi, snimi, puhnro);
+//            System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
+//
+//        }
+//        catch (Exception e){
+//            return;
+//        }
+//        Asiakas asiakas = Asiakas.haeAsiakas("Urho", "Kekkonen", "112");
+//        System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
     }
 
     public void deleteThisReservation(ActionEvent actionEvent) {
+
     }
 
     public void findThisCabin(ActionEvent actionEvent) {

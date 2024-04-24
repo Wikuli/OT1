@@ -113,24 +113,10 @@ public class Asiakas {
     }
 
 
-    public static void lisaaAsiakas(Asiakas asiakas, SessionFactory sessionFactory){
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.save(asiakas);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void poistaAsiakas(Asiakas asiakas){
-        try(Session session = Main.sessionFactory.openSession()){
-            Transaction transaction = session.beginTransaction();
-            session.remove(asiakas);
-            transaction.commit();
-        }
-    }
-
+    /**
+     * metodi jonka avulla päästään näkemään lista kaikista asiakkaista
+     * @return listan asiakkaista
+     */
     public static List<Asiakas> kaikkiAsiakkaat(){
         try (Session session = Main.sessionFactory.openSession();){
             Transaction transaction = session.beginTransaction();
@@ -145,6 +131,17 @@ public class Asiakas {
             return null;
         }
     }
+
+    /**
+     *
+     * @param asiakas
+     * @param enimi
+     * @param snimi
+     * @param lahiosoite
+     * @param posti
+     * @param sposti
+     * @param puhnro
+     */
     public static void paivitaAsiakas(Asiakas asiakas, String enimi, String snimi, String lahiosoite, Posti posti, String sposti, String puhnro){
         try(Session session = Main.sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();
@@ -162,6 +159,13 @@ public class Asiakas {
         }
     }
 
+    /**
+     * metodi asiakkaiden hakemiselle
+     * @param enimi eli asiakkaan etunimi
+     * @param snimi eli asiakkaan sukunimi
+     * @param puhnro eli asiakkaan puhelinnumero
+     * @return
+     */
     public static Asiakas haeAsiakas(String enimi, String snimi, String puhnro){
         try(Session session = Main.sessionFactory.openSession()){
             Transaction tx = session.beginTransaction();

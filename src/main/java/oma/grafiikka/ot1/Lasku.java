@@ -6,6 +6,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 /**
  * Luokka missä käsitellään SQL:n lasku taulua, sekä sille tarvittavat kentät ja metodit
  */
@@ -22,7 +26,7 @@ public class Lasku {
     /**
      * Kenttä varauksen id_lle
      */
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn (name = "varaus_id")
     private Varaus varaus;
     /**
@@ -39,22 +43,17 @@ public class Lasku {
      * kenttä maksun tiedosta
      */
     @Column(name = "maksettu")
-    private char maksettu;
+    private int maksettu;
 
     /**
      * Laskun alustajja
-     * @param lasku_id eli laskun id
-     * @param varaus eli varauksen id
-     * @param summa eli laskun hinta
-     * @param alv eli alvi
-     * @param maksettu tieto maksun tilanteesta
+     * @param varaus Varaus, jolle lasku luodaan
      */
-    public Lasku(int lasku_id, Varaus varaus, double summa, double alv, char maksettu) {
-        this.lasku_id = lasku_id;
+    public Lasku(Varaus varaus) {
         this.varaus = varaus;
-        this.summa = summa;
-        this.alv = alv;
-        this.maksettu = maksettu;
+        this.summa = ChronoUnit.DAYS.between(varaus.getVarattu_alkupvm().toLocalDate(), varaus.getVarattu_loppupvm().toLocalDate()) * varaus.getMokki().getHinta();
+        this.alv = 24;
+        this.maksettu = 0;
     }
     public Lasku(){}
 
@@ -126,7 +125,7 @@ public class Lasku {
      * Get-metodi maksun tilanteelle
      * @return maksettu tila eli onko maksettu vai ei
      */
-    public char getMaksettu() {
+    public int getMaksettu() {
         return maksettu;
     }
 
@@ -134,7 +133,7 @@ public class Lasku {
      * Set-metodi maksun tilanteelle
      * @param maksettu eli onko maksettu vai ei
      */
-    public void setMaksettu(char maksettu) {
+    public void setMaksettu(int maksettu) {
         this.maksettu = maksettu;
     }
 
@@ -142,7 +141,7 @@ public class Lasku {
     public void lisaaLasku(Lasku lasku, SessionFactory sessionFactory){
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(lasku);
+            session.persist(lasku);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

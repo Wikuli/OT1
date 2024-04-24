@@ -55,8 +55,10 @@ public class Varaus {
      */
     @Column(name = "varattu_loppupvm", columnDefinition = "DATETIME")
     private Date varattu_loppupvm;
-    //@OneToMany (mappedBy = "varaus")
+    //@OneToOne (mappedBy = "varaus")
     //private List<Varauksen_palvelut> varauksenPalveluList;
+    @OneToMany(mappedBy = "varaus", fetch = FetchType.EAGER)
+    private List<Lasku> laskut;
 
     /**
      * varausten alustaja
@@ -78,6 +80,10 @@ public class Varaus {
 
     public Varaus(){
 
+    }
+
+    public List<Lasku> getLaskut(){
+        return laskut;
     }
 
     /**

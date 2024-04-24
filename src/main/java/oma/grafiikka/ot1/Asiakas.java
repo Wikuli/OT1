@@ -53,7 +53,7 @@ public class Asiakas {
      */
     @Column(name = "puhelinnro")
     private String puhelinnro;
-    @OneToMany(mappedBy = "asiakas")
+    @OneToMany(mappedBy = "asiakas", fetch = FetchType.EAGER)
     private List<Varaus> varaukset;
 
     /**

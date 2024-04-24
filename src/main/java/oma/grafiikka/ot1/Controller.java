@@ -1,5 +1,7 @@
 package oma.grafiikka.ot1;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -77,9 +79,9 @@ public class Controller implements Initializable {
     public TextField laskujenSeurantaEtuNimiTF;
     public TextField laskujenSeurantaSukuNimiTF;
     public TextField laskujenSeurantaPuhTF;
-    public ListView asiakkaanLaskutLV;
+    public ListView<Varaus> asiakkaanLaskutLV;
     public ListView laskutMaksettuLV;
-    public ListView laskutAvoinnaLV;
+    public ListView<Lasku> laskutAvoinnaLV;
     public TextArea laskunTiedotTA;
     public TextField haeVarauspoistoEnimi;
     public TextField haeVVarauspoistoSnimi;
@@ -184,6 +186,21 @@ public class Controller implements Initializable {
                         }
                     }
                 };
+            }
+        });
+
+        asiakkaanLaskutLV.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue == null){
+                laskunTiedotTA.clear();
+            }
+            else {
+                laskunTiedotTA.setText(
+                        newValue.getAsiakas().getEtunimi() + " " + newValue.getAsiakas().getSukunimi() + "\n"
+                        + newValue.getMokki().getMokkinimi() + "\n"
+                        + newValue.getVarattu_alkupvm() + "\n"
+                        + newValue.getVarattu_loppupvm()
+                        //+ newValue.getLasku().getMaksettu()
+                );
             }
         });
     }
@@ -901,9 +918,21 @@ public class Controller implements Initializable {
                 "Tilinumero: FI12 3456 7891 0111 21\nSaaja: Village Newbies Oy\nViite: " +
                         varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + "0000000" );
         naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
+        Varaus varaus = varauksetListView.getSelectionModel().getSelectedItem();
+        Lasku lasku = new Lasku(varaus);
+        lasku.lisaaLasku(lasku, Main.sessionFactory);
     }
 
     public void invoicePayed(ActionEvent actionEvent) {
+        Varaus varaus = asiakkaanLaskutLV.getSelectionModel().getSelectedItem();
+        try(Session session = Main.sessionFactory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            List<Lasku> laskut = varaus.getLaskut();
+            for (Lasku lasku : laskut) {
+                lasku.setMaksettu(1);
+            }
+            tx.commit();
+        }
     }
 
     public void addNewCabin(ActionEvent actionEvent) throws IOException {

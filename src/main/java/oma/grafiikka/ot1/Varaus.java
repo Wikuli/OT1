@@ -103,17 +103,7 @@ public class Varaus {
     }
 
 
-    public static void lisaaVaraus(Varaus varaus){
-        try (Session session = Main.sessionFactory.openSession()) {
-            System.out.println("lisaa varauksen sisällä");
-            System.out.println(varaus);
-            Transaction transaction = session.beginTransaction();
-            session.persist(varaus);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static boolean onVarattu(Date alkuPvm, Date loppuPvm, int id, SessionFactory sessionFactory){
         try{
@@ -140,6 +130,13 @@ public class Varaus {
             return true;
         }
     }
+
+    /**
+     * metodi varauksien etsimiseen.
+     * @param asiakas Varauksien etsimiseen hyödynnetään asiakasta
+     * @param sessionFactory
+     * @return
+     */
     public static List<Varaus> etsiVaraus(Asiakas asiakas, SessionFactory sessionFactory) {
         Date date = Date.valueOf(LocalDate.now());
         int id = asiakas.getAsiakas_id();
@@ -162,6 +159,10 @@ public class Varaus {
         }
     }
 
+    /**
+     * metodi varauksen poistoon
+     * @param varaus eli varaus olio
+     */
     public static void poistaVaraus(Varaus varaus){
         try(Session session = Main.sessionFactory.openSession()){
             Transaction transaction = session.beginTransaction();

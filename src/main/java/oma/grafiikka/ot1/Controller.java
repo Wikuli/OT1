@@ -652,8 +652,8 @@ public class Controller implements Initializable {
     }
 
     public void findReservations(ActionEvent actionEvent) {
-        String snimi = haeVarauspoistoEnimi.getText();
-        String enimi = haeVVarauspoistoSnimi.getText();
+        String enimi = haeVarauspoistoEnimi.getText();
+        String snimi = haeVVarauspoistoSnimi.getText();
         String puhnro = haeVarauspoistoPuhnro.getText();
         Asiakas asiakas = Asiakas.haeAsiakas(enimi, snimi, puhnro);
         System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));

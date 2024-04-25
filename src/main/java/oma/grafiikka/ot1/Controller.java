@@ -670,16 +670,17 @@ public class Controller implements Initializable {
      * @param actionEvent napin klikkaus
      */
     public void addNewArea(ActionEvent actionEvent) {
-        Alue alue = new Alue(addAreaTextField.getText());
-        Alue etsittyAlue = Alue.etsiAlue(alue.getNimi(), Main.sessionFactory);
-
-        if (etsittyAlue == null){
-            alue.lisaaAlue(alue, Main.sessionFactory);
+        if (!addAreaTextField.getText().isEmpty()) {
+            Alue alue = new Alue(addAreaTextField.getText());
+            Alue etsittyAlue = Alue.etsiAlue(alue.getNimi(), Main.sessionFactory);
+            if (etsittyAlue == null){
+                alue.lisaaAlue(alue, Main.sessionFactory);
+            }
+            else {
+                addAreaTextField.setText("Alue jo järjestelmässä!");
+            }
+            naytaAlueListView(areaListView);
         }
-        else {
-            System.out.println("Elä perkele");
-        }
-        naytaAlueListView(areaListView);
     }
 
     /**
@@ -692,6 +693,7 @@ public class Controller implements Initializable {
             Alue alue = Alue.etsiAlue(i, Main.sessionFactory);
             Alue.poistaAlue(alue, Main.sessionFactory);
         }
+        naytaAlueListView(areaListView);
     }
 
     public void deleteCustomer(ActionEvent actionEvent) {
@@ -908,10 +910,6 @@ public class Controller implements Initializable {
             uudenPalvelunHintaTextField.setText("Ei aluetta valittu");
             uudenPalvelunAlvTextField.setText("Ei aluetta valittu");
         }
-
-
-
-
     }
 
     public void alterServiceInfo(ActionEvent actionEvent) throws IOException {
@@ -942,17 +940,19 @@ public class Controller implements Initializable {
     }
     // ================================================================================================================================================
     public void createEmailInvoice(ActionEvent actionEvent) throws IOException {
-        luoPdf.luoPdfDoc("Lasku, " +
-                varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getSukunimi() + " " +
-                varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getEtunimi() + " (" +
-                varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + ").pdf",
-                varauksenTiedotTextArea.getText() + "\n" +
-                "Tilinumero: FI12 3456 7891 0111 21\nSaaja: Village Newbies Oy\nViite: " +
-                        varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + "0000000" );
-        naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
-        Varaus varaus = varauksetListView.getSelectionModel().getSelectedItem();
-        Lasku lasku = new Lasku(varaus);
-        lasku.lisaaLasku(lasku, Main.sessionFactory);
+        if (!varauksenTiedotTextArea.getText().isEmpty()) {
+            luoPdf.luoPdfDoc("Lasku, " +
+                            varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getSukunimi() + " " +
+                            varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getEtunimi() + " (" +
+                            varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + ").pdf",
+                    varauksenTiedotTextArea.getText() + "\n" +
+                            "Tilinumero: FI12 3456 7891 0111 21\nSaaja: Village Newbies Oy\nViite: " +
+                            varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + "0000000");
+            naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
+            Varaus varaus = varauksetListView.getSelectionModel().getSelectedItem();
+            Lasku lasku = new Lasku(varaus);
+            lasku.lisaaLasku(lasku, Main.sessionFactory);
+        }
     }
 
     public void invoicePayed(ActionEvent actionEvent) {
@@ -968,52 +968,53 @@ public class Controller implements Initializable {
     }
 
     public void addNewCabin(ActionEvent actionEvent) throws IOException {
-        String mokinNimi = uusiMokinNimi.getText();
-        String katuOsoite = uusiKatuOsoite.getText();
-        Double hinta = 0.0;
-        try {
-            hinta = Double.parseDouble(uusiHinta.getText());
-        }
-        catch (Exception e){
-            uusiHinta.setText("Anna desimaalilukuna!");
-            return;
-        }
-        String kuvaus = uusiKuvaus.getText();
-        int henkiloMaara = 0;
-        try {
-            henkiloMaara = Integer.parseInt(uusiHenkiloMaara.getText());
-        }
-        catch (Exception e) {
-            uusiHenkiloMaara.setText("Anna kokonaislukuna!");
-            return;
-        }
-        String varustelu = uusiVarustelu.getText();
-        String alue = AlueTextField.getText();
-        Alue haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
-        if (haettuAlue == null) {
-            Alue.lisaaAlue(new Alue(alue), Main.sessionFactory);
-        }
-        haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
-        String postiNumero = postiNumeroTextField.getText();
-        Posti etsittyPosti = Posti.etsiPosti(postiNumero, Main.sessionFactory);
-        if (etsittyPosti == null) {
-            etsittyPosti = new Posti(postiNumero, postiNumero);
-            Posti.lisaaPosti(etsittyPosti, Main.sessionFactory);
-        }
-        Mokki uusiMokki = new Mokki(haettuAlue, etsittyPosti, mokinNimi, katuOsoite, hinta, kuvaus, henkiloMaara, varustelu);
-        uusiMokki.lisaaMokki(uusiMokki, Main.sessionFactory);
-        naytaViestiToiminnonOnnistumisesta("Mökki lisätty!");
+        if (!uusiMokinNimi.getText().isEmpty() && !uusiKatuOsoite.getText().isEmpty() &&
+        !uusiHinta.getText().isEmpty() && !uusiKuvaus.getText().isEmpty() && !uusiHenkiloMaara.getText().isEmpty() &&
+        !uusiVarustelu.getText().isEmpty() && !AlueTextField.getText().isEmpty() && !postiNumeroTextField.getText().isEmpty()) {
 
-        AlueTextField.clear();
-        postiNumeroTextField.clear();
-        uusiHinta.clear();
-        uusiVarustelu.clear();
-        uusiHenkiloMaara.clear();
-        uusiKuvaus.clear();
-        uusiKatuOsoite.clear();
-        uusiMokinNimi.clear();
+            String mokinNimi = uusiMokinNimi.getText();
+            String katuOsoite = uusiKatuOsoite.getText();
+            Double hinta = 0.0;
+            try {
+                hinta = Double.parseDouble(uusiHinta.getText());
+            } catch (Exception e) {
+                uusiHinta.setText("Anna desimaalilukuna!");
+                return;
+            }
+            String kuvaus = uusiKuvaus.getText();
+            int henkiloMaara = 0;
+            try {
+                henkiloMaara = Integer.parseInt(uusiHenkiloMaara.getText());
+            } catch (Exception e) {
+                uusiHenkiloMaara.setText("Anna kokonaislukuna!");
+                return;
+            }
+            String varustelu = uusiVarustelu.getText();
+            String alue = AlueTextField.getText();
+            Alue haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
+            if (haettuAlue == null) {
+                Alue.lisaaAlue(new Alue(alue), Main.sessionFactory);
+            }
+            haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
+            String postiNumero = postiNumeroTextField.getText();
+            Posti etsittyPosti = Posti.etsiPosti(postiNumero, Main.sessionFactory);
+            if (etsittyPosti == null) {
+                etsittyPosti = new Posti(postiNumero, postiNumero);
+                Posti.lisaaPosti(etsittyPosti, Main.sessionFactory);
+            }
+            Mokki uusiMokki = new Mokki(haettuAlue, etsittyPosti, mokinNimi, katuOsoite, hinta, kuvaus, henkiloMaara, varustelu);
+            uusiMokki.lisaaMokki(uusiMokki, Main.sessionFactory);
+            naytaViestiToiminnonOnnistumisesta("Mökki lisätty!");
 
-        naytaAlueListView(areaListView);
+            AlueTextField.clear();
+            postiNumeroTextField.clear();
+            uusiHinta.clear();
+            uusiVarustelu.clear();
+            uusiHenkiloMaara.clear();
+            uusiKuvaus.clear();
+            uusiKatuOsoite.clear();
+            uusiMokinNimi.clear();
+        }
     }
 
     public void deleteCabin(ActionEvent actionEvent) {

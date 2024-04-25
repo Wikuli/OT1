@@ -241,7 +241,6 @@ public class Controller implements Initializable {
         });
         palveluLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
-
     public void initializevarausPoistoLV() {
         varausPoistoLV.setCellFactory(new Callback<ListView<Varaus>, ListCell<Varaus>>() {
             @Override
@@ -682,20 +681,14 @@ public class Controller implements Initializable {
         String enimi = haeVarauspoistoEnimi.getText();
         String snimi = haeVVarauspoistoSnimi.getText();
         String puhnro = haeVarauspoistoPuhnro.getText();
-//        Asiakas asiakas = Asiakas.haeAsiakas(enimi, snimi, puhnro);
-//        System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
         try {
             Asiakas asiakas = Asiakas.haeAsiakas(enimi, snimi, puhnro);
-            System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
             List<Varaus> varaukset = Varaus.etsiVaraus(asiakas, Main.sessionFactory);
             varausPoistoLV.setItems(FXCollections.observableList(varaukset));
-
         }
         catch (Exception e){
             return;
         }
-//        Asiakas asiakas = Asiakas.haeAsiakas("Urho", "Kekkonen", "112");
-//        System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
     }
 
     public void deleteThisReservation(ActionEvent actionEvent) {

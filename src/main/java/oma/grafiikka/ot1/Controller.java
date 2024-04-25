@@ -1,9 +1,6 @@
 package oma.grafiikka.ot1;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,29 +76,22 @@ public class Controller implements Initializable {
     public TextField laskujenSeurantaEtuNimiTF;
     public TextField laskujenSeurantaSukuNimiTF;
     public TextField laskujenSeurantaPuhTF;
-    public ListView<Varaus> asiakkaanLaskutLV;
-    public ListView laskutMaksettuLV;
-    public ListView<Lasku> laskutAvoinnaLV;
-    public TextArea laskunTiedotTA;
     public TextField haeVarauspoistoEnimi;
     public TextField haeVVarauspoistoSnimi;
     public TextField haeVarauspoistoPuhnro;
-    public ListView varausPoistoLV;
+    @FXML
+    public ListView<Varaus> varausPoistoLV;
     public TextArea varausPoistoTiedotTA;
 
     @FXML
     private TextField muokattuMokinNimi;
     @FXML
-
     private TextField muokattuHenkiloMaara;
     @FXML
-
     private TextField muokattuHinta;
     @FXML
-
     private TextField muokattuVarustelu;
     @FXML
-
     private TextField muokattuKatuOsoite;
     @FXML
     private TextField muokattuKuvaus;
@@ -144,97 +134,36 @@ public class Controller implements Initializable {
     @FXML
     public TextField editLahiosTF;
 
-    public void findInvoice(ActionEvent actionEvent) {
-        List<Varaus> varaukset = etsiAsiakkaanLaskut();
-        ObservableList<Varaus> obsVaraukset = FXCollections.observableList(varaukset);
-        asiakkaanLaskutLV.setItems(obsVaraukset);
-        etsiAsiakkaanLaskut();
-    }
-    public Asiakas valittuAsiakas;
-    public List<Varaus> etsiAsiakkaanLaskut() {
-        System.out.println("toimii");
-        String laskuEnimi = laskujenSeurantaEtuNimiTF.getText();
-        String laskuSnimi = laskujenSeurantaSukuNimiTF.getText();
-        String laskuPuhnro = laskujenSeurantaPuhTF.getText();
-
-        valittuAsiakas = Asiakas.haeAsiakas(laskuEnimi, laskuSnimi, laskuPuhnro);
-        assert valittuAsiakas != null;
-
-        if(laskuEnimi.isBlank() || laskuSnimi.isEmpty() || laskuPuhnro.isEmpty()){
-            System.out.println("if");
-            return null;
-        }
-        else {
-            System.out.println("else");
-            return valittuAsiakas.getVaraukset();
-        }
-    }
-
-    public void initializeAsLaskutLV(){
-        asiakkaanLaskutLV.setCellFactory(new Callback<ListView<Varaus>, ListCell<Varaus>>() {
-            @Override
-            public ListCell<Varaus> call(ListView<Varaus> param) {
-                return new ListCell<Varaus>(){
-                    @Override
-                    protected void updateItem(Varaus varaus, boolean empty){
-                        super.updateItem(varaus, empty);
-                        if(varaus != null){
-                            setText(varaus.getVarattu_alkupvm() + " - " + varaus.getVarattu_loppupvm());
-                        }
-                        else {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
-
-        asiakkaanLaskutLV.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue == null){
-                laskunTiedotTA.clear();
-            }
-            else {
-                laskunTiedotTA.setText(
-                        newValue.getAsiakas().getEtunimi() + " " + newValue.getAsiakas().getSukunimi() + "\n"
-                        + newValue.getMokki().getMokkinimi() + "\n"
-                        + newValue.getVarattu_alkupvm() + "\n"
-                        + newValue.getVarattu_loppupvm()
-                        //+ newValue.getLasku().getMaksettu()
-                );
-            }
-        });
-    }
 
     @Override
-    public void initialize(URL location, ResourceBundle resourceBundle){
-        if(asiakasLV != null){
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        if (asiakasLV != null) {
             initializeUIComponent();
         }
-        if(valitseMokkiListaltaListView != null){
+        if (valitseMokkiListaltaListView != null) {
             initializeLV();
         }
-        if(palveluLV != null){
+        if (palveluLV != null) {
             initializePalveluLV();
         }
-        if(varauksetListView != null) {
+        if (varauksetListView != null) {
             initializeVarausLV();
         }
-        if(asiakkaanLaskutLV != null) {
-            initializeAsLaskutLV();
+        if (varausPoistoLV != null) {
+            initializevarausPoistoLV();
         }
     }
 
-    private void initializeUIComponent(){
+    private void initializeUIComponent() {
         asiakasLV.getSelectionModel().selectedItemProperty().addListener((observable, oldAsiakas, newAsiakas) -> {
-            if (newAsiakas == null){
+            if (newAsiakas == null) {
                 editLahiosTF.clear();
                 editPostiNroTF.clear();
                 editEnimiTF.clear();
                 editSnimiTF.clear();
                 editSpostiTF.clear();
                 editPuhNroTF.clear();
-            }
-            else {
+            } else {
                 editPuhNroTF.setText(newAsiakas.getPuhelinnro());
                 editEnimiTF.setText(newAsiakas.getEtunimi());
                 editLahiosTF.setText(newAsiakas.getLahiosoite());
@@ -246,14 +175,13 @@ public class Controller implements Initializable {
         asiakasLV.setCellFactory(new Callback<ListView<Asiakas>, ListCell<Asiakas>>() {
             @Override
             public ListCell<Asiakas> call(ListView<Asiakas> param) {
-                return new ListCell<Asiakas>(){
+                return new ListCell<Asiakas>() {
                     @Override
-                    protected void updateItem(Asiakas asiakas, boolean empty){
+                    protected void updateItem(Asiakas asiakas, boolean empty) {
                         super.updateItem(asiakas, empty);
-                        if(asiakas != null){
+                        if (asiakas != null) {
                             setText(asiakas.getEtunimi() + " " + asiakas.getSukunimi());
-                        }
-                        else {
+                        } else {
                             setText(null);
                         }
                     }
@@ -262,18 +190,17 @@ public class Controller implements Initializable {
         });
     }
 
-    public void initializeLV(){
+    public void initializeLV() {
         valitseMokkiListaltaListView.setCellFactory(new Callback<ListView<Mokki>, ListCell<Mokki>>() {
             @Override
             public ListCell<Mokki> call(ListView<Mokki> param) {
-                return new ListCell<Mokki>(){
+                return new ListCell<Mokki>() {
                     @Override
-                    protected void updateItem(Mokki mokki, boolean empty){
+                    protected void updateItem(Mokki mokki, boolean empty) {
                         super.updateItem(mokki, empty);
-                        if(mokki != null){
+                        if (mokki != null) {
                             setText(mokki.getMokkinimi());
-                        }
-                        else {
+                        } else {
                             setText(null);
                         }
                     }
@@ -284,8 +211,7 @@ public class Controller implements Initializable {
         valitseMokkiListaltaListView.getSelectionModel().selectedItemProperty().addListener((observable, oldMokki, newMokki) -> {
             if (newMokki == null) {
                 mokinTiedotTextAres.clear();
-            }
-            else {
+            } else {
                 mokinTiedotTextAres.setText("Mökin nimi: " + newMokki.getMokkinimi() + "\n" +
                         "Kuvaus: " + newMokki.getKuvaus() + "\n" +
                         "Hinta: " + newMokki.getHinta() + "\n" +
@@ -296,18 +222,17 @@ public class Controller implements Initializable {
         });
     }
 
-    public void initializePalveluLV(){
+    public void initializePalveluLV() {
         palveluLV.setCellFactory(new Callback<ListView<Palvelu>, ListCell<Palvelu>>() {
             @Override
             public ListCell<Palvelu> call(ListView<Palvelu> param) {
-                return new ListCell<Palvelu>(){
+                return new ListCell<Palvelu>() {
                     @Override
-                    protected void updateItem(Palvelu palvelu, boolean empty){
+                    protected void updateItem(Palvelu palvelu, boolean empty) {
                         super.updateItem(palvelu, empty);
-                        if(palvelu != null){
+                        if (palvelu != null) {
                             setText(palvelu.getNimi());
-                        }
-                        else {
+                        } else {
                             setText(null);
                         }
                     }
@@ -315,6 +240,38 @@ public class Controller implements Initializable {
             }
         });
         palveluLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    }
+
+    public void initializevarausPoistoLV() {
+        varausPoistoLV.setCellFactory(new Callback<ListView<Varaus>, ListCell<Varaus>>() {
+            @Override
+            public ListCell<Varaus> call(ListView<Varaus> param) {
+                return new ListCell<Varaus>() {
+                    @Override
+                    protected void updateItem(Varaus varaus, boolean empty) {
+                        super.updateItem(varaus, empty);
+                        if (varaus != null) {
+                            setText(varaus.getMokki().getMokkinimi());
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+        varausPoistoLV.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        varausPoistoLV.getSelectionModel().selectedItemProperty().addListener((observable, oldVaraus, newVaraus) -> {
+            if(newVaraus == null){
+                varausPoistoTiedotTA.clear();
+            }
+            else{
+                varausPoistoTiedotTA.setText("Mökin nimi: " + newVaraus.getMokki().getMokkinimi() + "\n" +
+                        "Varauksen alkamis päivämäärä: " + newVaraus.getVarattu_alkupvm() + "\n" +
+                        "Varauksen loppumis päivämäärä: " + newVaraus.getVarattu_loppupvm() + "\n" +
+                        "Varauksen hinta per päivä: " + newVaraus.getMokki().getHinta());
+            }
+        });
     }
 
     public void initializeVarausLV(){
@@ -449,21 +406,14 @@ public class Controller implements Initializable {
 
         Alue haettavaAlue = Alue.etsiAlue(haeAlueTextField.getText(), Main.sessionFactory);
 
-        if (haettavaAlue != null) {
-            for (Palvelu palvelu : palvelut) {
-                if (haettavaAlue.getAlue_id() == palvelu.getAlue().getAlue_id()) {
-                    nimet.add(palvelu.getNimi());
-                }
+        for (Palvelu palvelu:palvelut){
+            if (haettavaAlue.getAlue_id() == palvelu.getAlue().getAlue_id()) {
+                nimet.add(palvelu.getNimi());
             }
-            palvelutListView.setItems(FXCollections.observableArrayList(nimet));
-            palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         }
-        if(haettavaAlue == null) {
-            haeAlueTextField.setText("Aluetta ei löydy!");
-        }
-        if (haettavaAlue != null && nimet.isEmpty()) {
-            haeAlueTextField.setText("Alueella ei palveluja!");
-        }
+
+        palvelutListView.setItems(FXCollections.observableArrayList(nimet));
+        palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     /**
@@ -670,17 +620,16 @@ public class Controller implements Initializable {
      * @param actionEvent napin klikkaus
      */
     public void addNewArea(ActionEvent actionEvent) {
-        if (!addAreaTextField.getText().isEmpty()) {
-            Alue alue = new Alue(addAreaTextField.getText());
-            Alue etsittyAlue = Alue.etsiAlue(alue.getNimi(), Main.sessionFactory);
-            if (etsittyAlue == null){
-                alue.lisaaAlue(alue, Main.sessionFactory);
-            }
-            else {
-                addAreaTextField.setText("Alue jo järjestelmässä!");
-            }
-            naytaAlueListView(areaListView);
+        Alue alue = new Alue(addAreaTextField.getText());
+        Alue etsittyAlue = Alue.etsiAlue(alue.getNimi(), Main.sessionFactory);
+
+        if (etsittyAlue == null){
+            alue.lisaaAlue(alue, Main.sessionFactory);
         }
+        else {
+            System.out.println("Elä perkele");
+        }
+        naytaAlueListView(areaListView);
     }
 
     /**
@@ -693,7 +642,6 @@ public class Controller implements Initializable {
             Alue alue = Alue.etsiAlue(i, Main.sessionFactory);
             Alue.poistaAlue(alue, Main.sessionFactory);
         }
-        naytaAlueListView(areaListView);
     }
 
     public void deleteCustomer(ActionEvent actionEvent) {
@@ -731,11 +679,30 @@ public class Controller implements Initializable {
     }
 
     public void findReservations(ActionEvent actionEvent) {
-        Asiakas asiakas = Asiakas.haeAsiakas("Urho", "Kekkonen", "112");
-        System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
+        String enimi = haeVarauspoistoEnimi.getText();
+        String snimi = haeVVarauspoistoSnimi.getText();
+        String puhnro = haeVarauspoistoPuhnro.getText();
+//        Asiakas asiakas = Asiakas.haeAsiakas(enimi, snimi, puhnro);
+//        System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
+        try {
+            Asiakas asiakas = Asiakas.haeAsiakas(enimi, snimi, puhnro);
+            System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
+            List<Varaus> varaukset = Varaus.etsiVaraus(asiakas, Main.sessionFactory);
+            varausPoistoLV.setItems(FXCollections.observableList(varaukset));
+
+        }
+        catch (Exception e){
+            return;
+        }
+//        Asiakas asiakas = Asiakas.haeAsiakas("Urho", "Kekkonen", "112");
+//        System.out.println(Varaus.etsiVaraus(asiakas, Main.sessionFactory));
     }
 
     public void deleteThisReservation(ActionEvent actionEvent) {
+        Varaus varaus = varausPoistoLV.getSelectionModel().getSelectedItem();
+        if(varaus != null){
+            Varaus.poistaVaraus(varaus);
+        }
     }
 
     public void findThisCabin(ActionEvent actionEvent) {
@@ -881,41 +848,23 @@ public class Controller implements Initializable {
 
         areaListViewService.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         List<String> alue = areaListViewService.getSelectionModel().getSelectedItems();
+        Alue haettuAlue = Alue.etsiAlue(alue.getFirst(), Main.sessionFactory);
 
+        Palvelu uusiPalvelu = new Palvelu(haettuAlue, palvelunNimi, palvelunKuvaus, palvelunHinta, palvelunAlv);
+        Palvelu.lisaaPalvelu(uusiPalvelu, Main.sessionFactory);
 
-        if(!alue.isEmpty()) {
-            if(!uudenPalvelunNimiTextField.getText().isEmpty() && !uudenPalvelunKuvausTextField.getText().isEmpty() &&
-                    !uudenPalvelunHintaTextField.getText().isEmpty() && !uudenPalvelunAlvTextField.getText().isEmpty()) {
-                Alue haettuAlue = Alue.etsiAlue(alue.getFirst(), Main.sessionFactory);
-                Palvelu uusiPalvelu = new Palvelu(haettuAlue, palvelunNimi, palvelunKuvaus, palvelunHinta, palvelunAlv);
-                Palvelu.lisaaPalvelu(uusiPalvelu, Main.sessionFactory);
-                naytaViestiToiminnonOnnistumisesta("Palvelu lisätty!");
-                uudenPalvelunNimiTextField.clear();
-                uudenPalvelunKuvausTextField.clear();
-                uudenPalvelunHintaTextField.clear();
-                uudenPalvelunAlvTextField.clear();
-            }
-            else {
-                if (uudenPalvelunNimiTextField.getText().isEmpty()){
-                    uudenPalvelunNimiTextField.setText("Valitse nimi!");
-                }
-                else if (uudenPalvelunKuvausTextField.getText().isEmpty()) {
-                    uudenPalvelunKuvausTextField.setText("Valitse kuvaus!");
-                }
-            }
-        }
-        else {
-            uudenPalvelunNimiTextField.setText("Ei aluetta valittu");
-            uudenPalvelunKuvausTextField.setText("Ei aluetta valittu");
-            uudenPalvelunHintaTextField.setText("Ei aluetta valittu");
-            uudenPalvelunAlvTextField.setText("Ei aluetta valittu");
-        }
+        naytaViestiToiminnonOnnistumisesta("Palvelu lisätty!");
+
+        uudenPalvelunNimiTextField.clear();
+        uudenPalvelunKuvausTextField.clear();
+        uudenPalvelunHintaTextField.clear();
+        uudenPalvelunAlvTextField.clear();
     }
 
     public void alterServiceInfo(ActionEvent actionEvent) throws IOException {
         String valittuPalvelu = (String) palvelutListView.getSelectionModel().getSelectedItem();
         if (valittuPalvelu != null) {
-            try (Session session = Main.sessionFactory.openSession()) {
+            try(Session session = Main.sessionFactory.openSession()) {
                 Query<Palvelu> query = session.createQuery("FROM Palvelu WHERE nimi = :nimi");
                 query.setParameter("nimi", valittuPalvelu);
                 Palvelu palvelu = query.uniqueResult();
@@ -933,88 +882,83 @@ public class Controller implements Initializable {
                 }
             }
         }
-        if (!muokattuPalvelunNimiTextField.getText().isEmpty() || !muokattuPalvelunKuvausTextField.getText().isEmpty() ||
-                !muokattuPalvelunHintaTextField.getText().isEmpty() || !muokattuPalvelunAlvTextField.getText().isEmpty()){
-            naytaViestiToiminnonOnnistumisesta("Palvelun tietoja muokattu!");
-        }
+        naytaViestiToiminnonOnnistumisesta("Palvelun tietoja muokattu!");
     }
     // ================================================================================================================================================
     public void createEmailInvoice(ActionEvent actionEvent) throws IOException {
-        if (!varauksenTiedotTextArea.getText().isEmpty()) {
-            luoPdf.luoPdfDoc("Lasku, " +
-                            varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getSukunimi() + " " +
-                            varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getEtunimi() + " (" +
-                            varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + ").pdf",
-                    varauksenTiedotTextArea.getText() + "\n" +
-                            "Tilinumero: FI12 3456 7891 0111 21\nSaaja: Village Newbies Oy\nViite: " +
-                            varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + "0000000");
-            naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
-            Varaus varaus = varauksetListView.getSelectionModel().getSelectedItem();
-            Lasku lasku = new Lasku(varaus);
-            lasku.lisaaLasku(lasku, Main.sessionFactory);
+        luoPdf.luoPdfDoc("Lasku, " +
+                varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getSukunimi() + " " +
+                varauksetListView.getSelectionModel().getSelectedItem().getAsiakas().getEtunimi() + " (" +
+                varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + ").pdf",
+                varauksenTiedotTextArea.getText() + "\n" +
+                "Tilinumero: FI12 3456 7891 0111 21\nSaaja: Village Newbies Oy\nViite: " +
+                        varauksetListView.getSelectionModel().getSelectedItem().getVaraus_id() + "0000000" );
+        naytaViestiToiminnonOnnistumisesta("Lasku luotu!");
+    }
+
+    public void findInvoice(ActionEvent actionEvent) {
+        String varausEnimi = laskujenSeurantaEtuNimiTF.getText();
+        String varausSnimi = laskujenSeurantaSukuNimiTF.getText();
+        String varausPuhnro = laskujenSeurantaPuhTF.getText();
+        if(varausSnimi.isBlank() || varausEnimi.isEmpty() || varausPuhnro.isEmpty()){
+            return;
+        }
+        valittuAs = Asiakas.haeAsiakas(varausEnimi, varausSnimi, varausPuhnro);
+        if(valittuAs == null){
+            return;
         }
     }
 
     public void invoicePayed(ActionEvent actionEvent) {
-        Varaus varaus = asiakkaanLaskutLV.getSelectionModel().getSelectedItem();
-        try(Session session = Main.sessionFactory.openSession()) {
-            Transaction tx = session.beginTransaction();
-            List<Lasku> laskut = varaus.getLaskut();
-            for (Lasku lasku : laskut) {
-                lasku.setMaksettu(1);
-            }
-            tx.commit();
-        }
     }
 
     public void addNewCabin(ActionEvent actionEvent) throws IOException {
-        if (!uusiMokinNimi.getText().isEmpty() && !uusiKatuOsoite.getText().isEmpty() &&
-        !uusiHinta.getText().isEmpty() && !uusiKuvaus.getText().isEmpty() && !uusiHenkiloMaara.getText().isEmpty() &&
-        !uusiVarustelu.getText().isEmpty() && !AlueTextField.getText().isEmpty() && !postiNumeroTextField.getText().isEmpty()) {
-
-            String mokinNimi = uusiMokinNimi.getText();
-            String katuOsoite = uusiKatuOsoite.getText();
-            Double hinta = 0.0;
-            try {
-                hinta = Double.parseDouble(uusiHinta.getText());
-            } catch (Exception e) {
-                uusiHinta.setText("Anna desimaalilukuna!");
-                return;
-            }
-            String kuvaus = uusiKuvaus.getText();
-            int henkiloMaara = 0;
-            try {
-                henkiloMaara = Integer.parseInt(uusiHenkiloMaara.getText());
-            } catch (Exception e) {
-                uusiHenkiloMaara.setText("Anna kokonaislukuna!");
-                return;
-            }
-            String varustelu = uusiVarustelu.getText();
-            String alue = AlueTextField.getText();
-            Alue haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
-            if (haettuAlue == null) {
-                Alue.lisaaAlue(new Alue(alue), Main.sessionFactory);
-            }
-            haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
-            String postiNumero = postiNumeroTextField.getText();
-            Posti etsittyPosti = Posti.etsiPosti(postiNumero, Main.sessionFactory);
-            if (etsittyPosti == null) {
-                etsittyPosti = new Posti(postiNumero, postiNumero);
-                Posti.lisaaPosti(etsittyPosti, Main.sessionFactory);
-            }
-            Mokki uusiMokki = new Mokki(haettuAlue, etsittyPosti, mokinNimi, katuOsoite, hinta, kuvaus, henkiloMaara, varustelu);
-            uusiMokki.lisaaMokki(uusiMokki, Main.sessionFactory);
-            naytaViestiToiminnonOnnistumisesta("Mökki lisätty!");
-
-            AlueTextField.clear();
-            postiNumeroTextField.clear();
-            uusiHinta.clear();
-            uusiVarustelu.clear();
-            uusiHenkiloMaara.clear();
-            uusiKuvaus.clear();
-            uusiKatuOsoite.clear();
-            uusiMokinNimi.clear();
+        String mokinNimi = uusiMokinNimi.getText();
+        String katuOsoite = uusiKatuOsoite.getText();
+        Double hinta = 0.0;
+        try {
+            hinta = Double.parseDouble(uusiHinta.getText());
         }
+        catch (Exception e){
+            uusiHinta.setText("Anna desimaalilukuna!");
+            return;
+        }
+        String kuvaus = uusiKuvaus.getText();
+        int henkiloMaara = 0;
+        try {
+            henkiloMaara = Integer.parseInt(uusiHenkiloMaara.getText());
+        }
+        catch (Exception e) {
+            uusiHenkiloMaara.setText("Anna kokonaislukuna!");
+            return;
+        }
+        String varustelu = uusiVarustelu.getText();
+        String alue = AlueTextField.getText();
+        Alue haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
+        if (haettuAlue == null) {
+            Alue.lisaaAlue(new Alue(alue), Main.sessionFactory);
+        }
+        haettuAlue = Alue.etsiAlue(alue, Main.sessionFactory);
+        String postiNumero = postiNumeroTextField.getText();
+        Posti etsittyPosti = Posti.etsiPosti(postiNumero, Main.sessionFactory);
+        if (etsittyPosti == null) {
+            etsittyPosti = new Posti(postiNumero, postiNumero);
+            Posti.lisaaPosti(etsittyPosti, Main.sessionFactory);
+        }
+        Mokki uusiMokki = new Mokki(haettuAlue, etsittyPosti, mokinNimi, katuOsoite, hinta, kuvaus, henkiloMaara, varustelu);
+        uusiMokki.lisaaMokki(uusiMokki, Main.sessionFactory);
+        naytaViestiToiminnonOnnistumisesta("Mökki lisätty!");
+
+        AlueTextField.clear();
+        postiNumeroTextField.clear();
+        uusiHinta.clear();
+        uusiVarustelu.clear();
+        uusiHenkiloMaara.clear();
+        uusiKuvaus.clear();
+        uusiKatuOsoite.clear();
+        uusiMokinNimi.clear();
+
+        naytaAlueListView(areaListView);
     }
 
     public void deleteCabin(ActionEvent actionEvent) {

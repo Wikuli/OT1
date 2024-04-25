@@ -449,14 +449,21 @@ public class Controller implements Initializable {
 
         Alue haettavaAlue = Alue.etsiAlue(haeAlueTextField.getText(), Main.sessionFactory);
 
-        for (Palvelu palvelu:palvelut){
-            if (haettavaAlue.getAlue_id() == palvelu.getAlue().getAlue_id()) {
-                nimet.add(palvelu.getNimi());
+        if (haettavaAlue != null) {
+            for (Palvelu palvelu : palvelut) {
+                if (haettavaAlue.getAlue_id() == palvelu.getAlue().getAlue_id()) {
+                    nimet.add(palvelu.getNimi());
+                }
             }
+            palvelutListView.setItems(FXCollections.observableArrayList(nimet));
+            palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         }
-
-        palvelutListView.setItems(FXCollections.observableArrayList(nimet));
-        palvelutListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        if(haettavaAlue == null) {
+            haeAlueTextField.setText("Aluetta ei löydy!");
+        }
+        if (haettavaAlue != null && nimet.isEmpty()) {
+            haeAlueTextField.setText("Alueella ei palveluja!");
+        }
     }
 
     /**
@@ -872,23 +879,45 @@ public class Controller implements Initializable {
 
         areaListViewService.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         List<String> alue = areaListViewService.getSelectionModel().getSelectedItems();
-        Alue haettuAlue = Alue.etsiAlue(alue.getFirst(), Main.sessionFactory);
 
-        Palvelu uusiPalvelu = new Palvelu(haettuAlue, palvelunNimi, palvelunKuvaus, palvelunHinta, palvelunAlv);
-        Palvelu.lisaaPalvelu(uusiPalvelu, Main.sessionFactory);
 
-        naytaViestiToiminnonOnnistumisesta("Palvelu lisätty!");
+        if(!alue.isEmpty()) {
+            if(!uudenPalvelunNimiTextField.getText().isEmpty() && !uudenPalvelunKuvausTextField.getText().isEmpty() &&
+                    !uudenPalvelunHintaTextField.getText().isEmpty() && !uudenPalvelunAlvTextField.getText().isEmpty()) {
+                Alue haettuAlue = Alue.etsiAlue(alue.getFirst(), Main.sessionFactory);
+                Palvelu uusiPalvelu = new Palvelu(haettuAlue, palvelunNimi, palvelunKuvaus, palvelunHinta, palvelunAlv);
+                Palvelu.lisaaPalvelu(uusiPalvelu, Main.sessionFactory);
+                naytaViestiToiminnonOnnistumisesta("Palvelu lisätty!");
+                uudenPalvelunNimiTextField.clear();
+                uudenPalvelunKuvausTextField.clear();
+                uudenPalvelunHintaTextField.clear();
+                uudenPalvelunAlvTextField.clear();
+            }
+            else {
+                if (uudenPalvelunNimiTextField.getText().isEmpty()){
+                    uudenPalvelunNimiTextField.setText("Valitse nimi!");
+                }
+                else if (uudenPalvelunKuvausTextField.getText().isEmpty()) {
+                    uudenPalvelunKuvausTextField.setText("Valitse kuvaus!");
+                }
+            }
+        }
+        else {
+            uudenPalvelunNimiTextField.setText("Ei aluetta valittu");
+            uudenPalvelunKuvausTextField.setText("Ei aluetta valittu");
+            uudenPalvelunHintaTextField.setText("Ei aluetta valittu");
+            uudenPalvelunAlvTextField.setText("Ei aluetta valittu");
+        }
 
-        uudenPalvelunNimiTextField.clear();
-        uudenPalvelunKuvausTextField.clear();
-        uudenPalvelunHintaTextField.clear();
-        uudenPalvelunAlvTextField.clear();
+
+
+
     }
 
     public void alterServiceInfo(ActionEvent actionEvent) throws IOException {
         String valittuPalvelu = (String) palvelutListView.getSelectionModel().getSelectedItem();
         if (valittuPalvelu != null) {
-            try(Session session = Main.sessionFactory.openSession()) {
+            try (Session session = Main.sessionFactory.openSession()) {
                 Query<Palvelu> query = session.createQuery("FROM Palvelu WHERE nimi = :nimi");
                 query.setParameter("nimi", valittuPalvelu);
                 Palvelu palvelu = query.uniqueResult();
@@ -906,7 +935,10 @@ public class Controller implements Initializable {
                 }
             }
         }
-        naytaViestiToiminnonOnnistumisesta("Palvelun tietoja muokattu!");
+        if (!muokattuPalvelunNimiTextField.getText().isEmpty() || !muokattuPalvelunKuvausTextField.getText().isEmpty() ||
+                !muokattuPalvelunHintaTextField.getText().isEmpty() || !muokattuPalvelunAlvTextField.getText().isEmpty()){
+            naytaViestiToiminnonOnnistumisesta("Palvelun tietoja muokattu!");
+        }
     }
     // ================================================================================================================================================
     public void createEmailInvoice(ActionEvent actionEvent) throws IOException {

@@ -32,12 +32,7 @@
          </font>
       </Label>
       <ListView fx:id="laskutAvoinnaLV" layoutX="467.0" layoutY="66.0" prefHeight="270.0" prefWidth="296.0" />
-      <Label layoutX="467.0" layoutY="360.0" text="Lista maksetuista laskuista">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ListView fx:id="laskutMaksettuLV" layoutX="467.0" layoutY="402.0" prefHeight="270.0" prefWidth="296.0" />
       <ListView fx:id="asiakkaanLaskutLV" layoutX="50.0" layoutY="319.0" prefHeight="151.0" prefWidth="180.0" />
+      <Button layoutX="467.0" layoutY="348.0" mnemonicParsing="false" text="Hae laskut" />
    </children>
 </AnchorPane>

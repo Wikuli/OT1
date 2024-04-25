@@ -45,7 +45,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="findCabinButton" mnemonicParsing="false" onAction="#findCabins" text="Etsi mökkejä">
+                        <Button fx:id="findCabinButton" mnemonicParsing="false" onAction="#findCabins" text="Etsi mökkejä ja tee varaus">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>

@@ -1,10 +1,11 @@
 package oma.grafiikka.ot1;
 
 import jakarta.persistence.*;
-
+@Entity
 @Embeddable
 @Table(name = "varauksen_palvelut" )
 public class Varauksen_palvelut {
+    @EmbeddedId
     @ManyToOne (fetch = FetchType.LAZY)
     private Varaus varaus;
     @ManyToOne (fetch = FetchType.LAZY)

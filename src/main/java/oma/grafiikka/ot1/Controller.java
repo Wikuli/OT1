@@ -1,5 +1,8 @@
 package oma.grafiikka.ot1;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -133,6 +136,14 @@ public class Controller implements Initializable {
     public TextField editPostiNroTF;
     @FXML
     public TextField editLahiosTF;
+    @FXML
+    public DatePicker alkuPaivaMaara;
+    @FXML
+    public DatePicker loppuPaivaMaara;
+    @FXML
+    public TextField palveluTextFieldRaporti;
+    @FXML
+    public TextField alueTextFiedRaporti;
 
 
     @Override
@@ -799,8 +810,59 @@ public class Controller implements Initializable {
     }
 
     public void serviceReportSearch(ActionEvent actionEvent) {
-    }
+        Date aloitusPaivaMaara = Date.valueOf(alkuPaivaMaara.getValue());
+        Date viimeinenPaivaMaara = Date.valueOf(loppuPaivaMaara.getValue());
+        String palveluRaportti = palveluTextFieldRaporti.getText();
+        String alueRaportti = alueTextFiedRaporti.getText();
 
+        if (aloitusPaivaMaara != null && viimeinenPaivaMaara != null && palveluRaportti != null && alueRaportti != null) {
+            try (Session session = Main.sessionFactory.openSession()) {
+                Transaction transaction = session.beginTransaction();
+
+                CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<Alue> critAlueQuery = cBuilder.createQuery(Alue.class);
+
+                Root<Alue> root = critAlueQuery.from(Alue.class);
+
+                critAlueQuery.select(root).where(
+                        cBuilder.equal(root.get("nimi"), alueRaportti));
+
+
+                CriteriaQuery<Varaus> critVarausQuery = cBuilder.createQuery(Varaus.class);
+                Root<Varaus> rootVaraus = critVarausQuery.from(Varaus.class);
+
+                critVarausQuery.select(rootVaraus).where(
+                        cBuilder.or(
+                                cBuilder.between(rootVaraus.get("varattu_alkupvm"), aloitusPaivaMaara, viimeinenPaivaMaara),
+                                cBuilder.between(rootVaraus.get("varattu_loppupvm"), aloitusPaivaMaara, viimeinenPaivaMaara)
+                        )
+                );
+
+                List<Varaus> varaukset = session.createQuery(critVarausQuery).getResultList();
+                for(Varaus varaus : varaukset ) {
+                    if (varaus.getMokki().getAlue().getNimi() != alueRaportti) {
+                        varaukset.remove(varaus);
+
+                    }
+                    else {
+                        for (Varauksen_palvelut vp : varaus.getVarauksenPalvelut()) {
+                            if(vp.getPalvelu().getNimi() != palveluRaportti) {
+                                varaukset.remove(varaus);
+                            }
+                        }
+                    }
+                }
+                if (!varaukset.isEmpty()) {
+                    palvelunTiedotTextArea.setText("Palvelua ostettiin NÄIN monta kertaa:" + varaukset.size() + "ja ne maksoi:" + varaukset.size() * varaukset.getFirst().getVarauksenPalvelut().getFirst().getPalvelu().getHinta());
+                } else {
+                    palvelunTiedotTextArea.setText("Tätä Palvelua ei ole ostettu kertakaan tällä ajalla");
+                }
+                transaction.commit();
+            }
+        } else {
+            palvelunTiedotTextArea.setText("Syötä Palvelu, Alue, ja päivämäärät.");
+        }
+    }
     public void areaServiceFetch(ActionEvent actionEvent) {
         naytaAlueenPalvelutListView();
     }
